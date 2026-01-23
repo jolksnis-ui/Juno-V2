@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { FONT } from '@/lib/constants';
 
 interface SectionHeaderProps {
   /** Optional badge text displayed above title */
@@ -48,10 +49,11 @@ export const SectionHeader = ({
         {badge && (
           <span
             className={cn(
-              'w-fit rounded border px-1.5 py-1 font-[family-name:var(--font-geist-mono)] text-sm',
+              'w-fit rounded border px-1.5 py-1 text-sm',
+              FONT.mono,
               isDark
-                ? 'border-[#3F3F46] bg-white/[0.08] text-[#D1D1D6]'
-                : 'border-[#E4E4E7] bg-[#F4F4F5] text-[#3F3F46]'
+                ? 'border-juno-700 bg-white/[0.08] text-juno-300'
+                : 'border-juno-200 bg-juno-100 text-juno-700'
             )}
           >
             {badge}
@@ -59,8 +61,9 @@ export const SectionHeader = ({
         )}
         <h2
           className={cn(
-            'font-[family-name:var(--font-fraunces)] text-[60px] leading-[1.13]',
-            isDark ? 'text-white' : 'text-[#18181B]'
+            'text-[60px] leading-[1.13]',
+            FONT.serif,
+            isDark ? 'text-white' : 'text-juno-900'
           )}
         >
           {title}
@@ -69,7 +72,7 @@ export const SectionHeader = ({
           <p
             className={cn(
               'text-lg leading-normal',
-              isDark ? 'text-[#E4E4E7]' : 'text-[#3F3F46]'
+              isDark ? 'text-juno-200' : 'text-juno-700'
             )}
           >
             {subtitle}
@@ -85,10 +88,11 @@ export const SectionHeader = ({
       {badge && (
         <span
           className={cn(
-            'w-fit rounded border px-1.5 py-1 font-[family-name:var(--font-geist-mono)] text-sm',
+            'w-fit rounded border px-1.5 py-1 text-sm',
+            FONT.mono,
             isDark
-              ? 'border-[#3F3F46] bg-white/[0.08] text-[#D1D1D6]'
-              : 'border-[#E4E4E7] bg-[#F4F4F5] text-[#3F3F46]'
+              ? 'border-juno-700 bg-white/[0.08] text-juno-300'
+              : 'border-juno-200 bg-juno-100 text-juno-700'
           )}
         >
           {badge}
@@ -97,8 +101,9 @@ export const SectionHeader = ({
       <div className="flex items-center justify-between">
         <h2
           className={cn(
-            'font-[family-name:var(--font-fraunces)] text-[60px] leading-[1.13]',
-            isDark ? 'text-white' : 'text-[#18181B]'
+            'text-[60px] leading-[1.13]',
+            FONT.serif,
+            isDark ? 'text-white' : 'text-juno-900'
           )}
           style={{ maxWidth: titleMaxWidth }}
         >
@@ -110,7 +115,7 @@ export const SectionHeader = ({
         <p
           className={cn(
             'text-lg leading-normal',
-            isDark ? 'text-[#E4E4E7]' : 'text-[#3F3F46]'
+            isDark ? 'text-juno-200' : 'text-juno-700'
           )}
           style={{ maxWidth: titleMaxWidth }}
         >

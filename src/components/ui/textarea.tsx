@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { FONT } from '@/lib/constants';
 
 interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -28,11 +29,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           rows={rows}
           className={cn(
-            'min-h-16 w-full resize-none border-t bg-transparent p-3 text-base text-[#18181B] outline-none transition-colors',
-            'font-[family-name:var(--font-geist-mono)] placeholder:text-[#A0A0AB]',
-            'focus:border-[#18181B]',
+            'min-h-16 w-full resize-none border-t bg-transparent p-3 text-base text-juno-900 outline-none transition-colors',
+            FONT.mono,
+            'placeholder:text-juno-400',
+            'focus:border-juno-900',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            error ? 'border-[#EF4444]' : 'border-[#A0A0AB]',
+            error ? 'border-destructive' : 'border-juno-400',
             className
           )}
           ref={ref}
@@ -41,7 +43,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <span className="text-xs text-[#EF4444]" role="alert">
+          <span className="text-xs text-destructive" role="alert">
             {error}
           </span>
         )}

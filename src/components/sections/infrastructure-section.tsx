@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { TRANSITION, ANIMATION } from '@/lib/constants';
+import { TRANSITION, ANIMATION, FONT, CONTAINER_MAX_WIDTH } from '@/lib/constants';
 
 /** Tab content data */
 const TABS = {
@@ -44,11 +44,11 @@ const InfrastructureSection = () => {
   const currentTab = TABS[activeTab];
 
   return (
-    <section className="relative bg-[#18181B] px-6 pb-28 pt-24">
+    <section className="relative bg-juno-900 px-6 pb-28 pt-24">
       {/* Dot pattern background */}
       <DotPattern className="absolute inset-0" />
 
-      <div className="relative mx-auto max-w-[1392px]">
+      <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
         {/* Header */}
         <ScrollReveal mode="slide">
           <SectionHeader
@@ -69,7 +69,7 @@ const InfrastructureSection = () => {
 
         {/* Tab switcher */}
         <div className="mb-16 flex justify-center">
-          <div className="inline-flex overflow-hidden rounded border border-[#3F3F46] bg-white/[0.02]">
+          <div className="inline-flex overflow-hidden rounded border border-juno-700 bg-white/[0.02]">
             <TabButton
               label="Compliance"
               isActive={activeTab === 'compliance'}
@@ -93,7 +93,7 @@ const InfrastructureSection = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: ANIMATION.fast }}
-              className="relative aspect-[1392/440] w-full overflow-hidden rounded-md border border-[#3F3F46]"
+              className="relative aspect-[1392/440] w-full overflow-hidden rounded-md border border-juno-700"
             >
               <Image
                 src={currentTab.image}
@@ -114,12 +114,12 @@ const InfrastructureSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ ...TRANSITION, delay: 0.05 * index }}
-                className="flex flex-col justify-between border-l border-[#3F3F46] px-6 py-6"
+                className="flex flex-col justify-between border-l border-juno-700 px-6 py-6"
               >
-                <h3 className="mb-24 font-[family-name:var(--font-fraunces)] text-2xl leading-8 text-white">
+                <h3 className={cn('mb-24 text-2xl leading-8 text-white', FONT.serif)}>
                   {feature.title}
                 </h3>
-                <span className="font-[family-name:var(--font-geist-mono)] text-5xl text-[#51525C]">
+                <span className={cn('text-5xl text-juno-600', FONT.mono)}>
                   {feature.number}
                 </span>
               </motion.div>
@@ -148,10 +148,11 @@ const TabButton = ({
     type="button"
     onClick={onClick}
     className={cn(
-      'w-[172px] px-4 py-3 font-[family-name:var(--font-geist-mono)] text-sm transition-colors',
+      'w-[172px] px-4 py-3 text-sm transition-colors',
+      FONT.mono,
       isActive
-        ? 'bg-[#26272B] text-white'
-        : 'text-[#A0A0AB] hover:text-white'
+        ? 'bg-juno-800 text-white'
+        : 'text-juno-400 hover:text-white'
     )}
     aria-pressed={isActive}
   >

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { FONT } from '@/lib/constants';
 
 interface FaqAccordionProps {
   /** Question number (e.g., "Q1") */
@@ -30,7 +31,7 @@ export const FaqAccordion = ({
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-md border border-[#D1D1D6] bg-white/60',
+        'overflow-hidden rounded-md border border-juno-300 bg-white/60',
         isOpen && 'bg-white'
       )}
     >
@@ -41,15 +42,15 @@ export const FaqAccordion = ({
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-3">
-          <span className="w-10 font-[family-name:var(--font-geist-mono)] text-base text-[#A0A0AB]">
+          <span className={cn('w-10 text-base text-juno-400', FONT.mono)}>
             {number}
           </span>
-          <span className="text-left font-[family-name:var(--font-fraunces)] text-2xl leading-8 text-[#18181B]">
+          <span className={cn('text-left text-2xl leading-8 text-juno-900', FONT.serif)}>
             {question}
           </span>
         </div>
         <div
-          className="flex size-9 shrink-0 items-center justify-center rounded border border-[#D1D1D6]"
+          className="flex size-9 shrink-0 items-center justify-center rounded border border-juno-300"
           aria-hidden="true"
         >
           <PlusMinusIcon isOpen={isOpen} />
@@ -64,8 +65,8 @@ export const FaqAccordion = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] }}
           >
-            <div className="border-t border-[#D1D1D6] px-6 pb-6 pt-6">
-              <p className="max-w-[800px] text-base leading-normal text-[#3F3F46]">
+            <div className="border-t border-juno-300 px-6 pb-6 pt-6">
+              <p className="max-w-[800px] text-base leading-normal text-juno-700">
                 {answer}
               </p>
             </div>
@@ -84,7 +85,7 @@ const PlusMinusIcon = ({ isOpen }: { isOpen: boolean }) => (
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="#18181B"
+    stroke="var(--juno-gray-900)"
     strokeWidth="1.5"
     strokeLinecap="round"
     className="transition-transform duration-200"

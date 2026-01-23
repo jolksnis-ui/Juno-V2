@@ -1,9 +1,16 @@
 @import 'tailwindcss';
 
 :root {
-  /* Juno color palette */
+  /* Juno color palette - complete gray scale */
   --juno-gray-25: #fcfcfc;
+  --juno-gray-50: #fafafa;
+  --juno-gray-100: #f4f4f5;
+  --juno-gray-200: #e4e4e7;
+  --juno-gray-300: #d1d1d6;
+  --juno-gray-400: #a0a0ab;
   --juno-gray-500: #70707b;
+  --juno-gray-600: #51525c;
+  --juno-gray-700: #3f3f46;
   --juno-gray-800: #26272b;
   --juno-gray-900: #18181b;
 
@@ -33,6 +40,19 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-fraunces);
+
+  /* Juno gray scale for Tailwind utilities */
+  --color-juno-25: var(--juno-gray-25);
+  --color-juno-50: var(--juno-gray-50);
+  --color-juno-100: var(--juno-gray-100);
+  --color-juno-200: var(--juno-gray-200);
+  --color-juno-300: var(--juno-gray-300);
+  --color-juno-400: var(--juno-gray-400);
+  --color-juno-500: var(--juno-gray-500);
+  --color-juno-600: var(--juno-gray-600);
+  --color-juno-700: var(--juno-gray-700);
+  --color-juno-800: var(--juno-gray-800);
+  --color-juno-900: var(--juno-gray-900);
 }
 
 body {

@@ -14,6 +14,8 @@ import {
   IMAGES,
   BADGE_TEXT,
   BUTTON_TEXT,
+  FONT,
+  CONTAINER_MAX_WIDTH,
 } from '@/lib/constants';
 
 /** Feature data structure */
@@ -106,10 +108,10 @@ const FeaturesSection = () => {
     FEATURES.find((f) => f.id === activeFeature) || FEATURES[0];
 
   return (
-    <section className="relative bg-[#18181B] px-6 py-24">
+    <section className="relative bg-juno-900 px-6 py-24">
       <DotPattern color="#ffffff" />
 
-      <div className="relative mx-auto max-w-[1392px]">
+      <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
         <SectionHeader
           badge={BADGE_TEXT.individual}
           title="Payment solutions for individual clients."
@@ -118,7 +120,7 @@ const FeaturesSection = () => {
         />
 
         {/* Content Box */}
-        <div className="mt-16 flex h-[600px] overflow-hidden rounded-md border border-[#3F3F46] bg-white/[0.04]">
+        <div className="mt-16 flex h-[600px] overflow-hidden rounded-md border border-juno-700 bg-white/[0.04]">
           {/* Left: Feature List */}
           <div className="flex w-[440px] shrink-0 flex-col justify-center p-10">
             <FeatureList
@@ -130,7 +132,7 @@ const FeaturesSection = () => {
           </div>
 
           {/* Right: Image Area */}
-          <div className="relative flex-1 border-l border-[#3F3F46]">
+          <div className="relative flex-1 border-l border-juno-700">
             <FeatureImage feature={currentFeature} />
           </div>
         </div>
@@ -193,12 +195,13 @@ const FeatureItem = ({
         animate={{
           fontSize: isActive ? '32px' : '20px',
           lineHeight: isActive ? '1.25' : '1.4',
-          color: isActive ? '#FFFFFF' : '#A0A0AB',
+          color: isActive ? '#FFFFFF' : 'var(--juno-gray-400)',
         }}
         transition={{ ...TRANSITION, duration: ANIMATION.fast }}
         className={cn(
-          'font-[family-name:var(--font-fraunces)] transition-colors duration-200',
-          !isActive && 'group-hover:text-[#D1D1D6]'
+          'transition-colors duration-200',
+          FONT.serif,
+          !isActive && 'group-hover:text-juno-300'
         )}
       >
         {feature.title}
@@ -212,7 +215,7 @@ const FeatureItem = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-            className="mt-3 text-base leading-normal text-[#D1D1D6]"
+            className="mt-3 text-base leading-normal text-juno-300"
           >
             {feature.description}
           </motion.p>
@@ -225,7 +228,7 @@ const FeatureItem = ({
       isActive={isActive}
       isPaused={isPaused}
       featureId={feature.id}
-      bgColor="bg-[#3F3F46]"
+      bgColor="bg-juno-700"
       fillColor="bg-white"
     />
   </button>

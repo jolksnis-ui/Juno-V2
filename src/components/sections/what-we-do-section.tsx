@@ -1,9 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { TRANSITION } from '@/lib/constants';
+import { FadeInView } from '@/components/ui/fade-in-view';
+import { DotPattern } from '@/components/ui/dot-pattern';
+import { CheckCircleIcon } from '@/components/ui/icons';
+import { FONT, CONTAINER_MAX_WIDTH, IMAGES } from '@/lib/constants';
 
 /** Services list data */
 const SERVICES = [
@@ -19,30 +22,22 @@ const SERVICES = [
  */
 const WhatWeDoSection = () => {
   return (
-    <section className="relative bg-[#FAFAFA] px-6 py-24">
-      {/* Dot pattern background */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `radial-gradient(circle, #18181B 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
-        }}
-        aria-hidden="true"
-      />
+    <section className="relative bg-juno-50 px-6 py-24">
+      <DotPattern />
 
-      <div className="relative mx-auto max-w-[1392px]">
+      <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
         {/* Header with image */}
         <div className="mb-16 flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
           {/* Left: Text content */}
           <ScrollReveal mode="slide" className="max-w-[600px]">
             <div className="flex flex-col gap-5">
-              <span className="w-fit rounded border border-[#E4E4E7] bg-[#F4F4F5] px-1.5 py-1 font-[family-name:var(--font-geist-mono)] text-sm text-[#3F3F46]">
+              <span className={cn('w-fit rounded border border-juno-200 bg-juno-100 px-1.5 py-1 text-sm text-juno-700', FONT.mono)}>
                 Our services
               </span>
-              <h2 className="font-[family-name:var(--font-fraunces)] text-[56px] leading-[1.14] text-[#18181B]">
+              <h2 className={cn('text-[56px] leading-[1.14] text-juno-900', FONT.serif)}>
                 What we do
               </h2>
-              <p className="text-base leading-normal text-[#3F3F46]">
+              <p className="text-base leading-normal text-juno-700">
                 Juno provides a range of payment and account services designed to
                 support both individual users and corporate clients.
               </p>
@@ -50,40 +45,35 @@ const WhatWeDoSection = () => {
           </ScrollReveal>
 
           {/* Right: Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ ...TRANSITION, delay: 0.2 }}
+          <FadeInView
+            delay={0.2}
             className="relative h-[172px] w-[240px] overflow-hidden rounded-md"
           >
             <Image
-              src="/images/about/service-preview.jpg"
+              src={IMAGES.aboutServicePreview}
               alt="Modern office environment"
               fill
               className="object-cover"
             />
-          </motion.div>
+          </FadeInView>
         </div>
 
         {/* Services list */}
-        <div className="border-t border-[#D1D1D6]">
+        <div className="border-t border-juno-300">
           {SERVICES.map((service, index) => (
-            <motion.div
+            <FadeInView
               key={service}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ ...TRANSITION, delay: 0.1 * index }}
-              className="flex items-center gap-6 border-b border-[#D1D1D6] py-8"
+              direction="left"
+              delay={0.1 * index}
+              className="flex items-center gap-6 border-b border-juno-300 py-8"
             >
               <div className="flex items-center pt-1">
-                <CheckCircleIcon />
+                <CheckCircleIcon color="var(--juno-gray-900)" />
               </div>
-              <span className="font-[family-name:var(--font-fraunces)] text-4xl leading-[1.2] text-[#18181B]">
+              <span className={cn('text-4xl leading-[1.2] text-juno-900', FONT.serif)}>
                 {service}
               </span>
-            </motion.div>
+            </FadeInView>
           ))}
         </div>
       </div>
@@ -93,20 +83,3 @@ const WhatWeDoSection = () => {
 WhatWeDoSection.displayName = 'WhatWeDoSection';
 
 export { WhatWeDoSection };
-
-/** Check circle icon */
-const CheckCircleIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#18181B"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M9 12l2 2 4-4" />
-  </svg>
-);

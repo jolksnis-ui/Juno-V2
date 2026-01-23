@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { FONT } from '@/lib/constants';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   /** Error message to display below input */
@@ -19,11 +20,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={type}
           className={cn(
-            'h-16 w-full border-t bg-transparent p-3 text-base text-[#18181B] outline-none transition-colors',
-            'font-[family-name:var(--font-geist-mono)] placeholder:text-[#A0A0AB]',
-            'focus:border-[#18181B]',
+            'h-16 w-full border-t bg-transparent p-3 text-base text-juno-900 outline-none transition-colors',
+            FONT.mono,
+            'placeholder:text-juno-400',
+            'focus:border-juno-900',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            error ? 'border-[#EF4444]' : 'border-[#A0A0AB]',
+            error ? 'border-destructive' : 'border-juno-400',
             className
           )}
           ref={ref}
@@ -31,7 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <span className="text-xs text-[#EF4444]" role="alert">
+          <span className="text-xs text-destructive" role="alert">
             {error}
           </span>
         )}

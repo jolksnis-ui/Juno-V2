@@ -1,13 +1,20 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 
 interface SmoothScrollProps {
   children: ReactNode;
 }
 
-export default function SmoothScroll({ children }: SmoothScrollProps) {
+/**
+ * Provides smooth scrolling behavior for page content.
+ */
+const SmoothScroll = ({ children }: SmoothScrollProps) => {
+  const pathname = usePathname();
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -19,17 +26,43 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       touchMultiplier: 2,
     });
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+    lenisRef.current = lenis;
 
-    requestAnimationFrame(raf);
+    /**
+     * Keeps Lenis in sync with requestAnimationFrame.
+     */
+    const handleRaf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(handleRaf);
+    };
+
+    requestAnimationFrame(handleRaf);
 
     return () => {
+      lenisRef.current = null;
       lenis.destroy();
     };
   }, []);
 
+  useEffect(() => {
+    if (!lenisRef.current) {
+      return;
+    }
+
+    /**
+     * Ensures navigation always resets to the top.
+     */
+    const handleScrollTop = () => {
+      lenisRef.current?.scrollTo(0, { immediate: true });
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    };
+
+    handleScrollTop();
+  }, [pathname]);
+
   return <>{children}</>;
-}
+};
+
+SmoothScroll.displayName = 'SmoothScroll';
+
+export default SmoothScroll;

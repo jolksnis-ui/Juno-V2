@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ANIMATION, TRANSITION, IMAGES } from '@/lib/constants';
+import { ANIMATION, TRANSITION, IMAGES, FONT } from '@/lib/constants';
 
 /** Security feature data structure */
 interface SecurityFeature {
@@ -62,7 +62,7 @@ const SecuritySection = () => {
   const [activeFeature, setActiveFeature] = useState(1);
 
   return (
-    <section className="relative bg-[#18181B] py-[100px]">
+    <section className="relative bg-juno-900 py-[100px]">
       {/* Header */}
       <ScrollReveal mode="slide">
         <SectionHeader
@@ -137,7 +137,7 @@ const FeatureRow = ({
     transition={{ ...TRANSITION, duration: ANIMATION.medium }}
     className={cn(
       'flex w-full cursor-pointer items-center justify-between overflow-hidden border-b px-16',
-      isActive ? 'border-white py-10' : 'border-[#344054]'
+      isActive ? 'border-white py-10' : 'border-juno-700'
     )}
   >
     {/* Left: Label + Title (stacked with gap) */}
@@ -148,7 +148,7 @@ const FeatureRow = ({
       )}
     >
       {/* Micro headline - always visible */}
-      <span className="w-[360px] text-base leading-[1.25] text-[#D1D1D6]">
+      <span className="w-[360px] text-base leading-[1.25] text-juno-300">
         {feature.label}
       </span>
 
@@ -160,7 +160,7 @@ const FeatureRow = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-            className="w-[360px] font-[family-name:var(--font-fraunces)] text-[32px] leading-[1.25] text-white"
+            className={cn('w-[360px] text-[32px] leading-[1.25] text-white', FONT.serif)}
           >
             {feature.title}
           </motion.h3>
@@ -179,7 +179,7 @@ const FeatureRow = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-            className="text-base leading-[1.25] text-[#D1D1D6]"
+            className="text-base leading-[1.25] text-juno-300"
           >
             {feature.description}
           </motion.p>

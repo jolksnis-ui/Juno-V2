@@ -5,10 +5,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { GetStartedButton } from '@/components/ui/get-started-button';
+import { FadeInView } from '@/components/ui/fade-in-view';
+import { CheckIcon } from '@/components/ui/icons';
 import { contactFormSchema, type ContactFormValues } from '@/lib/validations';
+import { FONT, CONTAINER_MAX_WIDTH, IMAGES } from '@/lib/constants';
 
 /** Form submission states */
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error' | 'rate-limited';
@@ -89,7 +93,7 @@ const ContactSection = () => {
       {/* Background image header */}
       <div className="relative h-[280px] w-full overflow-hidden">
         <Image
-          src="/images/corporate-bg.jpg"
+          src={IMAGES.corporateBg}
           alt=""
           fill
           className="object-cover"
@@ -100,12 +104,9 @@ const ContactSection = () => {
 
       {/* Form container */}
       <div className="relative -mt-40 px-6 pb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="mx-auto max-w-[1392px] rounded-md border border-[#E4E4E7] bg-[#FCFCFC] px-[72px] py-20"
+        <FadeInView
+          className="mx-auto rounded-md border border-juno-200 bg-juno-25 px-[72px] py-20"
+          style={{ maxWidth: CONTAINER_MAX_WIDTH }}
         >
           <AnimatePresence mode="wait">
             {submitState === 'success' ? (
@@ -119,12 +120,12 @@ const ContactSection = () => {
               >
                 {/* Header */}
                 <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-center">
-                  <h2 className="w-[600px] font-[family-name:var(--font-fraunces)] text-4xl leading-none text-[#18181B] md:text-5xl lg:text-[60px]">
+                  <h2 className={cn('w-[600px] text-4xl leading-none text-juno-900 md:text-5xl lg:text-[60px]', FONT.serif)}>
                     Become a
                     <br />
                     Juno Money client.
                   </h2>
-                  <p className="w-[320px] text-base leading-normal text-[#3F3F46]">
+                  <p className="w-[320px] text-base leading-normal text-juno-700">
                     Unlock a world of financial possibilities with us, open an
                     account today and start experiencing unparalleled banking
                     solutions tailored just for you.
@@ -145,7 +146,7 @@ const ContactSection = () => {
                         aria-required="true"
                       />
                     </div>
-                    <div className="hidden h-6 w-px bg-[#A0A0AB] md:block" aria-hidden="true" />
+                    <div className="hidden h-6 w-px bg-juno-400 md:block" aria-hidden="true" />
                     <div className="flex-1">
                       <Input
                         placeholder="Company*"
@@ -171,7 +172,7 @@ const ContactSection = () => {
                         aria-required="true"
                       />
                     </div>
-                    <div className="hidden h-6 w-px bg-[#A0A0AB] md:block" aria-hidden="true" />
+                    <div className="hidden h-6 w-px bg-juno-400 md:block" aria-hidden="true" />
                     <div className="flex-1">
                       <Input
                         type="tel"
@@ -199,12 +200,12 @@ const ContactSection = () => {
 
                   {/* Error / Rate limit messages */}
                   {submitState === 'error' && (
-                    <p className="mt-4 text-sm text-[#EF4444]" role="alert">
+                    <p className="mt-4 text-sm text-destructive" role="alert">
                       {errorMessage}
                     </p>
                   )}
                   {submitState === 'rate-limited' && (
-                    <p className="mt-4 text-sm text-[#EF4444]" role="alert">
+                    <p className="mt-4 text-sm text-destructive" role="alert">
                       Too many requests. Please try again in {retryAfter} minutes.
                     </p>
                   )}
@@ -223,7 +224,7 @@ const ContactSection = () => {
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </FadeInView>
       </div>
     </section>
   );
@@ -240,40 +241,23 @@ const SuccessMessage = ({ onReset }: { onReset: () => void }) => (
     transition={{ duration: 0.3 }}
     className="flex flex-col items-center py-12 text-center"
   >
-    <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-[#F4F4F5]">
-      <CheckIcon />
+    <div className="mb-6 flex size-16 items-center justify-center rounded-full bg-juno-100">
+      <CheckIcon size={32} color="var(--juno-gray-900)" />
     </div>
-    <h3 className="font-[family-name:var(--font-fraunces)] text-3xl text-[#18181B]">
+    <h3 className={cn('text-3xl text-juno-900', FONT.serif)}>
       Message sent!
     </h3>
-    <p className="mt-3 max-w-md text-base text-[#3F3F46]">
+    <p className="mt-3 max-w-md text-base text-juno-700">
       Thank you for reaching out. Our team will get back to you within 24 hours.
     </p>
     <button
       onClick={onReset}
-      className="mt-8 text-sm font-medium text-[#18181B] underline underline-offset-4 transition-opacity hover:opacity-70"
+      className="mt-8 text-sm font-medium text-juno-900 underline underline-offset-4 transition-opacity hover:opacity-70"
       aria-label="Send another message"
     >
       Send another message
     </button>
   </motion.div>
-);
-
-/** Checkmark icon for success state */
-const CheckIcon = () => (
-  <svg
-    width="32"
-    height="32"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#18181B"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M20 6L9 17l-5-5" />
-  </svg>
 );
 
 export { ContactSection };

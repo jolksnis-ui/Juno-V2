@@ -2,12 +2,17 @@
 
 import { useRef, ReactNode } from 'react';
 import { motion, useScroll, useTransform, MotionProps } from 'framer-motion';
+import type { UseScrollOptions } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { TRANSITION } from '@/lib/constants';
 
 interface ScrollRevealProps extends MotionProps {
   children: ReactNode;
   className?: string;
+  /**
+   * Offset settings for the scroll progress calculation.
+   */
+  offset?: UseScrollOptions['offset'];
   /**
    * Animation mode:
    * - 'fade': Simple opacity fade (default)
@@ -21,17 +26,21 @@ interface ScrollRevealProps extends MotionProps {
   duration?: number;
 }
 
+/**
+ * Animated wrapper that reveals content on scroll.
+ */
 export function ScrollReveal({
   children,
   className,
   mode = 'slide',
   duration,
+  offset,
   ...props
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start'],
+    offset: offset ?? ['start end', 'end start'],
   });
 
   // Opacity: fade in as it enters, fade out as it leaves
@@ -52,10 +61,16 @@ export function ScrollReveal({
     y: mode === 'parallax' ? yParallax : mode === 'slide' ? ySlide : 0,
   };
 
+  const transition = {
+    ...TRANSITION,
+    duration: duration ?? TRANSITION.duration,
+  };
+
   return (
     <motion.div
       ref={ref}
       style={style}
+      transition={transition}
       className={cn('will-change-[opacity,transform]', className)}
       {...props}
     >

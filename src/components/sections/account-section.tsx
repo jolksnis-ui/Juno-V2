@@ -8,7 +8,7 @@ import { DotPattern } from '@/components/ui/dot-pattern';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { GetStartedButton } from '@/components/ui/get-started-button';
-import { ANIMATION, TRANSITION, IMAGES, BUTTON_TEXT } from '@/lib/constants';
+import { ANIMATION, TRANSITION, IMAGES, BUTTON_TEXT, FONT } from '@/lib/constants';
 
 /** Tab types for the account switcher */
 type AccountTab = 'personal' | 'business';
@@ -103,7 +103,7 @@ const AccountSection = () => {
   const content = TAB_CONTENT[activeTab];
 
   return (
-    <section className="relative bg-[#FCFCFC] py-[96px]">
+    <section className="relative bg-juno-25 py-[96px]">
       <DotPattern />
 
       <div className="relative mx-auto max-w-[1440px] px-6">
@@ -158,7 +158,7 @@ const TabSwitcher = ({
   onTabChange: (tab: AccountTab) => void;
 }) => (
   <div
-    className="mx-auto mt-9 flex w-fit overflow-hidden rounded border border-[#D1D1D6] bg-white"
+    className="mx-auto mt-9 flex w-fit overflow-hidden rounded border border-juno-300 bg-white"
     role="tablist"
     aria-label="Account type"
   >
@@ -176,11 +176,12 @@ const TabSwitcher = ({
           }
         }}
         className={cn(
-          'w-[172px] px-4 py-3 font-[family-name:var(--font-geist-mono)] text-sm transition-colors duration-150',
+          'w-[172px] px-4 py-3 text-sm transition-colors duration-150',
+          FONT.mono,
           activeTab === tab.id
-            ? 'bg-[#F4F4F5] text-[#18181B]'
-            : 'bg-white text-[#70707B] hover:bg-[#FAFAFA]',
-          index === 0 && 'border-r border-[#D1D1D6]'
+            ? 'bg-juno-100 text-juno-900'
+            : 'bg-white text-juno-500 hover:bg-juno-50',
+          index === 0 && 'border-r border-juno-300'
         )}
       >
         {tab.label}
@@ -199,17 +200,17 @@ const LeftContent = ({ content }: { content: TabContent }) => (
     className="w-[340px] shrink-0 py-6"
   >
     {/* Client label */}
-    <span className="font-[family-name:var(--font-geist-mono)] text-sm text-[#A0A0AB]">
+    <span className={cn('text-sm text-juno-400', FONT.mono)}>
       {content.clientLabel}
     </span>
 
     {/* Title */}
-    <h3 className="mt-3 whitespace-pre-line font-[family-name:var(--font-fraunces)] text-[40px] leading-[1.2] text-[#18181B]">
+    <h3 className={cn('mt-3 whitespace-pre-line text-[40px] leading-[1.2] text-juno-900', FONT.serif)}>
       {content.title}
     </h3>
 
     {/* Description */}
-    <p className="mt-4 text-lg leading-normal text-[#3F3F46]">
+    <p className="mt-4 text-lg leading-normal text-juno-700">
       {content.description}
     </p>
 
@@ -228,7 +229,7 @@ const MockupContainer = ({
   activeTab: AccountTab;
   content: TabContent;
 }) => (
-  <div className="relative h-[620px] overflow-hidden rounded-md border border-[#D1D1D6] bg-[#F4F4F5]">
+  <div className="relative h-[620px] overflow-hidden rounded-md border border-juno-300 bg-juno-100">
     <DotPattern size={16} dotSize={0.5} opacity={0.12} />
 
     {/* Centered mockup */}
@@ -275,14 +276,14 @@ const FeatureCard = ({ feature }: { feature: Feature }) => (
   <div className="flex flex-col gap-3">
     {/* Label with dot indicator */}
     <div className="flex items-center gap-2">
-      <span className="size-[6px] rounded-full bg-[#18181B]" />
-      <span className="font-[family-name:var(--font-geist-mono)] text-sm text-[#18181B]">
+      <span className="size-[6px] rounded-full bg-juno-900" />
+      <span className={cn('text-sm text-juno-900', FONT.mono)}>
         {feature.label}
       </span>
     </div>
 
     {/* Description */}
-    <p className="text-base leading-relaxed text-[#3F3F46]">
+    <p className="text-base leading-relaxed text-juno-700">
       {feature.description}
     </p>
   </div>

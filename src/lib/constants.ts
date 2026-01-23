@@ -19,12 +19,26 @@ export const TRANSITION = {
 /** Auto-rotation interval for carousels (ms) */
 export const AUTO_ROTATE_INTERVAL = 5000;
 
+/** Container max width used across sections */
+export const CONTAINER_MAX_WIDTH = '1392px';
+
+/** Hero video URL - city skyline from Pexels */
+export const HERO_VIDEO_URL =
+  'https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4';
+
+/** Font family class names for consistent typography */
+export const FONT = {
+  serif: 'font-[family-name:var(--font-fraunces)]',
+  mono: 'font-[family-name:var(--font-geist-mono)]',
+} as const;
+
 /** Image paths */
 export const IMAGES = {
   mobileMockup: '/images/Mobile Mockup.png',
   laptopMockup: '/images/laptop-mockup.png',
   corporateBg: '/images/corporate-bg.jpg',
   avatarJohn: '/images/avatar-john.jpg',
+  valuesDotPattern: '/images/values-dot-pattern.png',
   // About page images
   aboutOffice: '/images/about/office-interior.jpg',
   aboutServicePreview: '/images/about/service-preview.jpg',

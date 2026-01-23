@@ -1,9 +1,9 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { TRANSITION } from '@/lib/constants';
+import { IMAGES, FONT } from '@/lib/constants';
+import { FadeInView } from '@/components/ui/fade-in-view';
 
 interface ValueCardProps {
   /** Card number (e.g., "01") */
@@ -33,47 +33,45 @@ export const ValueCard = ({
   className,
 }: ValueCardProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ ...TRANSITION, delay }}
+    <FadeInView
+      delay={delay}
       className={cn(
-        'relative flex h-80 flex-col justify-between overflow-hidden rounded-md border border-[#3F3F46] bg-white/[0.02] p-8',
+        'relative flex h-80 flex-col justify-between overflow-hidden rounded-md border border-juno-700 bg-white/[0.02] p-8',
         className
       )}
     >
-      {/* Dot pattern background */}
+      {/* Dot pattern background - 156px tile size, 32% opacity per Figma */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-30"
+        className="pointer-events-none absolute inset-0 opacity-[0.32]"
         style={{
-          backgroundImage: `radial-gradient(circle, #A0A0AB 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
+          backgroundImage: `url('${IMAGES.valuesDotPattern}')`,
+          backgroundSize: '156px 156px',
+          backgroundPosition: 'top left',
         }}
         aria-hidden="true"
       />
 
       {/* Header: Number + Icon */}
       <div className="relative flex items-center justify-between">
-        <span className="w-10 font-[family-name:var(--font-geist-mono)] text-lg text-[#A0A0AB]">
+        <span className={cn('w-10 text-lg text-juno-400', FONT.mono)}>
           {number}
         </span>
-        <div className="flex size-6 items-center justify-center text-[#D1D1D6]">
+        <div className="flex size-6 items-center justify-center text-juno-300">
           {icon}
         </div>
       </div>
 
       {/* Content: Title + Description */}
       <div className="relative flex flex-col gap-3">
-        <h3 className="font-[family-name:var(--font-fraunces)] text-2xl leading-8 text-white">
+        <h3 className={cn('text-2xl leading-8 text-white', FONT.serif)}>
           {title}
         </h3>
-        <p className="text-sm leading-normal text-[#A0A0AB]">{description}</p>
+        <p className="text-sm leading-normal text-juno-400">{description}</p>
 
         {/* Bottom border gradient */}
-        <div className="mt-8 h-px w-full bg-gradient-to-r from-[#3F3F46] via-[#51525C] to-[#3F3F46]" />
+        <div className="mt-8 h-px w-full bg-gradient-to-r from-juno-700 via-juno-600 to-juno-700" />
       </div>
-    </motion.div>
+    </FadeInView>
   );
 };
 ValueCard.displayName = 'ValueCard';

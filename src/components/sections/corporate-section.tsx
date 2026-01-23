@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { GetStartedButton } from '@/components/ui/get-started-button';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, AUTO_ROTATE_INTERVAL } from '@/lib/constants';
+import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, AUTO_ROTATE_INTERVAL, FONT, CONTAINER_MAX_WIDTH } from '@/lib/constants';
 
 /** Corporate feature data structure */
 interface CorporateFeature {
@@ -91,7 +91,7 @@ const CorporateSection = () => {
   }, [isPaused, nextFeature]);
 
   return (
-    <section className="relative bg-[#FAFAFA] px-6 py-24">
+    <section className="relative bg-juno-50 px-6 py-24">
       {/* Subtle background texture */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.02]">
         <Image
@@ -102,7 +102,7 @@ const CorporateSection = () => {
         />
       </div>
 
-      <div className="relative mx-auto max-w-[1392px]">
+      <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
         <ScrollReveal mode="slide">
           <SectionHeader
             badge={BADGE_TEXT.corporate}
@@ -118,7 +118,7 @@ const CorporateSection = () => {
         </ScrollReveal>
 
         {/* Two-column card */}
-        <div className="mt-16 flex h-[600px] overflow-hidden rounded-md border border-[#D1D1D6] bg-white/56">
+        <div className="mt-16 flex h-[600px] overflow-hidden rounded-md border border-juno-300 bg-white/56">
           {/* Left: Image with transfer card overlay */}
           <ImageSide />
 
@@ -137,7 +137,7 @@ CorporateSection.displayName = 'CorporateSection';
 
 /** Left side with background image and transfer card overlay */
 const ImageSide = () => (
-  <div className="relative flex-1 overflow-hidden border-r border-[#D1D1D6]">
+  <div className="relative flex-1 overflow-hidden border-r border-juno-300">
     {/* Background image */}
     <Image
       src={IMAGES.corporateBg}
@@ -158,7 +158,7 @@ const ImageSide = () => (
 
 /** Transfer card component showing a sample transaction */
 const TransferCard = () => (
-  <div className="w-[400px] overflow-hidden rounded-lg border border-[#D1D1D6] bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)]">
+  <div className="w-[400px] overflow-hidden rounded-lg border border-juno-300 bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)]">
     {/* Header with avatar */}
     <div className="flex items-end gap-3 px-6 pt-6">
       <div className="relative size-[52px] overflow-hidden rounded-md border border-white">
@@ -170,10 +170,10 @@ const TransferCard = () => (
         />
       </div>
       <div className="flex flex-col">
-        <span className="text-[11px] font-medium uppercase leading-5 text-[#51525C]">
+        <span className="text-[11px] font-medium uppercase leading-5 text-juno-600">
           transfer to
         </span>
-        <span className="text-sm font-semibold leading-5 text-[#18181B]">
+        <span className="text-sm font-semibold leading-5 text-juno-900">
           John Sanderson
         </span>
       </div>
@@ -181,24 +181,24 @@ const TransferCard = () => (
 
     {/* Amount section */}
     <div className="mt-4 flex flex-col gap-5">
-      <div className="h-px bg-[#E4E4E7]" />
+      <div className="h-px bg-juno-200" />
       <div className="flex flex-col gap-2 px-6">
-        <span className="text-[11px] font-medium uppercase leading-[14px] text-[#51525C]">
+        <span className="text-[11px] font-medium uppercase leading-[14px] text-juno-600">
           Total:
         </span>
-        <span className="text-[32px] font-semibold leading-normal text-[#18181B]">
+        <span className="text-[32px] font-semibold leading-normal text-juno-900">
           $1,840
         </span>
-        <span className="text-[11px] font-medium uppercase leading-[14px] text-[#51525C]">
+        <span className="text-[11px] font-medium uppercase leading-[14px] text-juno-600">
           Invoice payout for development services.
         </span>
       </div>
-      <div className="h-px bg-[#E4E4E7]" />
+      <div className="h-px bg-juno-200" />
     </div>
 
     {/* Action button */}
-    <div className="flex h-[52px] items-center justify-center bg-[#F4F4F5] p-1">
-      <span className="text-[13px] font-semibold uppercase text-[#26272B]">
+    <div className="flex h-[52px] items-center justify-center bg-juno-100 p-1">
+      <span className="text-[13px] font-semibold uppercase text-juno-800">
         Transfer instantly
       </span>
     </div>
@@ -246,7 +246,7 @@ const FeatureItem = ({
 }) => (
   <button
     onClick={onClick}
-    className="group w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18181B]/50"
+    className="group w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-juno-900/50"
     aria-pressed={isActive}
   >
     {/* Container with height animation for smooth expand/collapse */}
@@ -260,12 +260,13 @@ const FeatureItem = ({
         animate={{
           fontSize: isActive ? '32px' : '20px',
           lineHeight: isActive ? '1.25' : '1.4',
-          color: isActive ? '#18181B' : '#3F3F46',
+          color: isActive ? 'var(--juno-gray-900)' : 'var(--juno-gray-700)',
         }}
         transition={{ ...TRANSITION, duration: ANIMATION.fast }}
         className={cn(
-          'font-[family-name:var(--font-fraunces)] transition-colors duration-200',
-          !isActive && 'group-hover:text-[#18181B]'
+          'transition-colors duration-200',
+          FONT.serif,
+          !isActive && 'group-hover:text-juno-900'
         )}
       >
         {feature.title}
@@ -279,7 +280,7 @@ const FeatureItem = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-            className="mt-3 text-base leading-normal text-[#3F3F46]"
+            className="mt-3 text-base leading-normal text-juno-700"
           >
             {feature.description}
           </motion.p>
@@ -292,8 +293,8 @@ const FeatureItem = ({
       isActive={isActive}
       isPaused={isPaused}
       featureId={feature.id}
-      bgColor="bg-[#D1D1D6]"
-      fillColor="bg-[#18181B]"
+      bgColor="bg-juno-300"
+      fillColor="bg-juno-900"
     />
   </button>
 );

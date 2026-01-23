@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { FaqAccordion } from '@/components/ui/faq-accordion';
-import { TRANSITION } from '@/lib/constants';
+import { FadeInView } from '@/components/ui/fade-in-view';
+import { DotPattern } from '@/components/ui/dot-pattern';
+import { FONT, CONTAINER_MAX_WIDTH } from '@/lib/constants';
 
 /** Leadership team data */
 const LEADERS = [
@@ -77,18 +79,10 @@ const LeadershipSection = () => {
   };
 
   return (
-    <section className="relative bg-[#FAFAFA] px-6 py-24">
-      {/* Dot pattern background */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `radial-gradient(circle, #18181B 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
-        }}
-        aria-hidden="true"
-      />
+    <section className="relative bg-juno-50 px-6 py-24">
+      <DotPattern />
 
-      <div className="relative mx-auto max-w-[1392px]">
+      <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
         {/* Part 1: Leadership Team */}
         <div className="mb-24">
           {/* Header */}
@@ -122,7 +116,7 @@ const LeadershipSection = () => {
         </div>
 
         {/* Divider */}
-        <div className="mb-24 h-px w-full bg-[#D1D1D6]" />
+        <div className="mb-24 h-px w-full bg-juno-300" />
 
         {/* Part 2: FAQ */}
         <div>
@@ -179,49 +173,40 @@ const LeaderCard = ({
   const isLarge = size === 'large';
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ ...TRANSITION, delay }}
-      className={`flex flex-col overflow-hidden rounded-md border border-[#D1D1D6] ${
+    <FadeInView
+      delay={delay}
+      className={cn(
+        'flex flex-col overflow-hidden rounded-md border border-juno-300',
         isLarge ? 'w-[440px]' : 'w-[400px]'
-      }`}
+      )}
     >
       {/* Image */}
       <div
-        className={`relative w-full overflow-hidden border-b border-[#D1D1D6] bg-white ${
+        className={cn(
+          'relative w-full overflow-hidden border-b border-juno-300 bg-white',
           isLarge ? 'h-[400px]' : 'h-[342px]'
-        }`}
+        )}
       >
         <Image src={image} alt={name} fill className="object-cover" />
       </div>
 
       {/* Content */}
       <div className="relative flex flex-col items-center gap-4 bg-white px-8 pb-10 pt-8 text-center">
-        {/* Dot pattern background */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `radial-gradient(circle, #A0A0AB 1px, transparent 1px)`,
-            backgroundSize: '24px 24px',
-          }}
-          aria-hidden="true"
-        />
+        <DotPattern color="var(--juno-gray-400)" opacity={0.04} />
 
         <div className="relative flex flex-col gap-3">
-          <span className="font-[family-name:var(--font-geist-mono)] text-sm text-[#A0A0AB]">
+          <span className={cn('text-sm text-juno-400', FONT.mono)}>
             {role}
           </span>
-          <h3 className="font-[family-name:var(--font-fraunces)] text-2xl leading-8 text-[#18181B]">
+          <h3 className={cn('text-2xl leading-8 text-juno-900', FONT.serif)}>
             {name}
           </h3>
-          <p className="text-sm leading-normal text-[#3F3F46]">{description}</p>
+          <p className="text-sm leading-normal text-juno-700">{description}</p>
         </div>
 
         {/* Decorative dot */}
-        <div className="relative mt-2 size-1.5 rounded-sm bg-[#3F3F46]" />
+        <div className="relative mt-2 size-1.5 rounded-sm bg-juno-700" />
       </div>
-    </motion.div>
+    </FadeInView>
   );
 };

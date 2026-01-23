@@ -11,12 +11,12 @@ import { DotPattern } from '@/components/ui/dot-pattern';
 /** Navigation items for expanded menu */
 const NAV_ITEMS = {
   left: [
-    { label: 'Everyday banking', href: '#' },
-    { label: 'Corporate account', href: '#' },
+    { label: 'Everyday banking', href: '/everyday-banking' },
+    { label: 'Corporate account', href: '/corporate-account' },
   ],
   right: [
     { label: 'About us', href: '/about' },
-    { label: 'Contact us', href: '#' },
+    { label: 'Contact us', href: '/contact-us' },
   ],
 };
 

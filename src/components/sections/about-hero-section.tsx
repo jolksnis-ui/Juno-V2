@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { TRANSITION } from '@/lib/constants';
+import { cn } from '@/lib/utils';
+import { TRANSITION, FONT } from '@/lib/constants';
 
 /** Decorative line heights for bottom border effect */
 const LINE_HEIGHTS = [20, 16, 12, 8, 4];
@@ -12,7 +13,7 @@ const LINE_HEIGHTS = [20, 16, 12, 8, 4];
  */
 const AboutHeroSection = () => {
   return (
-    <div className="flex flex-col gap-0.5 bg-[#18181B]">
+    <div className="flex flex-col gap-0.5 bg-juno-900">
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -26,7 +27,7 @@ const AboutHeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...TRANSITION, delay: 0.1 }}
-            className="font-[family-name:var(--font-fraunces)] text-[64px] leading-[72px] text-white"
+            className={cn('text-[64px] leading-[72px] text-white', FONT.serif)}
           >
             About Juno
           </motion.h1>
@@ -36,7 +37,7 @@ const AboutHeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...TRANSITION, delay: 0.3 }}
-            className="flex flex-col gap-4 text-base leading-normal text-[#E4E4E7]"
+            className="flex flex-col gap-4 text-base leading-normal text-juno-200"
           >
             <p>
               Juno is a payments platform providing secure and compliant
@@ -58,7 +59,7 @@ const AboutHeroSection = () => {
         {LINE_HEIGHTS.map((height) => (
           <div
             key={height}
-            className="w-full bg-[#27272A]"
+            className="w-full bg-juno-800"
             style={{ height: `${height}px` }}
             aria-hidden="true"
           />

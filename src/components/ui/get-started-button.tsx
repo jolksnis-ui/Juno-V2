@@ -45,8 +45,8 @@ const GetStartedButton = forwardRef<HTMLButtonElement, GetStartedButtonProps>(
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-50',
           isLight
-            ? 'bg-white text-[#18181B] focus-visible:ring-[#18181B]'
-            : 'bg-[#18181B] text-white focus-visible:ring-white',
+            ? 'bg-white text-juno-900 focus-visible:ring-juno-900'
+            : 'bg-juno-900 text-white focus-visible:ring-white',
           className
         )}
         {...props}
@@ -58,14 +58,14 @@ const GetStartedButton = forwardRef<HTMLButtonElement, GetStartedButtonProps>(
           <i
             className={cn(
               'absolute bottom-1 right-1 top-1 z-10 grid w-1/4 place-items-center rounded-sm transition-all duration-500 group-hover:w-[calc(100%-0.5rem)] group-active:scale-95',
-              isLight ? 'bg-[#18181B]/10' : 'bg-white/15'
+              isLight ? 'bg-juno-900/10' : 'bg-white/15'
             )}
             aria-hidden="true"
           >
             <ChevronRight
               size={16}
               strokeWidth={2}
-              className={isLight ? 'text-[#18181B]' : 'text-white'}
+              className={isLight ? 'text-juno-900' : 'text-white'}
             />
           </i>
         )}
