@@ -1,56 +1,70 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { DotPattern } from '@/components/ui/dot-pattern';
-import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { TRANSITION } from '@/lib/constants';
 
+/** Decorative line heights for bottom border effect */
+const LINE_HEIGHTS = [20, 16, 12, 8, 4];
+
 /**
- * About page hero section (50% viewport height)
- * Dark theme with centered title and dot pattern background
+ * About page hero section with centered title and decorative bottom lines
+ * Dark theme matching Figma design
  */
 const AboutHeroSection = () => {
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
-      className="relative flex min-h-[50vh] w-full flex-col items-center justify-center bg-[#18181B] px-6 py-24"
-    >
-      {/* Dot pattern background */}
-      <DotPattern className="absolute inset-0" />
-
-      {/* Content */}
-      <div className="relative z-10 flex max-w-[600px] flex-col items-center gap-6 text-center">
-        {/* Badge */}
-        <ScrollReveal mode="slide">
-          <span className="w-fit rounded border border-[#3F3F46] bg-white/[0.08] px-1.5 py-1 font-[family-name:var(--font-geist-mono)] text-sm text-[#D1D1D6]">
+    <div className="flex flex-col gap-0.5 bg-[#18181B]">
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        className="flex min-h-[558px] w-full flex-col items-center justify-center px-6 py-24"
+      >
+        {/* Content */}
+        <div className="flex max-w-[600px] flex-col items-center gap-6 text-center">
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...TRANSITION, delay: 0.1 }}
+            className="font-[family-name:var(--font-fraunces)] text-[64px] leading-[72px] text-white"
+          >
             About Juno
-          </span>
-        </ScrollReveal>
+          </motion.h1>
 
-        {/* Title */}
-        <ScrollReveal mode="slide">
-          <h1 className="font-[family-name:var(--font-fraunces)] text-5xl leading-[1.13] text-white md:text-[60px]">
-            Building trust in
-            <br />
-            regulated finance
-          </h1>
-        </ScrollReveal>
+          {/* Body text - two paragraphs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...TRANSITION, delay: 0.3 }}
+            className="flex flex-col gap-4 text-base leading-normal text-[#E4E4E7]"
+          >
+            <p>
+              Juno is a payments platform providing secure and compliant
+              financial services for individual and corporate clients. We
+              operate in regulated environments and focus on reliability,
+              transparency, and operational excellence across all payment flows.
+            </p>
+            <p>
+              Our platform supports both everyday financial needs and complex
+              business operations, enabling clients to manage, move, and protect
+              funds with confidence.
+            </p>
+          </motion.div>
+        </div>
+      </motion.section>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...TRANSITION, delay: 0.3 }}
-          className="text-lg leading-normal text-[#E4E4E7]"
-        >
-          We provide secure, compliant, and reliable payment services for
-          individual and corporate clients operating in regulated financial
-          environments.
-        </motion.p>
+      {/* Decorative lines - full width */}
+      <div className="flex flex-col gap-0.5">
+        {LINE_HEIGHTS.map((height) => (
+          <div
+            key={height}
+            className="w-full bg-[#27272A]"
+            style={{ height: `${height}px` }}
+            aria-hidden="true"
+          />
+        ))}
       </div>
-    </motion.section>
+    </div>
   );
 };
 AboutHeroSection.displayName = 'AboutHeroSection';
