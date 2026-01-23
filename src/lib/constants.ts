@@ -28,6 +28,7 @@ export const IMAGES = {
   // About page images
   aboutOffice: '/images/about/office-interior.jpg',
   aboutServicePreview: '/images/about/service-preview.jpg',
+  visionMockup: '/images/about/vision-mockup.png',
   leaderCeo: '/images/about/leader-ceo.jpg',
   leaderCompliance: '/images/about/leader-compliance.jpg',
   leaderCoo: '/images/about/leader-coo.jpg',
