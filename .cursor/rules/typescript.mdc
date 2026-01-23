@@ -1,0 +1,113 @@
+---
+description: "TypeScript strict mode patterns"
+globs: ["**/*.ts", "**/*.tsx"]
+---
+
+# TypeScript Patterns
+
+## Strict Mode Rules
+
+- Never use `any` - use `unknown` if type is uncertain
+- Define interfaces for all props: `ComponentNameProps`
+- Use `type` for unions/intersections, `interface` for objects
+- Infer types from Zod: `z.infer<typeof schema>`
+
+## Props Interfaces
+
+```typescript
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual style variant */
+  variant?: 'primary' | 'secondary';
+  /** Size of the button */
+  size?: 'sm' | 'md' | 'lg';
+}
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Whether to show elevated shadow */
+  elevated?: boolean;
+}
+```
+
+## Import Order
+
+1. React/Next.js imports
+2. Third-party libraries
+3. Internal aliases (`@/`)
+4. Relative imports
+5. Types (with `type` keyword)
+
+```typescript
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { Button } from './button';
+import type { ButtonProps } from '@/types';
+```
+
+## Zod Schema Types
+
+```typescript
+import { z } from 'zod';
+
+export const contactFormSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+});
+
+export type ContactFormValues = z.infer<typeof contactFormSchema>;
+```
+
+## Generic Components
+
+```typescript
+interface ListProps<T> {
+  items: T[];
+  renderItem: (item: T) => React.ReactNode;
+  keyExtractor: (item: T) => string;
+}
+
+const List = <T,>({ items, renderItem, keyExtractor }: ListProps<T>) => {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={keyExtractor(item)}>{renderItem(item)}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+## Event Handler Types
+
+```typescript
+const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  e.preventDefault();
+};
+
+const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  setValue(e.target.value);
+};
+
+const handleKeyDown: React.KeyboardEventHandler<HTMLElement> = (e) => {
+  if (e.key === 'Enter') handleSubmit();
+};
+```
+
+## Utility Types
+
+```typescript
+// Pick specific props
+type ButtonVariant = Pick<ButtonProps, 'variant' | 'size'>;
+
+// Omit props
+type InputWithoutClassName = Omit<InputProps, 'className'>;
+
+// Make props optional
+type PartialCardProps = Partial<CardProps>;
+
+// Make props required
+type RequiredFormProps = Required<FormProps>;
+```

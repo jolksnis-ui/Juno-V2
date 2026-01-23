@@ -1,0 +1,206 @@
+---
+description: "Tailwind CSS 4 styling conventions"
+alwaysApply: false
+---
+# Tailwind CSS Conventions
+
+## The `cn()` Utility
+
+Always use `cn()` from `@/lib/utils` for conditional and merged classes:
+
+```typescript
+import { cn } from '@/lib/utils';
+
+const Button = ({ className, variant, disabled }: ButtonProps) => {
+  return (
+    <button
+      className={cn(
+        // Base styles
+        'rounded-lg px-6 py-3 font-medium transition-colors',
+        // Variant styles
+        variant === 'primary' && 'bg-primary text-white hover:bg-primary/90',
+        variant === 'secondary' && 'border border-gray-200 hover:bg-gray-50',
+        // State styles
+        disabled && 'cursor-not-allowed opacity-50',
+        // Allow className override
+        className
+      )}
+    />
+  );
+};
+```
+
+## No Inline Styles
+
+Never use inline `style` attributes. Use Tailwind classes only:
+
+```typescript
+// Bad
+<div style={{ marginTop: '20px', padding: '16px' }}>
+
+// Good
+<div className="mt-5 p-4">
+```
+
+## No Custom CSS
+
+Avoid creating CSS files. Use Tailwind utilities instead:
+
+```typescript
+// Bad - custom.css
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// Good - Tailwind classes
+<div className="rounded-xl shadow-md">
+```
+
+## Responsive Design
+
+Use mobile-first approach with Tailwind breakpoints:
+
+```typescript
+<div className="
+  px-4 py-6           // Mobile (default)
+  md:px-8 md:py-10    // Tablet (768px+)
+  lg:px-16 lg:py-12   // Desktop (1024px+)
+  xl:px-24            // Large desktop (1280px+)
+">
+```
+
+## Common Patterns
+
+### Flexbox Layouts
+
+```typescript
+// Centered content
+<div className="flex items-center justify-center">
+
+// Space between
+<div className="flex items-center justify-between">
+
+// Column layout
+<div className="flex flex-col gap-4">
+
+// Responsive direction
+<div className="flex flex-col md:flex-row gap-6">
+```
+
+### Grid Layouts
+
+```typescript
+// Responsive grid
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+// Auto-fit grid
+<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
+```
+
+### Container
+
+```typescript
+// Centered container with max-width
+<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+```
+
+### Transitions
+
+```typescript
+// Smooth hover transitions
+<button className="transition-colors hover:bg-primary/90">
+
+// Multiple properties
+<div className="transition-all duration-300 hover:scale-105 hover:shadow-lg">
+```
+
+## Premium Design Tokens
+
+Use consistent spacing and sizing for the Juno premium feel:
+
+### Spacing Scale
+
+- `gap-2` / `p-2` - Tight spacing (8px)
+- `gap-4` / `p-4` - Default spacing (16px)
+- `gap-6` / `p-6` - Comfortable spacing (24px)
+- `gap-8` / `p-8` - Section spacing (32px)
+- `gap-12` / `p-12` - Large section spacing (48px)
+- `gap-16` / `p-16` - Hero spacing (64px)
+
+### Typography
+
+```typescript
+// Headings
+<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+<h2 className="text-3xl md:text-4xl font-semibold">
+<h3 className="text-xl md:text-2xl font-medium">
+
+// Body
+<p className="text-base text-gray-600 leading-relaxed">
+
+// Small text
+<span className="text-sm text-gray-500">
+```
+
+### Colors (Premium Palette)
+
+```typescript
+// Primary actions
+className="bg-primary text-white"
+
+// Secondary/Muted
+className="text-gray-600"
+className="bg-gray-50"
+
+// Borders
+className="border border-gray-200"
+
+// Hover states
+className="hover:bg-gray-50"
+className="hover:text-primary"
+```
+
+### Shadows
+
+```typescript
+// Subtle elevation
+className="shadow-sm"
+
+// Card elevation
+className="shadow-md"
+
+// Modal/Dropdown
+className="shadow-lg"
+
+// On hover
+className="hover:shadow-lg transition-shadow"
+```
+
+### Border Radius
+
+```typescript
+// Buttons
+className="rounded-lg"    // 8px
+
+// Cards
+className="rounded-xl"    // 12px
+
+// Modals
+className="rounded-2xl"   // 16px
+
+// Pills/Tags
+className="rounded-full"
+```
+
+## Class Order
+
+Prettier with `prettier-plugin-tailwindcss` auto-sorts classes. Follow this logical order when writing:
+
+1. Layout (`flex`, `grid`, `block`)
+2. Positioning (`relative`, `absolute`, `fixed`)
+3. Box model (`w-`, `h-`, `p-`, `m-`)
+4. Typography (`text-`, `font-`, `leading-`)
+5. Visual (`bg-`, `border-`, `shadow-`)
+6. Interactive (`hover:`, `focus:`, `active:`)
+7. Responsive (`sm:`, `md:`, `lg:`)

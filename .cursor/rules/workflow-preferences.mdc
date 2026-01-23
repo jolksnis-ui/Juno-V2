@@ -1,0 +1,65 @@
+---
+description: "Juno Bank project context and workflow preferences"
+alwaysApply: true
+---
+
+# Juno Bank - Project Context
+
+You are working on **Juno Bank**, a premium banking website for high net worth individuals (HNWI) and corporate clients.
+
+## Tech Stack
+
+| Technology      | Version | Purpose                        |
+| --------------- | ------- | ------------------------------ |
+| Next.js         | 16.x    | App Router framework           |
+| React           | 19.x    | UI library                     |
+| TypeScript      | 5.x     | Type safety (strict mode)      |
+| Tailwind CSS    | 4.x     | Utility-first styling          |
+| Radix UI        | latest  | Headless accessible components |
+| Framer Motion   | 12.x    | Animations                     |
+| React Hook Form | 7.x     | Form state management          |
+| Zod             | 4.x     | Schema validation              |
+
+## Project Structure
+
+```
+src/
+├── app/              # Next.js App Router
+│   ├── api/          # API routes
+│   ├── layout.tsx    # Root layout
+│   └── page.tsx      # Homepage
+├── components/
+│   ├── ui/           # Reusable UI primitives
+│   └── sections/     # Page sections
+├── lib/
+│   ├── utils.ts      # cn() helper
+│   └── validations.ts # Zod schemas
+└── types/            # TypeScript definitions
+```
+
+## Path Aliases
+
+Use `@/*` for imports from `src/`:
+
+```typescript
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+```
+
+## Brand Guidelines
+
+### Tone
+- Sophisticated and professional
+- Trustworthy and confident
+- Exclusive but approachable
+
+### Visual Style
+- Minimalist and elegant
+- Premium feel with generous whitespace
+- Subtle animations for polish
+
+### Design Principles
+1. **Clarity** - Information hierarchy is immediately clear
+2. **Elegance** - Every element serves a purpose
+3. **Trust** - Visual cues that reinforce security
+4. **Premium** - Details that signal quality and exclusivity
