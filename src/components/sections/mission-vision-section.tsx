@@ -56,13 +56,15 @@ const MissionVisionSection = () => {
           {/* Vision mockup (center) */}
           <FadeInView
             delay={0.2}
-            className="relative h-[441px] overflow-hidden rounded-md border border-juno-300"
+            className="flex h-[441px] items-end justify-center overflow-hidden rounded-md border border-juno-300 bg-juno-100 px-6 pb-6 pt-8"
           >
             <Image
-              src={IMAGES.visionMockup}
-              alt="Juno platform interface preview"
-              fill
-              className="object-cover opacity-[0.02]"
+              src={IMAGES.missionVisionMock}
+              alt="Mission and vision interface mockup"
+              width={640}
+              height={640}
+              className="h-full w-auto object-contain"
+              priority
             />
           </FadeInView>
 

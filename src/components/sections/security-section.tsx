@@ -14,6 +14,7 @@ interface SecurityFeature {
   label: string;
   title: string;
   description: string;
+  image: string;
 }
 
 /** Security feature data for each section */
@@ -24,6 +25,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     title: 'Earn interest on your Bitcoin, paid every day',
     description:
       'Multi-layer security, real-time monitoring, and account-level controls safeguard user funds and access at all times.',
+    image: IMAGES.stepperAccountProtection,
   },
   {
     id: 2,
@@ -31,6 +33,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     title: 'Streamlined verification for faster onboarding',
     description:
       'Automated identity verification, regulatory reporting, and built-in compliance workflows keep your business audit-ready.',
+    image: IMAGES.stepperComplianceKyc,
   },
   {
     id: 3,
@@ -38,6 +41,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     title: 'Move money globally with confidence',
     description:
       'Enterprise-grade encryption and fraud detection enable millions of transactions without compromising security.',
+    image: IMAGES.stepperSecurePayments,
   },
   {
     id: 4,
@@ -45,6 +49,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     title: 'Enterprise-grade reliability you can count on',
     description:
       'Bank-grade hosting, redundant systems, and 99.99% uptime ensure your operations never skip a beat.',
+    image: IMAGES.stepperTrustedInfrastructure,
   },
 ];
 
@@ -56,10 +61,13 @@ const ROW_HEIGHT = {
 
 /**
  * Security section with hover-based animations
- * Full-width rows with phone mockup absolutely centered on top
+ * Full-width rows with dynamic stepper images that change on hover
  */
 const SecuritySection = () => {
   const [activeFeature, setActiveFeature] = useState(1);
+
+  const currentFeature =
+    SECURITY_FEATURES.find((f) => f.id === activeFeature) || SECURITY_FEATURES[0];
 
   return (
     <section className="relative bg-juno-900 py-[100px]">
@@ -98,17 +106,27 @@ const SecuritySection = () => {
           ))}
         </div>
 
-        {/* Phone mockup - responsive sizing between lg (1024px) and xl (1280px) */}
+        {/* Stepper image - responsive sizing, animates on feature change */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="lg:w-[260px] xl:w-[320px]">
-            <Image
-              src={IMAGES.mobileMockup}
-              alt="Juno app dashboard showing account balance"
-              width={320}
-              height={640}
-              className="pointer-events-none h-auto w-full"
-              priority
-            />
+          <div className="w-[clamp(220px,calc(220px+(100vw-1024px)*0.39),320px)]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentFeature.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <Image
+                  src={currentFeature.image}
+                  alt={currentFeature.label}
+                  width={320}
+                  height={640}
+                  className="pointer-events-none h-auto w-full"
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

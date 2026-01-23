@@ -38,40 +38,40 @@ const FEATURES: Feature[] = [
     id: 1,
     title: 'Instant payments',
     description: 'Send funds to other Juno Money users instantly.',
-    image: IMAGES.mobileMockup,
+    image: IMAGES.featureInstantPayments,
   },
   {
     id: 2,
     title: 'Exchange in 30+ currencies',
     description:
       'Convert between currencies with competitive rates and real-time pricing.',
-    image: IMAGES.laptopMockup,
+    image: IMAGES.featureExchange,
   },
   {
     id: 3,
     title: 'Fast account creation',
     description:
       'Get started in minutes with our streamlined onboarding process.',
-    image: IMAGES.mobileMockup,
+    image: IMAGES.featureFastAccount,
   },
   {
     id: 4,
     title: 'Dedicated account manager',
     description:
       'Personal support from experts who understand your financial needs.',
-    image: IMAGES.laptopMockup,
+    image: IMAGES.featureDedicatedManager,
   },
   {
     id: 5,
     title: 'Withdraw',
     description: 'Access your funds anytime with flexible withdrawal options.',
-    image: IMAGES.mobileMockup,
+    image: IMAGES.featureWithdraw,
   },
   {
     id: 6,
     title: 'Accept payments',
     description: 'Receive payments from anywhere in the world seamlessly.',
-    image: IMAGES.laptopMockup,
+    image: IMAGES.featureAcceptPayments,
   },
 ];
 
@@ -122,7 +122,7 @@ const FeaturesSection = () => {
         {/* Content Box */}
         <div className="mt-16 flex h-[600px] overflow-hidden rounded-md border border-juno-700 bg-white/[0.04]">
           {/* Left: Feature List */}
-          <div className="flex w-[440px] shrink-0 flex-col justify-center p-10">
+          <div className="flex w-1/2 flex-col justify-center p-10">
             <FeatureList
               features={FEATURES}
               activeId={activeFeature}
@@ -132,7 +132,7 @@ const FeaturesSection = () => {
           </div>
 
           {/* Right: Image Area */}
-          <div className="relative flex-1 border-l border-juno-700">
+          <div className="relative w-1/2 border-l border-juno-700">
             <FeatureImage feature={currentFeature} />
           </div>
         </div>
@@ -267,10 +267,10 @@ const ProgressBar = ({
 /** Right side image area with blur backdrop and centered content */
 const FeatureImage = ({ feature }: { feature: Feature }) => (
   <>
-    {/* Blurred background */}
+    {/* Static blurred background */}
     <div className="absolute inset-0 overflow-hidden">
       <Image
-        src={feature.image}
+        src={IMAGES.featuresSectionBg}
         alt=""
         fill
         className="object-cover opacity-30 blur-sm"

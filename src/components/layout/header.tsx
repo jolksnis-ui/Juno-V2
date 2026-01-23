@@ -60,12 +60,18 @@ export function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="relative z-50"
+          className="relative z-50 flex items-center"
           onClick={() => setExpanded(false)}
+          aria-label="Juno home"
         >
-          <span className="font-[family-name:var(--font-fraunces)] text-2xl font-semibold text-[#18181B]">
-            Juno
-          </span>
+          <Image
+            src="/images/Header/logo.svg"
+            alt="Juno logo"
+            width={112}
+            height={28}
+            priority
+            className="h-7 w-auto"
+          />
         </Link>
 
         {/* Centered Menu Button */}
@@ -163,7 +169,7 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className="whitespace-nowrap border-b border-[#d1d1d6] py-6 font-[family-name:var(--font-fraunces)] text-5xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B]"
+    className="whitespace-nowrap border-b border-[#d1d1d6] py-6 font-[family-name:var(--font-prata)] text-5xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B]"
   >
     {children}
   </Link>

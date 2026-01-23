@@ -47,6 +47,16 @@ const ContactSection = () => {
     }
   };
 
+  /** Blocks number input in name field - only allows letters and common name characters */
+  const handleNameKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const isNumber = /^\d$/.test(e.key);
+    const isModifier = e.metaKey || e.ctrlKey;
+
+    if (isNumber && !isModifier) {
+      e.preventDefault();
+    }
+  };
+
   /** Handle form submission with API call */
   const handleFormSubmit = async (data: ContactFormValues) => {
     setSubmitState('submitting');
@@ -140,6 +150,7 @@ const ContactSection = () => {
                       <Input
                         placeholder="Name*"
                         {...register('name')}
+                        onKeyDown={handleNameKeyDown}
                         error={errors.name?.message}
                         disabled={submitState === 'submitting'}
                         aria-label="Your full name (required)"

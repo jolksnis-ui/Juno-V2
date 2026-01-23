@@ -14,6 +14,7 @@ interface CorporateFeature {
   id: number;
   title: string;
   description: string;
+  image: string;
 }
 
 /** Row heights for active/inactive states */
@@ -28,36 +29,42 @@ const CORPORATE_FEATURES: CorporateFeature[] = [
     id: 1,
     title: 'Instant payments',
     description: 'Send funds to other Juno Money users instantly.',
+    image: IMAGES.corpInstantPayments,
   },
   {
     id: 2,
     title: 'Exchange in 30+ currencies',
     description:
       'Convert between major currencies with competitive rates and full transparency.',
+    image: IMAGES.corpExchange,
   },
   {
     id: 3,
     title: 'Fast account creation',
     description:
       'Get started in minutes with streamlined onboarding and verification.',
+    image: IMAGES.corpFastAccount,
   },
   {
     id: 4,
     title: 'Dedicated account manager',
     description:
       'Personal support from experts who understand your business needs.',
+    image: IMAGES.corpDedicatedManager,
   },
   {
     id: 5,
     title: 'Withdraw',
     description:
       'Access your funds anytime with flexible withdrawal options worldwide.',
+    image: IMAGES.corpWithdraw,
   },
   {
     id: 6,
     title: 'Accept payments',
     description:
       'Receive payments from clients globally with minimal fees and fast settlement.',
+    image: IMAGES.corpAcceptPayments,
   },
 ];
 
@@ -90,6 +97,9 @@ const CorporateSection = () => {
     return () => clearInterval(interval);
   }, [isPaused, nextFeature]);
 
+  const currentFeature =
+    CORPORATE_FEATURES.find((f) => f.id === activeFeature) || CORPORATE_FEATURES[0];
+
   return (
     <section className="relative bg-juno-50 px-6 py-24">
       {/* Subtle background texture */}
@@ -119,8 +129,8 @@ const CorporateSection = () => {
 
         {/* Two-column card */}
         <div className="mt-16 flex h-[600px] overflow-hidden rounded-md border border-juno-300 bg-white/56">
-          {/* Left: Image with transfer card overlay */}
-          <ImageSide />
+          {/* Left: Animated feature image */}
+          <FeatureImage feature={currentFeature} />
 
           {/* Right: Feature list */}
           <FeaturesSide
@@ -135,72 +145,41 @@ const CorporateSection = () => {
 };
 CorporateSection.displayName = 'CorporateSection';
 
-/** Left side with background image and transfer card overlay */
-const ImageSide = () => (
-  <div className="relative flex-1 overflow-hidden border-r border-juno-300">
-    {/* Background image */}
-    <Image
-      src={IMAGES.corporateBg}
-      alt="Modern corporate office"
-      fill
-      className="object-cover"
-    />
-
-    {/* Frosted glass overlay */}
-    <div className="absolute inset-0 bg-white/12 backdrop-blur-[6px]" />
-
-    {/* Transfer card - centered */}
-    <div className="absolute inset-0 flex items-center justify-center">
-      <TransferCard />
-    </div>
-  </div>
-);
-
-/** Transfer card component showing a sample transaction */
-const TransferCard = () => (
-  <div className="w-[400px] overflow-hidden rounded-lg border border-juno-300 bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)]">
-    {/* Header with avatar */}
-    <div className="flex items-end gap-3 px-6 pt-6">
-      <div className="relative size-[52px] overflow-hidden rounded-md border border-white">
-        <Image
-          src={IMAGES.avatarJohn}
-          alt="John Sanderson"
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="flex flex-col">
-        <span className="text-[11px] font-medium uppercase leading-5 text-juno-600">
-          transfer to
-        </span>
-        <span className="text-sm font-semibold leading-5 text-juno-900">
-          John Sanderson
-        </span>
-      </div>
+/** Left side with animated feature image */
+const FeatureImage = ({ feature }: { feature: CorporateFeature }) => (
+  <div className="relative w-1/2 overflow-hidden border-r border-juno-300">
+    {/* Blurred background image */}
+    <div className="absolute inset-0 overflow-hidden">
+      <Image
+        src={IMAGES.corpBg}
+        alt=""
+        fill
+        className="object-cover opacity-30 blur-sm"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-white/40 backdrop-blur-md" />
     </div>
 
-    {/* Amount section */}
-    <div className="mt-4 flex flex-col gap-5">
-      <div className="h-px bg-juno-200" />
-      <div className="flex flex-col gap-2 px-6">
-        <span className="text-[11px] font-medium uppercase leading-[14px] text-juno-600">
-          Total:
-        </span>
-        <span className="text-[32px] font-semibold leading-normal text-juno-900">
-          $1,840
-        </span>
-        <span className="text-[11px] font-medium uppercase leading-[14px] text-juno-600">
-          Invoice payout for development services.
-        </span>
-      </div>
-      <div className="h-px bg-juno-200" />
-    </div>
-
-    {/* Action button */}
-    <div className="flex h-[52px] items-center justify-center bg-juno-100 p-1">
-      <span className="text-[13px] font-semibold uppercase text-juno-800">
-        Transfer instantly
-      </span>
+    {/* Centered animated feature icon */}
+    <div className="absolute inset-0 flex items-center justify-center py-6">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={feature.id}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ ...TRANSITION, duration: ANIMATION.medium }}
+          className="relative h-full aspect-[1/2]"
+        >
+          <Image
+            src={feature.image}
+            alt={feature.title}
+            fill
+            className="object-contain drop-shadow-2xl"
+            priority
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   </div>
 );
@@ -216,7 +195,7 @@ const FeaturesSide = ({
   onFeatureClick: (id: number) => void;
 }) => (
   <div
-    className="flex w-[440px] shrink-0 flex-col justify-center p-10"
+    className="flex w-1/2 flex-col justify-center p-10"
     role="tablist"
     aria-label="Corporate features"
   >
