@@ -38,14 +38,12 @@ export const Preloader = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
-              {/* Juno Logo SVG - White version */}
+              {/* Juno Logo SVG - White version, responsive sizing */}
               <svg
-                width="140"
-                height="40"
                 viewBox="0 0 50 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="text-white"
+                className="h-[28px] w-[100px] text-white md:h-[40px] md:w-[140px]"
               >
                 <motion.path
                   initial={{ opacity: 0, y: 10 }}
@@ -79,7 +77,7 @@ export const Preloader = () => {
             </motion.div>
 
             {/* Elegant loading line - animating left to right */}
-            <div className="mt-8 h-[1px] w-[140px] overflow-hidden bg-white/10">
+            <div className="mt-6 h-[1px] w-[100px] overflow-hidden bg-white/10 md:mt-8 md:w-[140px]">
               <motion.div
                 className="h-full w-full bg-white/40"
                 initial={{ scaleX: 0 }}
