@@ -61,11 +61,11 @@ const ValuesSection = () => {
           {/* First row: Header + 2 cards */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             {/* Header card (left) */}
-            <FadeInView className="flex h-80 flex-col justify-center gap-6 rounded-md p-6">
+            <FadeInView className="flex h-80 flex-col items-center justify-center gap-6 rounded-md p-6 text-center">
               <span className={cn('w-fit rounded border border-juno-700 bg-white/[0.08] px-1.5 py-1 text-sm text-juno-300', FONT.mono)}>
                 How we operate
               </span>
-              <h2 className={cn('text-[56px] leading-[1.14] text-white', FONT.serif)}>
+              <h2 className={cn('text-5xl leading-[1.14] text-white lg:text-[64px]', FONT.serif)}>
                 Our values
               </h2>
               <p className="text-base leading-normal text-juno-200">

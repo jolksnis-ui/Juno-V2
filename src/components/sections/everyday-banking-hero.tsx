@@ -18,6 +18,8 @@ interface PageHeroProps {
   image: string;
   /** Alt text for the hero image */
   imageAlt: string;
+  /** Whether to center the headline and description */
+  centered?: boolean;
 }
 
 /**
@@ -30,6 +32,7 @@ const PageHero = ({
   description,
   image,
   imageAlt,
+  centered = false,
 }: PageHeroProps) => {
   const isDark = variant === 'dark';
 
@@ -47,7 +50,14 @@ const PageHero = ({
         style={{ maxWidth: CONTAINER_MAX_WIDTH }}
       >
         {/* Header: Headline + Description */}
-        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
+        <div 
+          className={cn(
+            "flex flex-col gap-8",
+            centered 
+              ? "items-center text-center" 
+              : "justify-between md:flex-row md:items-center"
+          )}
+        >
           <FadeInView>
             <h1
               className={cn(
@@ -102,6 +112,7 @@ PageHero.displayName = 'PageHero';
 const EverydayBankingHero = () => (
   <PageHero
     variant="light"
+    centered
     title={
       <>
         Tailored, individual

@@ -205,7 +205,7 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className="whitespace-nowrap border-b border-[#d1d1d6] py-4 font-[family-name:var(--font-prata)] text-3xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B] md:py-6 md:text-5xl"
+    className="border-b border-[#d1d1d6] py-4 font-[family-name:var(--font-prata)] text-3xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B] md:py-6 md:text-5xl"
   >
     {children}
   </Link>

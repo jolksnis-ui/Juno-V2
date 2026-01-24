@@ -27,7 +27,7 @@ const AboutHeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...TRANSITION, delay: 0.1 }}
-            className={cn('text-[64px] leading-[72px] text-white', FONT.serif)}
+            className={cn('text-5xl leading-tight md:text-6xl lg:text-[64px] lg:leading-[72px] text-white', FONT.serif)}
           >
             About Juno
           </motion.h1>
