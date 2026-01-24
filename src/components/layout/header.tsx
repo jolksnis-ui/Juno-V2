@@ -61,7 +61,7 @@ export function Header() {
         delayChildren: 0.2,
       }
     }
-  };
+  } as const;
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -73,7 +73,7 @@ export function Header() {
         ease: [0.25, 0.1, 0.25, 1.0]
       }
     }
-  };
+  } as const;
 
   return (
     <motion.header
