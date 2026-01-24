@@ -115,7 +115,7 @@ const ContactSection = () => {
       {/* Form container */}
       <div className="relative -mt-40 px-6 pb-24">
         <FadeInView
-          className="mx-auto rounded-md border border-juno-200 bg-juno-25 px-[72px] py-20"
+          className="mx-auto rounded-md border border-juno-200 bg-juno-25 px-4 py-20 md:px-8 lg:px-[72px]"
           style={{ maxWidth: CONTAINER_MAX_WIDTH }}
         >
           <AnimatePresence mode="wait">
@@ -130,12 +130,12 @@ const ContactSection = () => {
               >
                 {/* Header */}
                 <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-center">
-                  <h2 className={cn('w-[600px] text-4xl leading-none text-juno-900 md:text-5xl lg:text-[60px]', FONT.serif)}>
+                  <h2 className={cn('w-full max-w-[600px] text-4xl leading-none text-juno-900 md:text-5xl lg:text-[60px]', FONT.serif)}>
                     Become a
                     <br />
                     Juno Money client.
                   </h2>
-                  <p className="w-[320px] text-base leading-normal text-juno-700">
+                  <p className="w-full max-w-[320px] text-base leading-normal text-juno-700">
                     Unlock a world of financial possibilities with us, open an
                     account today and start experiencing unparalleled banking
                     solutions tailored just for you.

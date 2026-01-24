@@ -58,14 +58,12 @@ const HeroSection = () => {
 
       {/* Bottom: Description + CTA */}
       <footer className="flex flex-col items-center gap-6 bg-juno-25 px-4 pb-12 pt-8 text-center md:flex-row md:items-center md:justify-between md:gap-8 md:px-6 md:pb-16 md:pt-12 md:text-left">
-        <ScrollReveal mode="slide" className="w-[696px] max-w-full">
-          <p className="text-base leading-normal text-juno-800 md:text-lg">
-            We provide a highly personalised service to corporate entities,
-            institutions and high net worth individuals, including secure,
-            competitive and discrete execution of cross-border payments and
-            settlement services.
-          </p>
-        </ScrollReveal>
+        <p className="w-[696px] max-w-full text-base leading-normal text-juno-800 md:text-lg">
+          We provide a highly personalised service to corporate entities,
+          institutions and high net worth individuals, including secure,
+          competitive and discrete execution of cross-border payments and
+          settlement services.
+        </p>
 
         <motion.div
           initial={{ opacity: 0, x: 10 }}

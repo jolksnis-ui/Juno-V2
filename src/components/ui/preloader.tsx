@@ -20,7 +20,7 @@ export const Preloader = () => {
       {isLoading && (
         <motion.div
           key="preloader"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#18181B]"
+          className="fixed inset-0 z-[100] flex min-h-dvh items-center justify-center bg-[#18181B]"
           initial={{ y: 0 }}
           exit={{
             y: '-100%',
@@ -43,7 +43,7 @@ export const Preloader = () => {
                 viewBox="0 0 50 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-[28px] w-[100px] text-white md:h-[40px] md:w-[140px]"
+                className="h-[40px] w-[140px] text-white sm:h-[24px] sm:w-[85px] md:h-[40px] md:w-[140px]"
               >
                 <motion.path
                   initial={{ opacity: 0, y: 10 }}
@@ -77,7 +77,7 @@ export const Preloader = () => {
             </motion.div>
 
             {/* Elegant loading line - animating left to right */}
-            <div className="mt-6 h-[1px] w-[100px] overflow-hidden bg-white/10 md:mt-8 md:w-[140px]">
+            <div className="mt-8 h-[1px] w-[140px] overflow-hidden bg-white/10 sm:mt-5 sm:w-[85px] md:mt-8 md:w-[140px]">
               <motion.div
                 className="h-full w-full bg-white/40"
                 initial={{ scaleX: 0 }}

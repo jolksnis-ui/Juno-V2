@@ -34,21 +34,21 @@ const FOOTER_LINKS: Record<string, FooterLink[]> = {
  */
 export const Footer = () => {
   return (
-    <footer className="relative flex min-h-screen w-full flex-col justify-between bg-juno-900 px-10 pb-8 pt-[148px] text-white">
+    <footer className="relative flex min-h-screen w-full flex-col justify-between bg-juno-900 px-4 pb-8 pt-[148px] text-white md:px-10">
       {/* Background Texture */}
       <DotPattern color="#ffffff" opacity={0.02} />
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col gap-12">
         {/* Top Section: Headline + Description */}
-        <div className="flex items-center justify-between">
-          <FadeInView className={cn('w-[440px] text-[60px] font-light leading-[68px] text-white', FONT.serif)}>
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row md:items-center md:gap-0">
+          <FadeInView className={cn('w-full max-w-[440px] text-[60px] font-light leading-[68px] text-white', FONT.serif)}>
             Time is money.
             <br />
             Save both.
           </FadeInView>
 
-          <FadeInView delay={0.1} className="w-[320px] text-base leading-normal text-juno-300">
+          <FadeInView delay={0.1} className="w-full max-w-[320px] text-base leading-normal text-juno-300">
             Unlock a world of financial possibilities with us, open an account
             today and start experiencing unparalleled banking solutions tailored
             just for you.
@@ -66,7 +66,7 @@ export const Footer = () => {
               <FadeInView
                 key={category}
                 delay={0.2 + idx * 0.1}
-                className="flex w-[200px] flex-col gap-8"
+                className="flex w-full flex-col gap-8 md:w-[200px]"
               >
                 <span className={cn('text-sm text-juno-400', FONT.mono)}>
                   {category}

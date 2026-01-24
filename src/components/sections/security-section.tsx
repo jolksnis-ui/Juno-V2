@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
@@ -75,6 +74,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
  */
 const SecuritySection = () => {
   const [activeFeature, setActiveFeature] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
 
   /** Advances to the next feature (wraps around) */
   const nextFeature = useCallback(() => {
@@ -88,11 +88,26 @@ const SecuritySection = () => {
     );
   }, []);
 
-  // Auto-rotation effect
+  /** Handles manual navigation - pauses auto-rotation briefly */
+  const handleManualNav = useCallback(
+    (direction: 'prev' | 'next') => {
+      setIsPaused(true);
+      if (direction === 'prev') {
+        prevFeature();
+      } else {
+        nextFeature();
+      }
+      setTimeout(() => setIsPaused(false), AUTO_ROTATE_INTERVAL);
+    },
+    [prevFeature, nextFeature]
+  );
+
+  // Auto-rotation effect (pauses on manual navigation)
   useEffect(() => {
+    if (isPaused) return;
     const interval = setInterval(nextFeature, AUTO_ROTATE_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextFeature]);
+  }, [isPaused, nextFeature]);
 
   const currentFeature =
     SECURITY_FEATURES.find((f) => f.id === activeFeature) || SECURITY_FEATURES[0];
@@ -176,8 +191,8 @@ const SecuritySection = () => {
       <MobileCarousel
         currentFeature={currentFeature}
         activeId={activeFeature}
-        onPrev={prevFeature}
-        onNext={nextFeature}
+        onPrev={() => handleManualNav('prev')}
+        onNext={() => handleManualNav('next')}
       />
     </section>
   );
@@ -221,12 +236,28 @@ const MobileCarousel = ({
 
     {/* Navigation: arrows and dots */}
     <div className="flex items-center justify-between px-4 py-6">
+      {/* Diamond-shaped prev button */}
       <button
         onClick={onPrev}
-        className="flex size-[51px] items-center justify-center rounded-sm bg-juno-700/50 text-white transition-colors hover:bg-juno-700"
+        className="flex size-[51px] rotate-45 items-center justify-center bg-juno-700/50 text-white transition-colors hover:bg-juno-700"
         aria-label="Previous feature"
       >
-        <ChevronLeft size={24} />
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="-rotate-45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
 
       {/* Dot indicators */}
@@ -243,12 +274,28 @@ const MobileCarousel = ({
         ))}
       </div>
 
+      {/* Diamond-shaped next button */}
       <button
         onClick={onNext}
-        className="flex size-[51px] items-center justify-center rounded-sm bg-juno-700/50 text-white transition-colors hover:bg-juno-700"
+        className="flex size-[51px] rotate-45 items-center justify-center bg-juno-700/50 text-white transition-colors hover:bg-juno-700"
         aria-label="Next feature"
       >
-        <ChevronRight size={24} />
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="-rotate-45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9 18L15 12L9 6"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
     </div>
 
@@ -261,7 +308,7 @@ const MobileCarousel = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          className="w-[300px]"
+          className="w-[300px] max-w-full"
         >
           <Image
             src={currentFeature.mobileImage}

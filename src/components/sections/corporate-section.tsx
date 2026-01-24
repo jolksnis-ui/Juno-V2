@@ -96,7 +96,7 @@ const CorporateSection = () => {
     CORPORATE_FEATURES.find((f) => f.id === activeFeature) || CORPORATE_FEATURES[0];
 
   return (
-    <section className="relative bg-juno-50 px-6 py-24">
+    <section className="relative bg-juno-50 px-4 py-24 md:px-6">
       {/* Subtle background texture */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.02]">
         <Image

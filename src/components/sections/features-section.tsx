@@ -104,7 +104,7 @@ const FeaturesSection = () => {
     FEATURES.find((f) => f.id === activeFeature) || FEATURES[0];
 
   return (
-    <section className="relative bg-juno-900 px-6 py-24">
+    <section className="relative bg-juno-900 px-4 py-24 md:px-6">
       <DotPattern color="#ffffff" />
 
       <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>

@@ -89,7 +89,7 @@ export function Header() {
       )}
     >
       {/* Header Bar */}
-      <div className="relative flex items-center justify-between px-7 py-[18px]">
+      <div className="relative flex items-center justify-between px-4 py-4 md:px-7 md:py-[18px]">
         {/* Logo */}
         <Link
           href="/"
@@ -121,11 +121,11 @@ export function Header() {
         </motion.button>
 
         {/* Auth Buttons */}
-        <div className="relative z-50 flex items-center gap-1">
-          <button className="flex h-9 items-center justify-center rounded border border-[#d1d1d6] px-4 font-[family-name:var(--font-geist-mono)] text-sm text-[#18181B] transition-colors hover:bg-black/5">
+        <div className="relative z-50 flex items-center gap-2">
+          <button className="hidden h-9 items-center justify-center rounded border border-[#d1d1d6] px-3 font-[family-name:var(--font-geist-mono)] text-xs text-[#18181B] transition-colors hover:bg-black/5 sm:flex md:px-4 md:text-sm">
             Log in
           </button>
-          <button className="flex h-9 items-center justify-center rounded bg-[#18181B] px-4 font-[family-name:var(--font-geist-mono)] text-sm text-white transition-colors hover:bg-[#18181B]/90">
+          <button className="flex h-9 items-center justify-center rounded bg-[#18181B] px-3 font-[family-name:var(--font-geist-mono)] text-xs text-white transition-colors hover:bg-[#18181B]/90 md:px-4 md:text-sm">
             Open account
           </button>
         </div>
@@ -141,7 +141,7 @@ export function Header() {
             exit="hidden"
             className="overflow-hidden border-t border-[#d1d1d6]"
           >
-            <div className="flex gap-16 px-7 pb-12 pt-12">
+            <div className="flex flex-col gap-8 px-4 py-8 md:px-7 md:py-12 lg:flex-row lg:gap-16">
               {/* Navigation Section */}
               <motion.div variants={itemVariants} className="flex flex-1 flex-col gap-6">
                 {/* Navigation Badge */}
@@ -150,7 +150,7 @@ export function Header() {
                 </span>
 
                 {/* Two-column Navigation */}
-                <div className="flex gap-16">
+                <div className="flex flex-col gap-6 md:flex-row md:gap-16">
                   {/* Left Column */}
                   <div className="flex flex-1 flex-col gap-6">
                     {NAV_ITEMS.left.map((item) => (
@@ -205,7 +205,7 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className="whitespace-nowrap border-b border-[#d1d1d6] py-6 font-[family-name:var(--font-prata)] text-5xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B]"
+    className="whitespace-nowrap border-b border-[#d1d1d6] py-4 font-[family-name:var(--font-prata)] text-3xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B] md:py-6 md:text-5xl"
   >
     {children}
   </Link>
