@@ -44,11 +44,12 @@ const HeroSection = () => {
       <div className="relative min-h-[200px] flex-1 overflow-hidden md:min-h-[320px]">
         <ScrollReveal mode="fade" className="absolute inset-0 size-full">
           <video
-            className="size-full object-cover"
+            className="pointer-events-none size-full object-cover"
             autoPlay
             muted
             loop
             playsInline
+            disablePictureInPicture
             aria-hidden="true"
           >
             <source src={HERO_VIDEO_URL} type="video/mp4" />
