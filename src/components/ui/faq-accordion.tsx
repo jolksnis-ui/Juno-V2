@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { FONT } from '@/lib/constants';
+import { FONT, ANIMATION_MICRO, TRANSITION, MAX_WIDTHS } from '@/lib/constants';
 
 interface FaqAccordionProps {
   /** Question number (e.g., "Q1") */
@@ -63,10 +63,10 @@ export const FaqAccordion = ({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1.0] }}
+            transition={{ duration: ANIMATION_MICRO.medium, ease: TRANSITION.ease }}
           >
             <div className="border-t border-juno-300 px-6 pb-6 pt-6">
-              <p className="max-w-[800px] text-base leading-normal text-juno-700">
+              <p style={{ maxWidth: MAX_WIDTHS.faqAnswer }} className="text-base leading-normal text-juno-700">
                 {answer}
               </p>
             </div>
@@ -100,7 +100,7 @@ const PlusMinusIcon = ({ isOpen }: { isOpen: boolean }) => (
       y2="19"
       initial={false}
       animate={{ opacity: isOpen ? 0 : 1, rotate: isOpen ? 90 : 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: ANIMATION_MICRO.fast }}
     />
   </svg>
 );

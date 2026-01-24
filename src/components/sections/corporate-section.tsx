@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { GetStartedButton } from '@/components/ui/get-started-button';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, AUTO_ROTATE_INTERVAL, FONT, CONTAINER_MAX_WIDTH } from '@/lib/constants';
+import { ProgressBar } from '@/components/ui/progress-bar';
+import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, AUTO_ROTATE_INTERVAL, FONT, CONTAINER_MAX_WIDTH, ROW_HEIGHT, BUTTON_TEXT } from '@/lib/constants';
 
 /** Corporate feature data structure */
 interface CorporateFeature {
@@ -16,12 +17,6 @@ interface CorporateFeature {
   description: string;
   image: string;
 }
-
-/** Row heights for active/inactive states */
-const ROW_HEIGHT = {
-  active: 140,
-  inactive: 84,
-} as const;
 
 /** Feature data for corporate clients */
 const CORPORATE_FEATURES: CorporateFeature[] = [
@@ -123,7 +118,7 @@ const CorporateSection = () => {
                 for corporate clients.
               </>
             }
-            action={<GetStartedButton label="Open Account" variant="dark" />}
+            action={<GetStartedButton label={BUTTON_TEXT.openAccount} variant="dark" />}
           />
         </ScrollReveal>
 
@@ -276,36 +271,6 @@ const FeatureItem = ({
       fillColor="bg-juno-900"
     />
   </button>
-);
-
-/** Animated progress bar that fills over the auto-rotation interval */
-const ProgressBar = ({
-  isActive,
-  isPaused,
-  featureId,
-  bgColor,
-  fillColor,
-}: {
-  isActive: boolean;
-  isPaused: boolean;
-  featureId: number;
-  bgColor: string;
-  fillColor: string;
-}) => (
-  <div className={cn('h-px w-full', bgColor)}>
-    {isActive && (
-      <motion.div
-        key={`progress-${featureId}`}
-        className={cn('h-full', fillColor)}
-        initial={{ width: '0%' }}
-        animate={{ width: isPaused ? undefined : '100%' }}
-        transition={{
-          duration: AUTO_ROTATE_INTERVAL / 1000,
-          ease: 'linear',
-        }}
-      />
-    )}
-  </div>
 );
 
 export { CorporateSection };

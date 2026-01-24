@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { GetStartedButton } from '@/components/ui/get-started-button';
 import { FadeInView } from '@/components/ui/fade-in-view';
-import { FONT } from '@/lib/constants';
+import { FONT, BUTTON_TEXT } from '@/lib/constants';
 
 /** Footer link interface */
 interface FooterLink {
@@ -89,7 +89,7 @@ export const Footer = () => {
 
           {/* Open Account Button */}
           <FadeInView delay={0.4}>
-            <GetStartedButton label="Open Account" variant="light" />
+            <GetStartedButton label={BUTTON_TEXT.openAccount} variant="light" />
           </FadeInView>
         </div>
       </div>

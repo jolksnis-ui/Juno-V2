@@ -7,6 +7,7 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 import { AnimatedMenuIcon } from '@/components/ui/icons';
 import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
+import { TRANSITION } from '@/lib/constants';
 
 /** Navigation items for expanded menu */
 const NAV_ITEMS = {
@@ -28,11 +29,9 @@ export function Header() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    setHasScrolled(latest > 20);
 
     if (latest > previous && latest > 150) {
       setHidden(true);
@@ -41,6 +40,40 @@ export function Header() {
       setHidden(false);
     }
   });
+
+  const containerVariants = {
+    hidden: { 
+      opacity: 0, 
+      height: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1.0],
+        when: "afterChildren",
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      height: 'auto',
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.1, 0.25, 1.0],
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.1, 0.25, 1.0]
+      }
+    }
+  };
 
   return (
     <motion.header
@@ -99,15 +132,15 @@ export function Header() {
       <AnimatePresence>
         {expanded && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
             className="overflow-hidden border-t border-[#d1d1d6]"
           >
             <div className="flex gap-16 px-7 pb-12 pt-12">
               {/* Navigation Section */}
-              <div className="flex flex-1 flex-col gap-6">
+              <motion.div variants={itemVariants} className="flex flex-1 flex-col gap-6">
                 {/* Navigation Badge */}
                 <span className="w-fit rounded border border-[#E4E4E7] bg-[#F4F4F5] px-1.5 py-1 font-[family-name:var(--font-geist-mono)] text-sm text-[#3F3F46]">
                   Navigation
@@ -133,10 +166,10 @@ export function Header() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Phone Mockup */}
-              <div className="relative hidden size-[360px] shrink-0 overflow-hidden rounded-md border border-[#d1d1d6] bg-[#F4F4F5] lg:block">
+              <motion.div variants={itemVariants} className="relative hidden size-[360px] shrink-0 overflow-hidden rounded-md border border-[#d1d1d6] bg-[#F4F4F5] lg:block">
                 <DotPattern color="#000000" opacity={0.12} />
                 <div className="absolute left-1/2 top-8 h-[480px] w-[240px] -translate-x-1/2">
                   <Image
@@ -147,7 +180,7 @@ export function Header() {
                     priority
                   />
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}

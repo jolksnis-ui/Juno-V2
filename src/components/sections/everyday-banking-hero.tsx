@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { FadeInView } from '@/components/ui/fade-in-view';
-import { FONT, CONTAINER_MAX_WIDTH } from '@/lib/constants';
+import { FONT, CONTAINER_MAX_WIDTH, IMAGES } from '@/lib/constants';
 
 /** Props for the PageHero component */
 interface PageHeroProps {
@@ -110,7 +110,7 @@ const EverydayBankingHero = () => (
       </>
     }
     description="As a high net worth individual, if you're looking for a completely unique service that offers you secure and discrete execution of all of your financial affairs, then Juno Money has the solution."
-    image="/images/everyday-banking-hero.jpg"
+    image={IMAGES.everydayBankingHero}
     imageAlt="Person working on laptop with warm lighting"
   />
 );

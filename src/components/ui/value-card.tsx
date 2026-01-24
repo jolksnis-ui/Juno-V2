@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { IMAGES, FONT } from '@/lib/constants';
+import { IMAGES, FONT, DIMENSIONS } from '@/lib/constants';
 import { FadeInView } from '@/components/ui/fade-in-view';
 
 interface ValueCardProps {
@@ -45,7 +45,7 @@ export const ValueCard = ({
         className="pointer-events-none absolute inset-0 opacity-[0.32]"
         style={{
           backgroundImage: `url('${IMAGES.valuesDotPattern}')`,
-          backgroundSize: '156px 156px',
+          backgroundSize: `${DIMENSIONS.dotPatternSize} ${DIMENSIONS.dotPatternSize}`,
           backgroundPosition: 'top left',
         }}
         aria-hidden="true"

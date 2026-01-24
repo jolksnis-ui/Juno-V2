@@ -1,8 +1,17 @@
 'use client';
 
-import { ReactNode, useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import { ReactNode, useEffect, useRef, createContext, useContext } from 'react';
 import Lenis from 'lenis';
+
+interface SmoothScrollContextType {
+  scrollToTop: () => void;
+}
+
+const SmoothScrollContext = createContext<SmoothScrollContextType>({
+  scrollToTop: () => {},
+});
+
+export const useSmoothScroll = () => useContext(SmoothScrollContext);
 
 interface SmoothScrollProps {
   children: ReactNode;
@@ -10,9 +19,9 @@ interface SmoothScrollProps {
 
 /**
  * Provides smooth scrolling behavior for page content.
+ * Manages Lenis instance and exposes scroll control via context.
  */
 const SmoothScroll = ({ children }: SmoothScrollProps) => {
-  const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -44,23 +53,22 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!lenisRef.current) {
-      return;
-    }
+  /**
+   * Manually resets scroll position to top.
+   * Called by PageTransition component after exit animation completes.
+   */
+  const scrollToTop = () => {
+    if (!lenisRef.current) return;
+    
+    lenisRef.current.scrollTo(0, { immediate: true });
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  };
 
-    /**
-     * Ensures navigation always resets to the top.
-     */
-    const handleScrollTop = () => {
-      lenisRef.current?.scrollTo(0, { immediate: true });
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    };
-
-    handleScrollTop();
-  }, [pathname]);
-
-  return <>{children}</>;
+  return (
+    <SmoothScrollContext.Provider value={{ scrollToTop }}>
+      {children}
+    </SmoothScrollContext.Provider>
+  );
 };
 
 SmoothScroll.displayName = 'SmoothScroll';

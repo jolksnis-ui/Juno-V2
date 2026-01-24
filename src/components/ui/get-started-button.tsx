@@ -3,6 +3,7 @@
 import { forwardRef } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { BUTTON_TEXT, DIMENSIONS } from '@/lib/constants';
 
 interface GetStartedButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -24,7 +25,7 @@ const GetStartedButton = forwardRef<HTMLButtonElement, GetStartedButtonProps>(
   (
     {
       className,
-      label = 'Get Started',
+      label = BUTTON_TEXT.getStarted,
       variant = 'dark',
       isLoading = false,
       loadingLabel = 'Sending...',
@@ -40,8 +41,9 @@ const GetStartedButton = forwardRef<HTMLButtonElement, GetStartedButtonProps>(
       <button
         ref={ref}
         disabled={disabled || isLoading}
+        style={{ height: DIMENSIONS.buttonHeight }}
         className={cn(
-          'group relative inline-flex h-[52px] items-center justify-center overflow-hidden rounded-md px-8 text-sm font-medium transition-colors',
+          'group relative inline-flex items-center justify-center overflow-hidden rounded-md px-8 text-sm font-medium transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-50',
           isLight

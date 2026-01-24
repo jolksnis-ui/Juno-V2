@@ -14,9 +14,6 @@ import { TRANSITION, FONT, HERO_VIDEO_URL } from '@/lib/constants';
 const HeroSection = () => {
   return (
     <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
       className="flex min-h-[800px] min-h-dvh w-full flex-col bg-juno-25"
     >
       {/* Top: Headline + Singapore Time (aligned to bottom of headline) */}

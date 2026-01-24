@@ -16,11 +16,54 @@ export const TRANSITION = {
   duration: 1.2,
 } as const;
 
+/** Micro-interaction animation durations in seconds */
+export const ANIMATION_MICRO = {
+  fast: 0.2,
+  medium: 0.3,
+  slow: 0.4,
+} as const;
+
+/** Stagger animation delays in seconds */
+export const ANIMATION_DELAYS = {
+  small: 0.05,
+  medium: 0.1,
+  large: 0.2,
+  xlarge: 0.3,
+} as const;
+
 /** Auto-rotation interval for carousels (ms) */
 export const AUTO_ROTATE_INTERVAL = 5000;
 
+/** Update interval for Singapore time display (ms) */
+export const TIME_UPDATE_INTERVAL = 60000;
+
 /** Container max width used across sections */
 export const CONTAINER_MAX_WIDTH = '1392px';
+
+/** Max-width values for various components */
+export const MAX_WIDTHS = {
+  sectionHeader: '600px',
+  faqAnswer: '800px',
+  leadershipGrid: '1256px',
+  section: '1440px',
+  email: '600px',
+} as const;
+
+/** Component dimensions */
+export const DIMENSIONS = {
+  buttonHeight: '52px',
+  tabButtonWidth: '172px',
+  dotPatternSize: '156px',
+  singaporeTimeWidth: '275px',
+} as const;
+
+/** Row heights for expandable feature lists */
+export const ROW_HEIGHT = {
+  active: 140,
+  inactive: 84,
+  securityActive: 210,
+  securityInactive: 100,
+} as const;
 
 /** Hero video URL - city skyline from Pexels */
 export const HERO_VIDEO_URL =
@@ -39,6 +82,7 @@ export const IMAGES = {
   corporateBg: '/images/corporate-bg.jpg',
   avatarJohn: '/images/avatar-john.jpg',
   valuesDotPattern: '/images/values-dot-pattern.png',
+  everydayBankingHero: '/images/everyday-banking-hero.jpg',
   // About page images
   aboutOffice: '/images/about/office-interior.jpg',
   aboutServicePreview: '/images/about/service-preview.jpg',
@@ -82,4 +126,23 @@ export const BUTTON_TEXT = {
 export const BADGE_TEXT = {
   corporate: 'For corporate clients',
   individual: 'Tailored for individual clients',
+} as const;
+
+/** Validation limits for form fields */
+export const VALIDATION_LIMITS = {
+  nameMin: 2,
+  nameMax: 100,
+  emailMax: 254,
+  phoneMax: 30,
+  messageMin: 10,
+  messageMax: 5000,
+} as const;
+
+/** Email template color palette */
+export const EMAIL_COLORS = {
+  text: '#18181B',
+  textSecondary: '#70707B',
+  border: '#E4E4E7',
+  background: '#F4F4F5',
+  footer: '#A0A0AB',
 } as const;

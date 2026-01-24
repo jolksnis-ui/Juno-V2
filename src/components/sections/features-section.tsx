@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { SectionHeader } from '@/components/ui/section-header';
 import { GetStartedButton } from '@/components/ui/get-started-button';
+import { ProgressBar } from '@/components/ui/progress-bar';
 import {
   ANIMATION,
   TRANSITION,
@@ -16,6 +17,7 @@ import {
   BUTTON_TEXT,
   FONT,
   CONTAINER_MAX_WIDTH,
+  ROW_HEIGHT,
 } from '@/lib/constants';
 
 /** Feature data structure */
@@ -25,12 +27,6 @@ interface Feature {
   description: string;
   image: string;
 }
-
-/** Row heights for active/inactive states */
-const ROW_HEIGHT = {
-  active: 140,
-  inactive: 84,
-} as const;
 
 /** Features with corresponding images */
 const FEATURES: Feature[] = [
@@ -232,36 +228,6 @@ const FeatureItem = ({
       fillColor="bg-white"
     />
   </button>
-);
-
-/** Animated progress bar that fills over the auto-rotation interval */
-const ProgressBar = ({
-  isActive,
-  isPaused,
-  featureId,
-  bgColor,
-  fillColor,
-}: {
-  isActive: boolean;
-  isPaused: boolean;
-  featureId: number;
-  bgColor: string;
-  fillColor: string;
-}) => (
-  <div className={cn('h-px w-full', bgColor)}>
-    {isActive && (
-      <motion.div
-        key={`progress-${featureId}`}
-        className={cn('h-full', fillColor)}
-        initial={{ width: '0%' }}
-        animate={{ width: isPaused ? undefined : '100%' }}
-        transition={{
-          duration: AUTO_ROTATE_INTERVAL / 1000,
-          ease: 'linear',
-        }}
-      />
-    )}
-  </div>
 );
 
 /** Right side image area with blur backdrop and centered content */

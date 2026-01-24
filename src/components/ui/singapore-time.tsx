@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { TIME_UPDATE_INTERVAL, DIMENSIONS } from '@/lib/constants';
 
 interface SingaporeTimeProps {
   className?: string;
@@ -33,7 +34,7 @@ const SingaporeTime = ({ className }: SingaporeTimeProps) => {
     // Update every minute
     const interval = setInterval(() => {
       setTime(formatSingaporeTime());
-    }, 60000);
+    }, TIME_UPDATE_INTERVAL);
 
     return () => {
       clearTimeout(timeoutId);
@@ -46,10 +47,8 @@ const SingaporeTime = ({ className }: SingaporeTimeProps) => {
 
   return (
     <span
-      className={cn(
-        'w-[275px] text-right font-mono text-sm text-juno-500',
-        className
-      )}
+      style={{ width: DIMENSIONS.singaporeTimeWidth }}
+      className={cn('text-right font-mono text-sm text-juno-500', className)}
     >
       Singapore · SGT · {displayTime}
     </span>

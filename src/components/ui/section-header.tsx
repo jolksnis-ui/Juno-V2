@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { FONT } from '@/lib/constants';
+import { FONT, MAX_WIDTHS } from '@/lib/constants';
 
 interface SectionHeaderProps {
   /** Optional badge text displayed above title */
@@ -31,7 +31,7 @@ export const SectionHeader = ({
   action,
   align = 'left',
   theme = 'light',
-  titleMaxWidth = '600px',
+  titleMaxWidth = MAX_WIDTHS.sectionHeader,
   className,
 }: SectionHeaderProps) => {
   const isDark = theme === 'dark';
