@@ -1,3 +1,5 @@
+import { motion, MotionConfig } from 'framer-motion';
+
 interface IconProps {
   className?: string;
   size?: number;
@@ -10,59 +12,124 @@ interface AnimatedMenuIconProps extends IconProps {
 
 /**
  * Animated menu icon with smooth transition from burger to X
- * Uses CSS transitions for the morphing effect
+ * Uses Framer Motion for elegant sequential animation
  */
 export const AnimatedMenuIcon = ({
   isOpen,
   className,
   size = 24,
   color = "currentColor",
-}: AnimatedMenuIconProps) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke={color}
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-hidden="true"
-  >
-    {/* Top line - rotates to form X */}
-    <line
-      x1="4"
-      y1="8"
-      x2="20"
-      y2="8"
-      className="origin-center transition-transform duration-300 ease-out"
-      style={{
-        transform: isOpen ? 'translateY(4px) rotate(45deg)' : 'none',
-      }}
-    />
-    {/* Middle line - fades out */}
-    <line
-      x1="4"
-      y1="12"
-      x2="20"
-      y2="12"
-      className="transition-opacity duration-200 ease-out"
-      style={{ opacity: isOpen ? 0 : 1 }}
-    />
-    {/* Bottom line - rotates to form X */}
-    <line
-      x1="4"
-      y1="16"
-      x2="20"
-      y2="16"
-      className="origin-center transition-transform duration-300 ease-out"
-      style={{
-        transform: isOpen ? 'translateY(-4px) rotate(-45deg)' : 'none',
-      }}
-    />
-  </svg>
-);
+}: AnimatedMenuIconProps) => {
+  const transition = { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] };
+
+  const topVariants = {
+    closed: {
+      rotate: 0,
+      y: 0,
+      transition: {
+        rotate: { ...transition, duration: 0.2 },
+        y: { ...transition, delay: 0.2 }
+      }
+    },
+    open: {
+      rotate: 45,
+      y: 4,
+      transition: {
+        y: { ...transition, duration: 0.2 },
+        rotate: { ...transition, delay: 0.2 }
+      }
+    },
+    hoverClosed: {
+      y: -3,
+      transition: { ...transition, duration: 0.2 }
+    },
+    hoverExpanded: {
+      rotate: 45,
+      y: 4,
+      scale: 1.1,
+      transition: { ...transition, duration: 0.2 }
+    }
+  };
+
+  const centerVariants = {
+    closed: { opacity: 1 },
+    open: { opacity: 0 },
+    hoverClosed: { opacity: 1 },
+    hoverExpanded: { opacity: 0 }
+  };
+
+  const bottomVariants = {
+    closed: {
+      rotate: 0,
+      y: 0,
+      transition: {
+        rotate: { ...transition, duration: 0.2 },
+        y: { ...transition, delay: 0.2 }
+      }
+    },
+    open: {
+      rotate: -45,
+      y: -4,
+      transition: {
+        y: { ...transition, duration: 0.2 },
+        rotate: { ...transition, delay: 0.2 }
+      }
+    },
+    hoverClosed: {
+      y: 3,
+      transition: { ...transition, duration: 0.2 }
+    },
+    hoverExpanded: {
+      rotate: -45,
+      y: -4,
+      scale: 1.1,
+      transition: { ...transition, duration: 0.2 }
+    }
+  };
+
+  return (
+    <motion.svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      {/* Top line */}
+      <motion.line
+        x1="4"
+        y1="8"
+        x2="20"
+        y2="8"
+        variants={topVariants}
+        className="origin-center"
+      />
+      {/* Middle line */}
+      <motion.line
+        x1="4"
+        y1="12"
+        x2="20"
+        y2="12"
+        variants={centerVariants}
+        className="origin-center"
+      />
+      {/* Bottom line */}
+      <motion.line
+        x1="4"
+        y1="16"
+        x2="20"
+        y2="16"
+        variants={bottomVariants}
+        className="origin-center"
+      />
+    </motion.svg>
+  );
+};
 AnimatedMenuIcon.displayName = "AnimatedMenuIcon";
 
 /** Shield icon for Security value */

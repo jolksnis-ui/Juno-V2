@@ -108,14 +108,17 @@ export function Header() {
         </Link>
 
         {/* Centered Menu Button */}
-        <button
+        <motion.button
           onClick={() => setExpanded(!expanded)}
           aria-label={expanded ? 'Close menu' : 'Open menu'}
           aria-expanded={expanded}
           className="absolute left-1/2 z-50 flex size-10 -translate-x-1/2 items-center justify-center rounded hover:bg-black/5"
+          initial="closed"
+          animate={expanded ? "open" : "closed"}
+          whileHover={expanded ? "hoverExpanded" : "hoverClosed"}
         >
           <AnimatedMenuIcon isOpen={expanded} size={24} color="#18181B" />
-        </button>
+        </motion.button>
 
         {/* Auth Buttons */}
         <div className="relative z-50 flex items-center gap-1">
