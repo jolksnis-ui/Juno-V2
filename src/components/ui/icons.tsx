@@ -20,7 +20,7 @@ export const AnimatedMenuIcon = ({
   size = 24,
   color = "currentColor",
 }: AnimatedMenuIconProps) => {
-  const transition = { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] };
+  const transition = { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] as const };
 
   const topVariants = {
     closed: {
