@@ -66,6 +66,11 @@ export const FONT = {
   mono: 'font-[family-name:var(--font-geist-mono)]',
 } as const;
 
+/** Video paths */
+export const VIDEOS = {
+  animatedCurrencies: '/images/LogIn/Animated Currencies.mp4',
+} as const;
+
 /** Image paths */
 export const IMAGES = {
   mobileMockup: '/images/Mobile Mockup.png',

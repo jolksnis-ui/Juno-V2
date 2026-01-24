@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Prata } from 'next/font/google';
 import SmoothScroll from '@/components/ui/smooth-scroll';
 import { PageTransition } from '@/components/ui/page-transition';
-import { Header } from '@/components/layout/header';
+import { HeaderWrapper } from '@/components/layout/header-wrapper';
 import { Preloader } from '@/components/ui/preloader';
 import './globals.css';
 
@@ -57,7 +57,7 @@ export default function RootLayout({
       >
         <Preloader />
         <SmoothScroll>
-          <Header />
+          <HeaderWrapper />
           <PageTransition>
             {children}
           </PageTransition>

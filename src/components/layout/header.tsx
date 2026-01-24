@@ -120,12 +120,18 @@ export function Header() {
 
         {/* Auth Buttons */}
         <div className="relative z-50 flex items-center gap-2">
-          <button className="hidden h-9 items-center justify-center rounded border border-[#d1d1d6] px-3 font-[family-name:var(--font-geist-mono)] text-xs text-[#18181B] transition-colors hover:bg-black/5 sm:flex md:px-4 md:text-sm">
+          <Link
+            href="/login"
+            className="hidden h-9 items-center justify-center rounded border border-[#d1d1d6] px-3 font-[family-name:var(--font-geist-mono)] text-xs text-[#18181B] transition-colors hover:bg-black/5 sm:flex md:px-4 md:text-sm"
+          >
             Log in
-          </button>
-          <button className="flex h-9 items-center justify-center rounded bg-[#18181B] px-3 font-[family-name:var(--font-geist-mono)] text-xs text-white transition-colors hover:bg-[#18181B]/90 md:px-4 md:text-sm">
+          </Link>
+          <Link
+            href="/open-account"
+            className="flex h-9 items-center justify-center rounded bg-[#18181B] px-3 font-[family-name:var(--font-geist-mono)] text-xs text-white transition-colors hover:bg-[#18181B]/90 md:px-4 md:text-sm"
+          >
             Open account
-          </button>
+          </Link>
         </div>
       </div>
 
