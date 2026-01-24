@@ -112,6 +112,11 @@ export const IMAGES = {
   stepperComplianceKyc: '/images/Stepper/Compliance & KYC.png',
   stepperSecurePayments: '/images/Stepper/Secure Payments.png',
   stepperTrustedInfrastructure: '/images/Stepper/Trusted infrascrutcture.png',
+  // Stepper images - Mobile versions
+  stepperAccountProtectionMobile: '/images/Stepper/AccountProtection(M).png',
+  stepperComplianceMobile: '/images/Stepper/Compliance(M).png',
+  stepperSecurePaymentsMobile: '/images/Stepper/SecurePay(M).png',
+  stepperTrustedInfrastructureMobile: '/images/Stepper/TrustedInfra(M).png',
 } as const;
 
 /** Button text constants */

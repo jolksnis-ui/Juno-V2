@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { Plus, Minus, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { SectionHeader } from '@/components/ui/section-header';
@@ -96,17 +97,18 @@ const TABS: { id: AccountTab; label: string }[] = [
 
 /**
  * Account section with Personal/Business tab switcher
- * Shows different content and device mockups based on active tab
+ * Desktop: Side-by-side layout with text left, mockup and features right
+ * Mobile: Stacked layout with mockup, text, and accordion features
  */
 const AccountSection = () => {
   const [activeTab, setActiveTab] = useState<AccountTab>('personal');
   const content = TAB_CONTENT[activeTab];
 
   return (
-    <section className="relative bg-juno-25 py-[96px]">
+    <section className="relative bg-juno-25 py-16 md:py-[96px]">
       <DotPattern />
 
-      <div className="relative mx-auto max-w-[1440px] px-6">
+      <div className="relative mx-auto max-w-[1440px] px-4 md:px-6">
         <ScrollReveal mode="slide" className="flex flex-col items-center">
           <SectionHeader
             align="center"
@@ -122,12 +124,16 @@ const AccountSection = () => {
         </ScrollReveal>
 
         {/* Tab Switcher */}
-        <ScrollReveal mode="slide" className="mx-auto" offset={['start 0.95', 'end 0.2']}>
+        <ScrollReveal
+          mode="slide"
+          className="mx-auto"
+          offset={['start 0.95', 'end 0.2']}
+        >
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
         </ScrollReveal>
 
-        {/* Content Area */}
-        <div className="mt-16 flex gap-10">
+        {/* Desktop Content Area */}
+        <div className="mt-16 hidden gap-10 md:flex">
           {/* Left: Text content */}
           <AnimatePresence mode="wait">
             <LeftContent key={activeTab} content={content} />
@@ -142,6 +148,22 @@ const AccountSection = () => {
               <FeaturesGrid key={activeTab} features={content.features} />
             </AnimatePresence>
           </div>
+        </div>
+
+        {/* Mobile Content Area */}
+        <div className="mt-8 flex flex-col gap-8 md:hidden">
+          {/* Mockup first on mobile */}
+          <MockupContainer activeTab={activeTab} content={content} />
+
+          {/* Text content */}
+          <AnimatePresence mode="wait">
+            <MobileContent key={activeTab} content={content} />
+          </AnimatePresence>
+
+          {/* Features Accordion */}
+          <AnimatePresence mode="wait">
+            <FeaturesAccordion key={`accordion-${activeTab}`} features={content.features} />
+          </AnimatePresence>
         </div>
       </div>
     </section>
@@ -158,7 +180,7 @@ const TabSwitcher = ({
   onTabChange: (tab: AccountTab) => void;
 }) => (
   <div
-    className="mx-auto mt-9 flex w-fit overflow-hidden rounded border border-juno-300 bg-white"
+    className="mx-auto mt-9 flex w-full max-w-[344px] overflow-hidden rounded border border-juno-300 bg-white"
     role="tablist"
     aria-label="Account type"
   >
@@ -176,7 +198,7 @@ const TabSwitcher = ({
           }
         }}
         className={cn(
-          'w-[172px] px-4 py-3 text-sm transition-colors duration-150',
+          'flex-1 px-4 py-3 text-sm transition-colors duration-150',
           FONT.mono,
           activeTab === tab.id
             ? 'bg-juno-100 text-juno-900'
@@ -190,7 +212,7 @@ const TabSwitcher = ({
   </div>
 );
 
-/** Left side content with label, title, description and CTA */
+/** Left side content with label, title, description and CTA (Desktop) */
 const LeftContent = ({ content }: { content: TabContent }) => (
   <motion.div
     initial={{ opacity: 0, x: -20 }}
@@ -199,25 +221,59 @@ const LeftContent = ({ content }: { content: TabContent }) => (
     transition={{ ...TRANSITION, duration: ANIMATION.medium }}
     className="w-[340px] shrink-0 py-6"
   >
-    {/* Client label */}
     <span className={cn('text-sm text-juno-400', FONT.mono)}>
       {content.clientLabel}
     </span>
-
-    {/* Title */}
-    <h3 className={cn('mt-3 whitespace-pre-line text-[40px] leading-[1.2] text-juno-900', FONT.serif)}>
+    <h3
+      className={cn(
+        'mt-3 whitespace-pre-line text-[40px] leading-[1.2] text-juno-900',
+        FONT.serif
+      )}
+    >
       {content.title}
     </h3>
-
-    {/* Description */}
     <p className="mt-4 text-lg leading-normal text-juno-700">
       {content.description}
     </p>
-
-    {/* Learn more button */}
     <div className="mt-8">
       <GetStartedButton variant="dark" label={BUTTON_TEXT.learnMore} />
     </div>
+  </motion.div>
+);
+
+/** Mobile text content with label, title, description and link */
+const MobileContent = ({ content }: { content: TabContent }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ ...TRANSITION, duration: ANIMATION.medium }}
+    className="flex flex-col"
+  >
+    <span className={cn('text-sm text-juno-400', FONT.mono)}>
+      {content.clientLabel}
+    </span>
+    <h3
+      className={cn(
+        'mt-3 whitespace-pre-line text-3xl leading-tight text-juno-900',
+        FONT.serif
+      )}
+    >
+      {content.title}
+    </h3>
+    <p className="mt-4 text-base leading-normal text-juno-700">
+      {content.description}
+    </p>
+    {/* Learn more link with arrow */}
+    <a
+      href="#"
+      className="mt-6 inline-flex items-center gap-3 text-sm font-medium text-juno-900"
+    >
+      <span className="flex size-7 items-center justify-center rounded-full bg-juno-100">
+        <ArrowUpRight size={16} />
+      </span>
+      {BUTTON_TEXT.learnMore}
+    </a>
   </motion.div>
 );
 
@@ -229,7 +285,7 @@ const MockupContainer = ({
   activeTab: AccountTab;
   content: TabContent;
 }) => (
-  <div className="relative h-[620px] overflow-hidden rounded-md border border-juno-300 bg-juno-100">
+  <div className="relative h-[400px] overflow-hidden rounded-md border border-juno-300 bg-juno-100 md:h-[620px]">
     <DotPattern size={16} dotSize={0.5} opacity={0.12} />
 
     {/* Centered mockup */}
@@ -247,7 +303,7 @@ const MockupContainer = ({
             alt={content.mockupAlt}
             width={content.mockupWidth}
             height={content.mockupHeight}
-            className="pointer-events-none"
+            className="pointer-events-none max-h-[350px] w-auto md:max-h-none"
             priority
           />
         </motion.div>
@@ -256,7 +312,7 @@ const MockupContainer = ({
   </div>
 );
 
-/** Features grid below the mockup */
+/** Features grid below the mockup (Desktop) */
 const FeaturesGrid = ({ features }: { features: Feature[] }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -271,21 +327,95 @@ const FeaturesGrid = ({ features }: { features: Feature[] }) => (
   </motion.div>
 );
 
-/** Individual feature card */
+/** Individual feature card (Desktop) */
 const FeatureCard = ({ feature }: { feature: Feature }) => (
   <div className="flex flex-col gap-3">
-    {/* Label with dot indicator */}
     <div className="flex items-center gap-2">
       <span className="size-[6px] rounded-full bg-juno-900" />
       <span className={cn('text-sm text-juno-900', FONT.mono)}>
         {feature.label}
       </span>
     </div>
-
-    {/* Description */}
     <p className="text-base leading-relaxed text-juno-700">
       {feature.description}
     </p>
+  </div>
+);
+
+/** Features accordion for mobile with expandable items */
+const FeaturesAccordion = ({ features }: { features: Feature[] }) => {
+  const [expandedIndex, setExpandedIndex] = useState(0);
+
+  const handleToggle = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? -1 : index);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ ...TRANSITION, duration: ANIMATION.medium, delay: 0.1 }}
+      className="flex flex-col overflow-hidden rounded-md border border-juno-200"
+    >
+      {features.map((feature, index) => (
+        <AccordionItem
+          key={feature.label}
+          feature={feature}
+          isExpanded={expandedIndex === index}
+          onToggle={() => handleToggle(index)}
+          isLast={index === features.length - 1}
+        />
+      ))}
+    </motion.div>
+  );
+};
+
+/** Individual accordion item */
+const AccordionItem = ({
+  feature,
+  isExpanded,
+  onToggle,
+  isLast,
+}: {
+  feature: Feature;
+  isExpanded: boolean;
+  onToggle: () => void;
+  isLast: boolean;
+}) => (
+  <div className={cn('bg-white', !isLast && 'border-b border-juno-200')}>
+    <button
+      onClick={onToggle}
+      className="flex w-full items-center justify-between px-4 py-4"
+      aria-expanded={isExpanded}
+    >
+      <div className="flex items-center gap-3">
+        <span className="size-[6px] rounded-full bg-juno-900" />
+        <span className={cn('text-sm text-juno-900', FONT.mono)}>
+          {feature.label}
+        </span>
+      </div>
+      {isExpanded ? (
+        <Minus size={24} className="text-juno-500" />
+      ) : (
+        <Plus size={24} className="text-juno-500" />
+      )}
+    </button>
+    <AnimatePresence>
+      {isExpanded && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: 'auto', opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          className="overflow-hidden"
+        >
+          <p className="px-4 pb-4 text-base leading-relaxed text-juno-700">
+            {feature.description}
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
   </div>
 );
 

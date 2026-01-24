@@ -3,11 +3,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { ProgressBar } from '@/components/ui/progress-bar';
-import { ANIMATION, TRANSITION, IMAGES, FONT, ROW_HEIGHT, MAX_WIDTHS, AUTO_ROTATE_INTERVAL } from '@/lib/constants';
+import {
+  ANIMATION,
+  TRANSITION,
+  IMAGES,
+  FONT,
+  ROW_HEIGHT,
+  MAX_WIDTHS,
+  AUTO_ROTATE_INTERVAL,
+} from '@/lib/constants';
 
 /** Security feature data structure */
 interface SecurityFeature {
@@ -16,6 +25,7 @@ interface SecurityFeature {
   title: string;
   description: string;
   image: string;
+  mobileImage: string;
 }
 
 /** Security feature data for each section */
@@ -27,6 +37,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     description:
       'Multi-layer security, real-time monitoring, and account-level controls safeguard user funds and access at all times.',
     image: IMAGES.stepperAccountProtection,
+    mobileImage: IMAGES.stepperAccountProtectionMobile,
   },
   {
     id: 2,
@@ -35,6 +46,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     description:
       'Automated identity verification, regulatory reporting, and built-in compliance workflows keep your business audit-ready.',
     image: IMAGES.stepperComplianceKyc,
+    mobileImage: IMAGES.stepperComplianceMobile,
   },
   {
     id: 3,
@@ -43,6 +55,7 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     description:
       'Enterprise-grade encryption and fraud detection enable millions of transactions without compromising security.',
     image: IMAGES.stepperSecurePayments,
+    mobileImage: IMAGES.stepperSecurePaymentsMobile,
   },
   {
     id: 4,
@@ -51,12 +64,14 @@ const SECURITY_FEATURES: SecurityFeature[] = [
     description:
       'Bank-grade hosting, redundant systems, and 99.99% uptime ensure your operations never skip a beat.',
     image: IMAGES.stepperTrustedInfrastructure,
+    mobileImage: IMAGES.stepperTrustedInfrastructureMobile,
   },
 ];
 
 /**
  * Security section with auto-rotating feature display
- * Full-width rows with dynamic stepper images that change automatically
+ * Desktop: Full-width rows with centered phone mockup
+ * Mobile: Carousel with navigation arrows and dots
  */
 const SecuritySection = () => {
   const [activeFeature, setActiveFeature] = useState(1);
@@ -64,6 +79,13 @@ const SecuritySection = () => {
   /** Advances to the next feature (wraps around) */
   const nextFeature = useCallback(() => {
     setActiveFeature((current) => (current % SECURITY_FEATURES.length) + 1);
+  }, []);
+
+  /** Goes to the previous feature (wraps around) */
+  const prevFeature = useCallback(() => {
+    setActiveFeature((current) =>
+      current === 1 ? SECURITY_FEATURES.length : current - 1
+    );
   }, []);
 
   // Auto-rotation effect
@@ -76,27 +98,32 @@ const SecuritySection = () => {
     SECURITY_FEATURES.find((f) => f.id === activeFeature) || SECURITY_FEATURES[0];
 
   return (
-    <section className="relative bg-juno-900 py-[100px]">
+    <section className="relative bg-juno-900">
       {/* Header */}
-      <ScrollReveal mode="slide">
-        <SectionHeader
-          align="center"
-          theme="dark"
-          title={
-            <>
-              Security & compliance
-              <br />
-              you can trust
-            </>
-          }
-          subtitle="Juno combines enterprise-grade security features with world-class compliance tooling to help businesses operate safely, securely, and at scale."
-          titleMaxWidth="696px"
-        />
-      </ScrollReveal>
+      <div className="px-4 py-16 md:px-0 md:py-[100px]">
+        <ScrollReveal mode="slide">
+          <SectionHeader
+            align="center"
+            theme="dark"
+            title={
+              <>
+                Security & compliance
+                <br />
+                you can trust
+              </>
+            }
+            subtitle="Juno combines enterprise-grade security features with world-class compliance tooling to help businesses operate safely, securely, and at scale."
+            titleMaxWidth="696px"
+          />
+        </ScrollReveal>
+      </div>
 
-      {/* Content area */}
-      <div className="relative mx-auto mt-16 h-[640px] w-full" style={{ maxWidth: MAX_WIDTHS.section }}>
-        {/* Feature rows - offset from top to give phone overlap room */}
+      {/* Desktop: Row-based layout */}
+      <div
+        className="relative mx-auto hidden h-[640px] w-full md:block"
+        style={{ maxWidth: MAX_WIDTHS.section }}
+      >
+        {/* Feature rows */}
         <div
           className="absolute left-0 top-[65px] flex w-full flex-col"
           aria-label="Security features"
@@ -110,7 +137,7 @@ const SecuritySection = () => {
           ))}
         </div>
 
-        {/* Stepper image - responsive sizing, crossfades on feature change */}
+        {/* Stepper image - desktop */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div className="relative w-[clamp(220px,calc(220px+(100vw-1024px)*0.39),320px)]">
             <AnimatePresence mode="popLayout">
@@ -144,10 +171,112 @@ const SecuritySection = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile: Carousel layout */}
+      <MobileCarousel
+        currentFeature={currentFeature}
+        activeId={activeFeature}
+        onPrev={prevFeature}
+        onNext={nextFeature}
+      />
     </section>
   );
 };
 SecuritySection.displayName = 'SecuritySection';
+
+/** Mobile carousel with arrows, dots, and bottom-flush mockup */
+const MobileCarousel = ({
+  currentFeature,
+  activeId,
+  onPrev,
+  onNext,
+}: {
+  currentFeature: SecurityFeature;
+  activeId: number;
+  onPrev: () => void;
+  onNext: () => void;
+}) => (
+  <div className="relative border-t border-juno-700 md:hidden">
+    {/* Content area */}
+    <div className="px-4 pt-16">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentFeature.id}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ ...TRANSITION, duration: ANIMATION.fast }}
+          className="flex flex-col gap-4 text-center"
+        >
+          <span className="text-base text-juno-300">{currentFeature.label}</span>
+          <h3 className={cn('text-[32px] leading-tight text-white', FONT.serif)}>
+            {currentFeature.title}
+          </h3>
+          <p className="text-base leading-normal text-juno-200">
+            {currentFeature.description}
+          </p>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+
+    {/* Navigation: arrows and dots */}
+    <div className="flex items-center justify-between px-4 py-6">
+      <button
+        onClick={onPrev}
+        className="flex size-[51px] items-center justify-center rounded-sm bg-juno-700/50 text-white transition-colors hover:bg-juno-700"
+        aria-label="Previous feature"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      {/* Dot indicators */}
+      <div className="flex gap-2">
+        {SECURITY_FEATURES.map((feature) => (
+          <span
+            key={feature.id}
+            className={cn(
+              'size-3 rounded-full transition-colors',
+              activeId === feature.id ? 'bg-white' : 'bg-juno-600'
+            )}
+            aria-label={`Step ${feature.id} of ${SECURITY_FEATURES.length}`}
+          />
+        ))}
+      </div>
+
+      <button
+        onClick={onNext}
+        className="flex size-[51px] items-center justify-center rounded-sm bg-juno-700/50 text-white transition-colors hover:bg-juno-700"
+        aria-label="Next feature"
+      >
+        <ChevronRight size={24} />
+      </button>
+    </div>
+
+    {/* Mobile mockup - flush to bottom */}
+    <div className="relative flex justify-center">
+      <AnimatePresence mode="popLayout">
+        <motion.div
+          key={currentFeature.id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+          className="w-[300px]"
+        >
+          <Image
+            src={currentFeature.mobileImage}
+            alt={currentFeature.label}
+            width={300}
+            height={399}
+            className="h-auto w-full"
+            priority
+          />
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  </div>
+);
+MobileCarousel.displayName = 'MobileCarousel';
 
 /** Full-width feature row with left title and right description */
 const FeatureRow = ({
