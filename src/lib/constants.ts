@@ -23,14 +23,6 @@ export const ANIMATION_MICRO = {
   slow: 0.4,
 } as const;
 
-/** Stagger animation delays in seconds */
-export const ANIMATION_DELAYS = {
-  small: 0.05,
-  medium: 0.1,
-  large: 0.2,
-  xlarge: 0.3,
-} as const;
-
 /** Auto-rotation interval for carousels (ms) */
 export const AUTO_ROTATE_INTERVAL = 5000;
 
@@ -52,7 +44,6 @@ export const MAX_WIDTHS = {
 /** Component dimensions */
 export const DIMENSIONS = {
   buttonHeight: '52px',
-  tabButtonWidth: '172px',
   dotPatternSize: '156px',
   singaporeTimeWidth: '275px',
 } as const;
@@ -124,7 +115,6 @@ export const BUTTON_TEXT = {
   openAccount: 'Open account',
   getStarted: 'Get Started',
   learnMore: 'Learn more',
-  transferInstantly: 'Transfer instantly',
 } as const;
 
 /** Badge text constants */

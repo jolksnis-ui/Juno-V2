@@ -114,9 +114,9 @@ const InfrastructureSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ ...TRANSITION, delay: 0.05 * index }}
-                className="flex flex-col justify-between border-l border-juno-700 px-6 py-6"
+                className="flex flex-col-reverse items-center text-center md:flex-col md:items-start md:text-left md:justify-between border-l border-juno-700 px-6 py-6"
               >
-                <h3 className={cn('mb-24 text-2xl leading-8 text-white', FONT.serif)}>
+                <h3 className={cn('mt-4 text-2xl leading-8 text-white md:mb-24 md:mt-0', FONT.serif)}>
                   {feature.title}
                 </h3>
                 <span className={cn('text-5xl text-juno-600', FONT.mono)}>

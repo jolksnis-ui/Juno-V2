@@ -1,7 +1,8 @@
+import type { Metadata } from 'next';
 import { ContactSection } from '@/components/sections/contact-section';
 import { Footer } from '@/components/sections/footer';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Contact Us | Juno Bank',
   description:
     'Contact Juno Bank to discuss premium banking solutions tailored for individuals and corporate clients.',

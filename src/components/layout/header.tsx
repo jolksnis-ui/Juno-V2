@@ -6,8 +6,6 @@ import Image from 'next/image';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { AnimatedMenuIcon } from '@/components/ui/icons';
 import { cn } from '@/lib/utils';
-import { DotPattern } from '@/components/ui/dot-pattern';
-import { TRANSITION } from '@/lib/constants';
 
 /** Navigation items for expanded menu */
 const NAV_ITEMS = {
@@ -141,49 +139,28 @@ export function Header() {
             exit="hidden"
             className="overflow-hidden border-t border-[#d1d1d6]"
           >
-            <div className="flex flex-col gap-8 px-4 py-8 md:px-7 md:py-12 lg:flex-row lg:gap-16">
+            <div className="px-4 py-8 md:px-7 md:py-12">
               {/* Navigation Section */}
-              <motion.div variants={itemVariants} className="flex flex-1 flex-col gap-6">
-                {/* Navigation Badge */}
-                <span className="w-fit rounded border border-[#E4E4E7] bg-[#F4F4F5] px-1.5 py-1 font-[family-name:var(--font-geist-mono)] text-sm text-[#3F3F46]">
-                  Navigation
-                </span>
-
-                {/* Two-column Navigation */}
-                <div className="flex flex-col gap-6 md:flex-row md:gap-16">
-                  {/* Left Column */}
-                  <div className="flex flex-1 flex-col gap-6">
-                    {NAV_ITEMS.left.map((item) => (
-                      <NavLink key={item.label} href={item.href} onClick={() => setExpanded(false)}>
-                        {item.label}
-                      </NavLink>
-                    ))}
-                  </div>
-
-                  {/* Right Column */}
-                  <div className="flex flex-1 flex-col gap-6">
-                    {NAV_ITEMS.right.map((item) => (
-                      <NavLink key={item.label} href={item.href} onClick={() => setExpanded(false)}>
-                        {item.label}
-                      </NavLink>
-                    ))}
-                  </div>
+              <motion.div variants={itemVariants} className="mx-auto w-full max-w-7xl">
+                {/* Two-column Navigation Grid */}
+                <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2">
+                  {/* Row 1 */}
+                  <NavLink href={NAV_ITEMS.left[0].href} onClick={() => setExpanded(false)}>
+                    {NAV_ITEMS.left[0].label}
+                  </NavLink>
+                  <NavLink href={NAV_ITEMS.right[0].href} onClick={() => setExpanded(false)}>
+                    {NAV_ITEMS.right[0].label}
+                  </NavLink>
+                  {/* Row 2 */}
+                  <NavLink href={NAV_ITEMS.left[1].href} onClick={() => setExpanded(false)}>
+                    {NAV_ITEMS.left[1].label}
+                  </NavLink>
+                  <NavLink href={NAV_ITEMS.right[1].href} onClick={() => setExpanded(false)}>
+                    {NAV_ITEMS.right[1].label}
+                  </NavLink>
                 </div>
               </motion.div>
 
-              {/* Phone Mockup */}
-              <motion.div variants={itemVariants} className="relative hidden size-[360px] shrink-0 overflow-hidden rounded-md border border-[#d1d1d6] bg-[#F4F4F5] lg:block">
-                <DotPattern color="#000000" opacity={0.12} />
-                <div className="absolute left-1/2 top-8 h-[480px] w-[240px] -translate-x-1/2">
-                  <Image
-                    src="/images/Mobile Mockup.png"
-                    alt="Juno app preview"
-                    fill
-                    className="object-contain object-top"
-                    priority
-                  />
-                </div>
-              </motion.div>
             </div>
           </motion.div>
         )}
@@ -205,7 +182,7 @@ const NavLink = ({
   <Link
     href={href}
     onClick={onClick}
-    className="border-b border-[#d1d1d6] py-4 font-[family-name:var(--font-prata)] text-3xl font-light text-[#3F3F46] transition-colors hover:text-[#18181B] md:py-6 md:text-5xl"
+    className="block whitespace-nowrap text-center border-b border-[#d1d1d6] py-4 font-[family-name:var(--font-prata)] text-3xl font-light text-[#71717A] transition-all duration-200 hover:text-[#18181B] hover:border-[#18181B] md:py-6 md:text-5xl"
   >
     {children}
   </Link>

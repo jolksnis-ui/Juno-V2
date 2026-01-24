@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { SectionHeader } from '@/components/ui/section-header';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { ProgressBar } from '@/components/ui/progress-bar';
+import { useAutoRotate } from '@/hooks/use-auto-rotate';
 import {
   ANIMATION,
   TRANSITION,
@@ -73,41 +73,14 @@ const SECURITY_FEATURES: SecurityFeature[] = [
  * Mobile: Carousel with navigation arrows and dots
  */
 const SecuritySection = () => {
-  const [activeFeature, setActiveFeature] = useState(1);
-  const [isPaused, setIsPaused] = useState(false);
-
-  /** Advances to the next feature (wraps around) */
-  const nextFeature = useCallback(() => {
-    setActiveFeature((current) => (current % SECURITY_FEATURES.length) + 1);
-  }, []);
-
-  /** Goes to the previous feature (wraps around) */
-  const prevFeature = useCallback(() => {
-    setActiveFeature((current) =>
-      current === 1 ? SECURITY_FEATURES.length : current - 1
-    );
-  }, []);
-
-  /** Handles manual navigation - pauses auto-rotation briefly */
-  const handleManualNav = useCallback(
-    (direction: 'prev' | 'next') => {
-      setIsPaused(true);
-      if (direction === 'prev') {
-        prevFeature();
-      } else {
-        nextFeature();
-      }
-      setTimeout(() => setIsPaused(false), AUTO_ROTATE_INTERVAL);
-    },
-    [prevFeature, nextFeature]
-  );
-
-  // Auto-rotation effect (pauses on manual navigation)
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(nextFeature, AUTO_ROTATE_INTERVAL);
-    return () => clearInterval(interval);
-  }, [isPaused, nextFeature]);
+  const {
+    active: activeFeature,
+    isPaused,
+    setActive: setActiveFeature,
+    handleManualNav,
+  } = useAutoRotate({
+    itemCount: SECURITY_FEATURES.length,
+  });
 
   const currentFeature =
     SECURITY_FEATURES.find((f) => f.id === activeFeature) || SECURITY_FEATURES[0];

@@ -47,7 +47,7 @@ const WhatWeDoSection = () => {
           {/* Image */}
           <FadeInView
             delay={0.2}
-            className="relative aspect-[16/9] w-full max-w-4xl overflow-hidden rounded-md md:aspect-[21/9]"
+            className="relative aspect-[16/9] w-full overflow-hidden rounded-md md:aspect-[21/9]"
           >
             <Image
               src={IMAGES.aboutServicePreview}

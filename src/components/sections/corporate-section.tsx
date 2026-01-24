@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -8,7 +7,9 @@ import { SectionHeader } from '@/components/ui/section-header';
 import { GetStartedButton } from '@/components/ui/get-started-button';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { ProgressBar } from '@/components/ui/progress-bar';
-import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, AUTO_ROTATE_INTERVAL, FONT, CONTAINER_MAX_WIDTH, ROW_HEIGHT, BUTTON_TEXT } from '@/lib/constants';
+import { useAutoRotate } from '@/hooks/use-auto-rotate';
+import { MobileFeatureAccordion } from '@/components/ui/mobile-feature-accordion';
+import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, FONT, CONTAINER_MAX_WIDTH, ROW_HEIGHT, BUTTON_TEXT } from '@/lib/constants';
 
 /** Corporate feature data structure */
 interface CorporateFeature {
@@ -69,27 +70,9 @@ const CORPORATE_FEATURES: CorporateFeature[] = [
  * Mobile: Vertical accordion with image appearing below active card
  */
 const CorporateSection = () => {
-  const [activeFeature, setActiveFeature] = useState(1);
-  const [isPaused, setIsPaused] = useState(false);
-
-  /** Advances to the next feature (wraps around) */
-  const nextFeature = useCallback(() => {
-    setActiveFeature((current) => (current % CORPORATE_FEATURES.length) + 1);
-  }, []);
-
-  /** Handles feature click - sets active and pauses auto-rotation briefly */
-  const handleFeatureClick = (id: number) => {
-    setActiveFeature(id);
-    setIsPaused(true);
-    setTimeout(() => setIsPaused(false), AUTO_ROTATE_INTERVAL);
-  };
-
-  // Auto-rotation effect
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(nextFeature, AUTO_ROTATE_INTERVAL);
-    return () => clearInterval(interval);
-  }, [isPaused, nextFeature]);
+  const { active: activeFeature, isPaused, handleClick: handleFeatureClick } = useAutoRotate({
+    itemCount: CORPORATE_FEATURES.length,
+  });
 
   const currentFeature =
     CORPORATE_FEATURES.find((f) => f.id === activeFeature) || CORPORATE_FEATURES[0];
@@ -159,11 +142,13 @@ const CorporateSection = () => {
 
         {/* Mobile: Accordion Layout */}
         <div className="mt-8 overflow-hidden rounded-md border border-juno-300 bg-white md:hidden">
-          <MobileCorporateAccordion
+          <MobileFeatureAccordion
             features={CORPORATE_FEATURES}
             activeId={activeFeature}
             isPaused={isPaused}
             onFeatureClick={handleFeatureClick}
+            theme="light"
+            backgroundImage={IMAGES.corpBg}
           />
         </div>
       </div>
@@ -303,140 +288,6 @@ const FeatureItem = ({
       fillColor="bg-juno-900"
     />
   </button>
-);
-
-/** Mobile accordion container for corporate features */
-const MobileCorporateAccordion = ({
-  features,
-  activeId,
-  isPaused,
-  onFeatureClick,
-}: {
-  features: CorporateFeature[];
-  activeId: number;
-  isPaused: boolean;
-  onFeatureClick: (id: number) => void;
-}) => (
-  <div className="flex flex-col">
-    {features.map((feature, index) => (
-      <MobileCorporateItem
-        key={feature.id}
-        feature={feature}
-        isActive={feature.id === activeId}
-        isPaused={isPaused}
-        isLast={index === features.length - 1}
-        onClick={() => onFeatureClick(feature.id)}
-      />
-    ))}
-  </div>
-);
-
-/** Mobile feature item - smooth animated transitions between states (Light theme) */
-const MobileCorporateItem = ({
-  feature,
-  isActive,
-  isPaused,
-  isLast,
-  onClick,
-}: {
-  feature: CorporateFeature;
-  isActive: boolean;
-  isPaused: boolean;
-  isLast: boolean;
-  onClick: () => void;
-}) => (
-  <div className={cn(!isLast && !isActive && 'border-b border-juno-300')}>
-    {/* Title - always visible, clickable when inactive, animates size/color */}
-    <button
-      onClick={!isActive ? onClick : undefined}
-      className={cn(
-        'w-full px-4 py-4 text-center',
-        !isActive && 'cursor-pointer'
-      )}
-      aria-label={!isActive ? `View ${feature.title}` : undefined}
-      disabled={isActive}
-    >
-      <motion.h3
-        animate={{
-          fontSize: isActive ? '22px' : '18px',
-          color: isActive ? 'var(--juno-gray-900)' : 'var(--juno-gray-600)',
-        }}
-        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-        className={cn('leading-tight', FONT.serif)}
-      >
-        {feature.title}
-      </motion.h3>
-    </button>
-
-    {/* Expandable content - animates height in/out smoothly */}
-    <AnimatePresence>
-      {isActive && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          className="overflow-hidden"
-        >
-          {/* Description - fades in and pushes content */}
-          <motion.p
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
-            className="px-4 pb-4 text-center text-base leading-relaxed text-juno-700"
-          >
-            {feature.description}
-          </motion.p>
-
-          {/* Progress bar - above image */}
-          <ProgressBar
-            isActive={isActive}
-            isPaused={isPaused}
-            featureId={feature.id}
-            bgColor="bg-juno-300"
-            fillColor="bg-juno-900"
-          />
-
-          {/* Image container */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="relative h-[280px] overflow-hidden"
-          >
-            {/* Blurred background */}
-            <div className="absolute inset-0 overflow-hidden">
-              <Image
-                src={IMAGES.corpBg}
-                alt=""
-                fill
-                className="object-cover opacity-30 blur-sm"
-                aria-hidden="true"
-              />
-              <div className="absolute inset-0 bg-white/40 backdrop-blur-md" />
-            </div>
-
-            {/* Feature image */}
-            <div className="absolute inset-0 flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                className="relative h-[240px] w-[180px]"
-              >
-                <Image
-                  src={feature.image}
-                  alt={feature.title}
-                  fill
-                  className="object-contain drop-shadow-2xl"
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
 );
 
 export { CorporateSection };

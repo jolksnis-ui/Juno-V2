@@ -55,7 +55,7 @@ const PageHero = ({
             "flex flex-col gap-8",
             centered 
               ? "items-center text-center" 
-              : "justify-between md:flex-row md:items-center"
+              : "items-center text-center md:flex-row md:justify-between md:text-left md:items-center"
           )}
         >
           <FadeInView>

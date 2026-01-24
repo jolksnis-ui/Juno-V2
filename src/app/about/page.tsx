@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { AboutHeroSection } from '@/components/sections/about-hero-section';
 import { MissionVisionSection } from '@/components/sections/mission-vision-section';
 import { ValuesSection } from '@/components/sections/values-section';
@@ -7,7 +8,7 @@ import { LeadershipSection } from '@/components/sections/leadership-section';
 import { ContactSection } from '@/components/sections/contact-section';
 import { Footer } from '@/components/sections/footer';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'About Us | Juno Bank',
   description:
     'Learn about Juno Bank - our mission, values, leadership team, and commitment to secure, compliant financial services for individuals and corporate clients.',

@@ -142,14 +142,8 @@ const AccountSection = () => {
         </div>
 
         {/* Tab Switcher */}
-        <div className="mx-auto mt-8 md:mt-9">
-          <ScrollReveal
-            mode="slide"
-            className="mx-auto"
-            offset={['start 0.95', 'end 0.2']}
-          >
-            <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
-          </ScrollReveal>
+        <div className="mt-8 flex justify-center md:mt-10">
+          <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
         {/* Desktop Content Area */}
@@ -323,7 +317,7 @@ const MockupContainer = ({
             alt={content.mockupAlt}
             width={content.mockupWidth}
             height={content.mockupHeight}
-            className="pointer-events-none max-h-[280px] w-auto md:max-h-none"
+            className="pointer-events-none max-h-[280px] w-auto md:max-h-[420px]"
             priority
           />
         </motion.div>
