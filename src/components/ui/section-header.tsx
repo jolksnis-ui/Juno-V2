@@ -61,7 +61,7 @@ export const SectionHeader = ({
         )}
         <h2
           className={cn(
-            'text-[60px] leading-[1.13]',
+            'text-[36px] leading-none md:text-[60px] md:leading-[1.13]',
             FONT.serif,
             isDark ? 'text-white' : 'text-juno-900'
           )}

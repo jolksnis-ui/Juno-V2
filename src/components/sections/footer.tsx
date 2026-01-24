@@ -34,15 +34,15 @@ const FOOTER_LINKS: Record<string, FooterLink[]> = {
  */
 export const Footer = () => {
   return (
-    <footer className="relative flex min-h-screen w-full flex-col justify-between bg-juno-900 px-4 pb-8 pt-[148px] text-white md:px-10">
+    <footer className="relative flex w-full flex-col gap-16 bg-juno-900 px-4 pb-8 pt-20 text-white md:min-h-[856px] md:h-screen md:justify-end md:gap-[96px] md:px-10 md:pt-[148px]">
       {/* Background Texture */}
       <DotPattern color="#ffffff" opacity={0.02} />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col gap-12">
+      <div className="relative z-10 flex flex-col gap-10 md:gap-12">
         {/* Top Section: Headline + Description */}
-        <div className="flex flex-col items-center justify-between gap-8 md:flex-row md:items-center md:gap-0">
-          <FadeInView className={cn('w-full max-w-[440px] text-[60px] font-light leading-[68px] text-white', FONT.serif)}>
+        <div className="flex flex-col items-center justify-between gap-8 text-center md:flex-row md:items-center md:gap-0 md:text-left">
+          <FadeInView className={cn('w-full text-4xl font-light leading-[56px] text-white md:max-w-[440px] md:text-[60px] md:leading-[68px]', FONT.serif)}>
             Time is money.
             <br />
             Save both.
@@ -59,14 +59,14 @@ export const Footer = () => {
         <div className="h-px w-full bg-white/10" />
 
         {/* Links Section */}
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-0">
           {/* Link Columns */}
-          <div className="flex gap-8">
+          <div className="flex w-full flex-col gap-10 text-center md:w-auto md:flex-row md:gap-8 md:text-left">
             {Object.entries(FOOTER_LINKS).map(([category, links], idx) => (
               <FadeInView
                 key={category}
                 delay={0.2 + idx * 0.1}
-                className="flex w-full flex-col gap-8 md:w-[200px]"
+                className="flex w-full flex-col gap-6 md:gap-8 md:w-[200px]"
               >
                 <span className={cn('text-sm text-juno-400', FONT.mono)}>
                   {category}
@@ -88,14 +88,18 @@ export const Footer = () => {
           </div>
 
           {/* Open Account Button */}
-          <FadeInView delay={0.4}>
-            <GetStartedButton label={BUTTON_TEXT.openAccount} variant="light" />
+          <FadeInView delay={0.4} className="w-full md:w-auto">
+            <GetStartedButton
+              label={BUTTON_TEXT.openAccount}
+              variant="light"
+              className="w-full md:w-auto"
+            />
           </FadeInView>
         </div>
       </div>
 
       {/* Bottom Section: Logo + Legal */}
-      <div className="relative z-10 flex flex-col gap-8">
+      <div className="relative z-10 flex flex-col items-center gap-8 text-center md:items-start md:text-left">
         {/* Juno Logo */}
         <FadeInView delay={0.5} direction="up" distance={0}>
           <span className={cn('text-[32px] font-light text-white', FONT.serif)}>

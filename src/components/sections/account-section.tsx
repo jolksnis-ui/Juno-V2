@@ -35,10 +35,10 @@ interface TabContent {
 /** Content configuration for each tab */
 const TAB_CONTENT: Record<AccountTab, TabContent> = {
   personal: {
-    clientLabel: 'Personal clients',
+    clientLabel: 'Personal account',
     title: 'Tailored, individual\npayment solutions',
     description:
-      'Multi-currency accounts, instant internal transfers and international online payments — all in one platform. LuxePay offers everything your business needs to simplify your global payments and financial operations.',
+      "As a high net worth individual, if you're looking for a completely unique service that offers you secure and discrete execution of all of your financial affairs, then Juno Money has the solution.",
     mockupSrc: IMAGES.mobileMockup,
     mockupAlt: 'Juno mobile app showing account dashboard',
     mockupWidth: 280,
@@ -109,28 +109,48 @@ const AccountSection = () => {
       <DotPattern />
 
       <div className="relative mx-auto max-w-[1440px] px-4 md:px-6">
-        <ScrollReveal mode="slide" className="flex flex-col items-center">
-          <SectionHeader
-            align="center"
-            title={
-              <>
-                Get the best out of
-                <br />
-                Juno Money.
-              </>
-            }
-            subtitle="We provide a highly personalised service to corporate entities, institutions and high net worth individuals, including secure, competitive and discrete execution of cross-border payments and settlement services."
-          />
-        </ScrollReveal>
+        {/* Desktop Header */}
+        <div className="hidden md:block">
+          <ScrollReveal mode="slide" className="flex flex-col items-center">
+            <SectionHeader
+              align="center"
+              title={
+                <>
+                  Get the best out of
+                  <br />
+                  Juno Money.
+                </>
+              }
+              subtitle="We provide a highly personalised service to corporate entities, institutions and high net worth individuals, including secure, competitive and discrete execution of cross-border payments and settlement services."
+            />
+          </ScrollReveal>
+        </div>
+
+        {/* Mobile Header - Custom markup for exact Figma specs */}
+        <div className="flex flex-col items-center gap-4 md:hidden">
+          <div className="flex flex-col gap-4 text-center">
+            <h2 className={cn('text-[36px] leading-none text-juno-900', FONT.serif)}>
+              Get the best out of Juno Money.
+            </h2>
+            <p className="text-base leading-normal text-juno-700">
+              We provide a highly personalised service to corporate entities,
+              institutions and high net worth individuals, including secure,
+              competitive and discrete execution of cross-border payments and
+              settlement services.
+            </p>
+          </div>
+        </div>
 
         {/* Tab Switcher */}
-        <ScrollReveal
-          mode="slide"
-          className="mx-auto"
-          offset={['start 0.95', 'end 0.2']}
-        >
-          <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
-        </ScrollReveal>
+        <div className="mx-auto mt-8 md:mt-9">
+          <ScrollReveal
+            mode="slide"
+            className="mx-auto"
+            offset={['start 0.95', 'end 0.2']}
+          >
+            <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
+          </ScrollReveal>
+        </div>
 
         {/* Desktop Content Area */}
         <div className="mt-16 hidden gap-10 md:flex">
@@ -180,7 +200,7 @@ const TabSwitcher = ({
   onTabChange: (tab: AccountTab) => void;
 }) => (
   <div
-    className="mx-auto mt-9 flex w-full max-w-[344px] overflow-hidden rounded border border-juno-300 bg-white"
+    className="mx-auto flex w-full max-w-[344px] overflow-hidden rounded border border-juno-300 bg-white"
     role="tablist"
     aria-label="Account type"
   >
@@ -248,14 +268,14 @@ const MobileContent = ({ content }: { content: TabContent }) => (
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -10 }}
     transition={{ ...TRANSITION, duration: ANIMATION.medium }}
-    className="flex flex-col"
+    className="flex flex-col text-center"
   >
     <span className={cn('text-sm text-juno-400', FONT.mono)}>
       {content.clientLabel}
     </span>
     <h3
       className={cn(
-        'mt-3 whitespace-pre-line text-3xl leading-tight text-juno-900',
+        'mt-3 whitespace-pre-line text-[32px] leading-[36px] text-juno-900',
         FONT.serif
       )}
     >
@@ -267,12 +287,12 @@ const MobileContent = ({ content }: { content: TabContent }) => (
     {/* Learn more link with arrow */}
     <a
       href="#"
-      className="mt-6 inline-flex items-center gap-3 text-sm font-medium text-juno-900"
+      className="mt-6 inline-flex items-center justify-center gap-3 text-sm text-juno-900"
     >
-      <span className="flex size-7 items-center justify-center rounded-full bg-juno-100">
-        <ArrowUpRight size={16} />
+      <span className="flex size-7 items-center justify-center rounded-[3px] bg-juno-900">
+        <ArrowUpRight size={16} className="text-white" />
       </span>
-      {BUTTON_TEXT.learnMore}
+      <span className={FONT.mono}>{BUTTON_TEXT.learnMore}</span>
     </a>
   </motion.div>
 );
@@ -285,7 +305,7 @@ const MockupContainer = ({
   activeTab: AccountTab;
   content: TabContent;
 }) => (
-  <div className="relative h-[400px] overflow-hidden rounded-md border border-juno-300 bg-juno-100 md:h-[620px]">
+  <div className="relative h-[320px] overflow-hidden rounded-md border border-juno-300 bg-juno-100 md:h-[620px]">
     <DotPattern size={16} dotSize={0.5} opacity={0.12} />
 
     {/* Centered mockup */}
@@ -303,7 +323,7 @@ const MockupContainer = ({
             alt={content.mockupAlt}
             width={content.mockupWidth}
             height={content.mockupHeight}
-            className="pointer-events-none max-h-[350px] w-auto md:max-h-none"
+            className="pointer-events-none max-h-[280px] w-auto md:max-h-none"
             priority
           />
         </motion.div>
@@ -356,7 +376,7 @@ const FeaturesAccordion = ({ features }: { features: Feature[] }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ ...TRANSITION, duration: ANIMATION.medium, delay: 0.1 }}
-      className="flex flex-col overflow-hidden rounded-md border border-juno-200"
+      className="flex flex-col overflow-hidden rounded border border-juno-200"
     >
       {features.map((feature, index) => (
         <AccordionItem

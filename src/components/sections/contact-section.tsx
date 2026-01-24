@@ -129,7 +129,7 @@ const ContactSection = () => {
                 transition={{ duration: 0.2 }}
               >
                 {/* Header */}
-                <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-center">
+                <div className="mb-16 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:items-center md:text-left">
                   <h2 className={cn('w-full max-w-[600px] text-4xl leading-none text-juno-900 md:text-5xl lg:text-[60px]', FONT.serif)}>
                     Become a
                     <br />
@@ -229,6 +229,7 @@ const ContactSection = () => {
                       label="Get in touch"
                       isLoading={submitState === 'submitting'}
                       disabled={!isValid || submitState === 'rate-limited'}
+                      className="w-full md:w-auto"
                     />
                   </div>
                 </form>

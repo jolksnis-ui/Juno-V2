@@ -115,7 +115,7 @@ const SecuritySection = () => {
   return (
     <section className="relative bg-juno-900">
       {/* Header */}
-      <div className="px-4 py-16 md:px-0 md:py-[100px]">
+      <div className="px-4 py-16 md:px-0 md:pt-[100px] md:pb-16">
         <ScrollReveal mode="slide">
           <SectionHeader
             align="center"
