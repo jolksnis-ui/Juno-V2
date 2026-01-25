@@ -56,9 +56,9 @@ export const ROW_HEIGHT = {
   securityInactive: 100,
 } as const;
 
-/** Hero video URL - city skyline from Pexels */
+/** Hero video URL - business/corporate theme from Pexels */
 export const HERO_VIDEO_URL =
-  'https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4';
+  'https://videos.pexels.com/video-files/3252123/3252123-uhd_2560_1440_25fps.mp4';
 
 /** Font family class names for consistent typography */
 export const FONT = {

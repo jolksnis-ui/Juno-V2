@@ -107,10 +107,7 @@ const SecuritySection = () => {
       </div>
 
       {/* Desktop: Row-based layout */}
-      <div
-        className="relative mx-auto hidden h-[640px] w-full md:block"
-        style={{ maxWidth: MAX_WIDTHS.section }}
-      >
+      <div className="relative hidden h-[640px] w-full pb-16 md:block">
         {/* Feature rows */}
         <div
           className="absolute left-0 top-[65px] flex w-full flex-col"
@@ -298,7 +295,7 @@ const MobileCarousel = ({
 );
 MobileCarousel.displayName = 'MobileCarousel';
 
-/** Full-width feature row with left title and right description */
+/** Full-width feature row with lines spanning viewport and centered text */
 const FeatureRow = ({
   feature,
   isActive,
@@ -307,59 +304,69 @@ const FeatureRow = ({
   isActive: boolean;
 }) => (
   <div className="flex w-full flex-col">
+    {/* Full-width border container */}
     <motion.div
       animate={{ height: isActive ? ROW_HEIGHT.securityActive : ROW_HEIGHT.securityInactive }}
       transition={{ ...TRANSITION, duration: ANIMATION.medium }}
       className={cn(
-        'flex w-full items-center justify-between overflow-hidden border-b px-16',
-        isActive ? 'border-white py-10' : 'border-juno-700'
+        'w-full overflow-hidden border-b',
+        isActive ? 'border-white' : 'border-juno-700'
       )}
     >
-      {/* Left: Label + Title (stacked with gap) */}
+      {/* Centered content container with max-width */}
       <div
         className={cn(
-          'flex flex-col',
-          isActive ? 'justify-center gap-[30px]' : 'h-full justify-center'
+          'mx-auto flex h-full w-full items-center justify-between px-16',
+          isActive && 'py-10'
         )}
+        style={{ maxWidth: MAX_WIDTHS.section }}
       >
-        {/* Micro headline - always visible */}
-        <span className="w-[360px] text-base leading-[1.25] text-juno-300">
-          {feature.label}
-        </span>
-
-        {/* H3 Title - appears below label when active */}
-        <AnimatePresence mode="wait">
-          {isActive && (
-            <motion.h3
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-              className={cn('w-[360px] text-[32px] leading-[1.25] text-white', FONT.serif)}
-            >
-              {feature.title}
-            </motion.h3>
+        {/* Left: Label + Title (stacked with gap) */}
+        <div
+          className={cn(
+            'flex flex-col',
+            isActive ? 'justify-center gap-[30px]' : 'h-full justify-center'
           )}
-        </AnimatePresence>
-      </div>
+        >
+          {/* Micro headline - always visible */}
+          <span className="w-[360px] text-base leading-[1.25] text-juno-300">
+            {feature.label}
+          </span>
 
-      {/* Right: Description (animates in when active, aligned to bottom) */}
-      <div
-        className={cn('flex w-[360px]', isActive ? 'h-full items-end' : 'hidden')}
-      >
-        <AnimatePresence mode="wait">
-          {isActive && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-              className="text-base leading-[1.25] text-juno-300"
-            >
-              {feature.description}
-            </motion.p>
-          )}
-        </AnimatePresence>
+          {/* H3 Title - appears below label when active */}
+          <AnimatePresence mode="wait">
+            {isActive && (
+              <motion.h3
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ ...TRANSITION, duration: ANIMATION.fast }}
+                className={cn('w-[360px] text-[32px] leading-[1.25] text-white', FONT.serif)}
+              >
+                {feature.title}
+              </motion.h3>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Right: Description (animates in when active, aligned to bottom) */}
+        <div
+          className={cn('flex w-[360px]', isActive ? 'h-full items-end' : 'hidden')}
+        >
+          <AnimatePresence mode="wait">
+            {isActive && (
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ ...TRANSITION, duration: ANIMATION.fast }}
+                className="text-base leading-[1.25] text-juno-300"
+              >
+                {feature.description}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </motion.div>
 
