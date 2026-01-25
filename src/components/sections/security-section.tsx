@@ -107,7 +107,7 @@ const SecuritySection = () => {
       </div>
 
       {/* Desktop: Row-based layout */}
-      <div className="relative hidden h-[640px] w-full pb-16 md:block">
+      <div className="relative hidden h-[640px] w-full mb-16 md:block">
         {/* Feature rows */}
         <div
           className="absolute left-0 top-[65px] flex w-full flex-col"
