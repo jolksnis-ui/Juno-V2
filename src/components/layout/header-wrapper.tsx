@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from './header';
 
 /** Auth routes where header should not appear */
@@ -11,7 +12,7 @@ const DARK_HEADER_ROUTES = ['/corporate-account'];
 
 /**
  * Conditionally renders Header based on current route
- * Hidden on auth pages, dark theme on corporate page, light theme elsewhere
+ * Animates in/out when navigating between auth and main pages
  */
 export function HeaderWrapper() {
   const pathname = usePathname();
@@ -20,9 +21,24 @@ export function HeaderWrapper() {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
-  if (isAuthRoute) return null;
-
   const isDark = DARK_HEADER_ROUTES.includes(pathname);
 
-  return <Header isDark={isDark} />;
+  return (
+    <AnimatePresence mode="wait">
+      {!isAuthRoute && (
+        <motion.div
+          key="header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{
+            duration: 0.7,
+            ease: [0.76, 0, 0.24, 1],
+          }}
+        >
+          <Header isDark={isDark} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }

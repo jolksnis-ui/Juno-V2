@@ -44,7 +44,9 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           loop
           muted
           playsInline
-          className="absolute inset-0 h-full w-full object-cover"
+          disablePictureInPicture
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
         >
           <source src={VIDEOS.animatedCurrencies} type="video/mp4" />
         </video>
