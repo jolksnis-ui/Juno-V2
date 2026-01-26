@@ -6,6 +6,7 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 import { AnimatedMenuIcon } from '@/components/ui/icons';
 import { AppLink } from '@/components/ui/app-link';
 import { cn } from '@/lib/utils';
+import { CONTAINER_MAX_WIDTH } from '@/lib/constants';
 
 /** Navigation items for expanded menu */
 const NAV_ITEMS = {
@@ -95,67 +96,72 @@ export function Header({ isDark = false }: HeaderProps) {
       )}
     >
       {/* Header Bar */}
-      <div className="relative flex items-center justify-between px-4 py-4 md:px-7 md:py-[18px]">
-        {/* Logo */}
-        <AppLink
-          href="/"
-          className="relative z-50 flex items-center"
-          onClick={() => setExpanded(false)}
-          aria-label="Juno home"
+      <div className="px-4 md:px-7">
+        <div
+          className="relative mx-auto flex items-center justify-between py-4 md:py-[18px]"
+          style={{ maxWidth: CONTAINER_MAX_WIDTH }}
         >
-          <Image
-            src="/images/Header/logo.svg"
-            alt="Juno logo"
-            width={112}
-            height={28}
-            priority
-            className={cn(
-              'h-7 w-auto transition-[filter] duration-500 ease-out',
-              isDark && 'brightness-0 invert'
-            )}
-          />
-        </AppLink>
-
-        {/* Centered Menu Button */}
-        <motion.button
-          onClick={() => setExpanded(!expanded)}
-          aria-label={expanded ? 'Close menu' : 'Open menu'}
-          aria-expanded={expanded}
-          className={cn(
-            'absolute left-1/2 z-50 flex size-10 -translate-x-1/2 items-center justify-center rounded transition-colors duration-500',
-            isDark ? 'hover:bg-white/10' : 'hover:bg-black/5'
-          )}
-          initial="closed"
-          animate={expanded ? "open" : "closed"}
-          whileHover={expanded ? "hoverExpanded" : "hoverClosed"}
-        >
-          <AnimatedMenuIcon isOpen={expanded} size={24} color={isDark ? '#ffffff' : '#18181B'} />
-        </motion.button>
-
-        {/* Auth Buttons */}
-        <div className="relative z-50 flex items-center gap-2">
+          {/* Logo */}
           <AppLink
-            href="/login"
-            className={cn(
-              'hidden h-9 items-center justify-center rounded border px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out sm:flex md:px-4 md:text-sm',
-              isDark
-                ? 'border-white/80 text-white hover:bg-white/10'
-                : 'border-[#d1d1d6] text-[#18181B] hover:bg-black/5'
-            )}
+            href="/"
+            className="relative z-50 flex items-center"
+            onClick={() => setExpanded(false)}
+            aria-label="Juno home"
           >
-            Log in
+            <Image
+              src="/images/Header/logo.svg"
+              alt="Juno logo"
+              width={112}
+              height={28}
+              priority
+              className={cn(
+                'h-7 w-auto transition-[filter] duration-500 ease-out',
+                isDark && 'brightness-0 invert'
+              )}
+            />
           </AppLink>
-          <AppLink
-            href="/open-account"
+
+          {/* Centered Menu Button */}
+          <motion.button
+            onClick={() => setExpanded(!expanded)}
+            aria-label={expanded ? 'Close menu' : 'Open menu'}
+            aria-expanded={expanded}
             className={cn(
-              'flex h-9 items-center justify-center rounded px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out md:px-4 md:text-sm',
-              isDark
-                ? 'bg-white text-[#18181B] hover:bg-white/90'
-                : 'bg-[#18181B] text-white hover:bg-[#18181B]/90'
+              'absolute left-1/2 z-50 flex size-10 -translate-x-1/2 items-center justify-center rounded transition-colors duration-500',
+              isDark ? 'hover:bg-white/10' : 'hover:bg-black/5'
             )}
+            initial="closed"
+            animate={expanded ? "open" : "closed"}
+            whileHover={expanded ? "hoverExpanded" : "hoverClosed"}
           >
-            Open account
-          </AppLink>
+            <AnimatedMenuIcon isOpen={expanded} size={24} color={isDark ? '#ffffff' : '#18181B'} />
+          </motion.button>
+
+          {/* Auth Buttons */}
+          <div className="relative z-50 flex items-center gap-2">
+            <AppLink
+              href="/login"
+              className={cn(
+                'hidden h-9 items-center justify-center rounded border px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out sm:flex md:px-4 md:text-sm',
+                isDark
+                  ? 'border-white/80 text-white hover:bg-white/10'
+                  : 'border-[#d1d1d6] text-[#18181B] hover:bg-black/5'
+              )}
+            >
+              Log in
+            </AppLink>
+            <AppLink
+              href="/open-account"
+              className={cn(
+                'flex h-9 items-center justify-center rounded px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out md:px-4 md:text-sm',
+                isDark
+                  ? 'bg-white text-[#18181B] hover:bg-white/90'
+                  : 'bg-[#18181B] text-white hover:bg-[#18181B]/90'
+              )}
+            >
+              Open account
+            </AppLink>
+          </div>
         </div>
       </div>
 

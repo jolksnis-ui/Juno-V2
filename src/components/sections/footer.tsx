@@ -5,7 +5,7 @@ import { DotPattern } from '@/components/ui/dot-pattern';
 import { GetStartedButton } from '@/components/ui/get-started-button';
 import { FadeInView } from '@/components/ui/fade-in-view';
 import { AppLink } from '@/components/ui/app-link';
-import { FONT, BUTTON_TEXT } from '@/lib/constants';
+import { CONTAINER_MAX_WIDTH, FONT, BUTTON_TEXT } from '@/lib/constants';
 
 /** Footer link interface */
 interface FooterLink {
@@ -39,7 +39,10 @@ export const Footer = () => {
       <DotPattern color="#ffffff" opacity={0.02} />
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col gap-10 md:gap-12">
+      <div
+        className="relative z-10 mx-auto flex w-full flex-col gap-10 md:gap-12"
+        style={{ maxWidth: CONTAINER_MAX_WIDTH }}
+      >
         {/* Top Section: Headline + Description */}
         <div className="flex flex-col items-center justify-between gap-8 text-center md:flex-row md:items-center md:gap-0 md:text-left">
           <FadeInView className={cn('w-full text-4xl font-light leading-[56px] text-white md:max-w-[440px] md:text-[60px] md:leading-[68px]', FONT.serif)}>
@@ -99,7 +102,10 @@ export const Footer = () => {
       </div>
 
       {/* Bottom Section: Logo + Legal */}
-      <div className="relative z-10 flex flex-col items-center gap-8 text-center md:items-start md:text-left">
+      <div
+        className="relative z-10 mx-auto flex w-full flex-col items-center gap-8 text-center md:items-start md:text-left"
+        style={{ maxWidth: CONTAINER_MAX_WIDTH }}
+      >
         {/* Juno Logo */}
         <FadeInView delay={0.5} direction="up" distance={0}>
           <span className={cn('text-[32px] font-light text-white', FONT.serif)}>
