@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthLayout } from '@/components/layout/auth-layout';
@@ -9,6 +8,7 @@ import { AuthInput } from '@/components/ui/auth-input';
 import { AuthSelect } from '@/components/ui/auth-select';
 import { AuthTextarea } from '@/components/ui/auth-textarea';
 import { AuthSubmitButton } from '@/components/ui/auth-button';
+import { AppLink } from '@/components/ui/app-link';
 import { openAccountSchema, type OpenAccountFormValues } from '@/lib/validations';
 import { cn } from '@/lib/utils';
 import { FONT } from '@/lib/constants';
@@ -59,7 +59,7 @@ export default function OpenAccountPage() {
             Thank you for your interest. Our team will review your application
             and contact you within 48 hours.
           </p>
-          <Link
+          <AppLink
             href="/"
             className={cn(
               'inline-block rounded bg-white px-6 py-3 text-sm text-juno-900 transition-colors hover:bg-white/90',
@@ -67,7 +67,7 @@ export default function OpenAccountPage() {
             )}
           >
             Back to home
-          </Link>
+          </AppLink>
         </div>
       ) : (
         <>
@@ -139,12 +139,12 @@ export default function OpenAccountPage() {
           <div className={cn('mt-6 text-sm', FONT.mono)}>
             <p className="text-white/40">
               Already have an account?{' '}
-              <Link
+              <AppLink
                 href="/login"
                 className="text-white/60 underline transition-colors hover:text-white"
               >
                 Log in
-              </Link>
+              </AppLink>
             </p>
           </div>
         </>

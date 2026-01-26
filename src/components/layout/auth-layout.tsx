@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { VIDEOS } from '@/lib/constants';
+import { AppLink } from '@/components/ui/app-link';
 
 interface AuthLayoutProps {
   /** Form content for left panel */
@@ -19,7 +19,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       {/* Left Panel - Form */}
       <div className="flex w-full flex-col bg-black px-6 py-8 md:w-1/2 md:px-12 lg:px-20">
         {/* Logo - links back to home */}
-        <Link href="/" className="mb-auto" aria-label="Back to home">
+        <AppLink href="/" className="mb-auto" aria-label="Back to home">
           <Image
             src="/images/Header/logo.svg"
             alt="Juno"
@@ -28,7 +28,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
             className="h-6 w-auto brightness-0 invert"
             priority
           />
-        </Link>
+        </AppLink>
 
         {/* Form Content - centered */}
         <div className="my-auto max-w-md text-center">{children}</div>

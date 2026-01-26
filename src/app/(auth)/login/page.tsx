@@ -1,11 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import { AuthInput } from '@/components/ui/auth-input';
 import { AuthSubmitButton } from '@/components/ui/auth-button';
+import { AppLink } from '@/components/ui/app-link';
 import { loginSchema, type LoginFormValues } from '@/lib/validations';
 import { cn } from '@/lib/utils';
 import { FONT } from '@/lib/constants';
@@ -69,20 +69,20 @@ export default function LoginPage() {
 
       {/* Links */}
       <div className={cn('mt-8 space-y-4 text-sm', FONT.mono)}>
-        <Link
+        <AppLink
           href="/forgot-password"
           className="block text-white/60 transition-colors hover:text-white"
         >
           Forgot password?
-        </Link>
+        </AppLink>
         <p className="text-white/40">
           Don&apos;t have an account?{' '}
-          <Link
+          <AppLink
             href="/open-account"
             className="text-white/60 underline transition-colors hover:text-white"
           >
             Open an account
-          </Link>
+          </AppLink>
         </p>
       </div>
     </AuthLayout>

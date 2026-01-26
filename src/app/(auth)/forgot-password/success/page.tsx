@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { AuthLayout } from '@/components/layout/auth-layout';
+import { AppLink } from '@/components/ui/app-link';
 import { cn } from '@/lib/utils';
 import { FONT } from '@/lib/constants';
 
@@ -20,7 +20,7 @@ export default function ForgotPasswordSuccessPage() {
           You can now log in with your new password.
         </p>
 
-        <Link
+        <AppLink
           href="/login"
           className={cn(
             'inline-block rounded bg-white px-8 py-3 text-sm text-juno-900 transition-colors hover:bg-white/90',
@@ -28,7 +28,7 @@ export default function ForgotPasswordSuccessPage() {
           )}
         >
           Log In
-        </Link>
+        </AppLink>
       </div>
     </AuthLayout>
   );

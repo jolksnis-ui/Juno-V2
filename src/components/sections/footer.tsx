@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { DotPattern } from '@/components/ui/dot-pattern';
 import { GetStartedButton } from '@/components/ui/get-started-button';
 import { FadeInView } from '@/components/ui/fade-in-view';
+import { AppLink } from '@/components/ui/app-link';
 import { FONT, BUTTON_TEXT } from '@/lib/constants';
 
 /** Footer link interface */
@@ -74,12 +74,12 @@ export const Footer = () => {
                 <ul className="flex flex-col gap-4">
                   {links.map((link) => (
                     <li key={link.label}>
-                      <Link
+                      <AppLink
                         href={link.href}
                         className="text-base text-juno-25 transition-colors hover:text-white/70"
                       >
                         {link.label}
-                      </Link>
+                      </AppLink>
                     </li>
                   ))}
                 </ul>

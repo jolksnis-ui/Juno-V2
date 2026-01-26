@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { AuthLayout } from '@/components/layout/auth-layout';
+import { AppLink } from '@/components/ui/app-link';
 import { cn } from '@/lib/utils';
 import { FONT } from '@/lib/constants';
 
@@ -23,7 +23,7 @@ export default function ForgotPasswordSentPage() {
         </p>
 
         <div className="flex flex-col gap-4">
-          <Link
+          <AppLink
             href="/forgot-password"
             className={cn(
               'inline-block rounded border border-white/20 px-6 py-3 text-sm text-white transition-colors hover:bg-white/10',
@@ -31,8 +31,8 @@ export default function ForgotPasswordSentPage() {
             )}
           >
             Try Again
-          </Link>
-          <Link
+          </AppLink>
+          <AppLink
             href="/login"
             className={cn(
               'text-sm text-white/60 transition-colors hover:text-white',
@@ -40,7 +40,7 @@ export default function ForgotPasswordSentPage() {
             )}
           >
             ← Back to login
-          </Link>
+          </AppLink>
         </div>
       </div>
     </AuthLayout>

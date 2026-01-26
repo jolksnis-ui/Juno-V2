@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { AnimatedMenuIcon } from '@/components/ui/icons';
+import { AppLink } from '@/components/ui/app-link';
 import { cn } from '@/lib/utils';
 
 /** Navigation items for expanded menu */
@@ -97,7 +97,7 @@ export function Header({ isDark = false }: HeaderProps) {
       {/* Header Bar */}
       <div className="relative flex items-center justify-between px-4 py-4 md:px-7 md:py-[18px]">
         {/* Logo */}
-        <Link
+        <AppLink
           href="/"
           className="relative z-50 flex items-center"
           onClick={() => setExpanded(false)}
@@ -114,7 +114,7 @@ export function Header({ isDark = false }: HeaderProps) {
               isDark && 'brightness-0 invert'
             )}
           />
-        </Link>
+        </AppLink>
 
         {/* Centered Menu Button */}
         <motion.button
@@ -134,7 +134,7 @@ export function Header({ isDark = false }: HeaderProps) {
 
         {/* Auth Buttons */}
         <div className="relative z-50 flex items-center gap-2">
-          <Link
+          <AppLink
             href="/login"
             className={cn(
               'hidden h-9 items-center justify-center rounded border px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out sm:flex md:px-4 md:text-sm',
@@ -144,8 +144,8 @@ export function Header({ isDark = false }: HeaderProps) {
             )}
           >
             Log in
-          </Link>
-          <Link
+          </AppLink>
+          <AppLink
             href="/open-account"
             className={cn(
               'flex h-9 items-center justify-center rounded px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out md:px-4 md:text-sm',
@@ -155,7 +155,7 @@ export function Header({ isDark = false }: HeaderProps) {
             )}
           >
             Open account
-          </Link>
+          </AppLink>
         </div>
       </div>
 
@@ -214,7 +214,7 @@ const NavLink = ({
   onClick?: () => void;
   isDark?: boolean;
 }) => (
-  <Link
+  <AppLink
     href={href}
     onClick={onClick}
     className={cn(
@@ -225,5 +225,5 @@ const NavLink = ({
     )}
   >
     {children}
-  </Link>
+  </AppLink>
 );

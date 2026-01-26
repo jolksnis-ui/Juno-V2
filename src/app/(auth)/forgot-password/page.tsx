@@ -1,12 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import { AuthInput } from '@/components/ui/auth-input';
 import { AuthSubmitButton } from '@/components/ui/auth-button';
+import { AppLink } from '@/components/ui/app-link';
 import { forgotPasswordSchema, type ForgotPasswordFormValues } from '@/lib/validations';
 import { cn } from '@/lib/utils';
 import { FONT } from '@/lib/constants';
@@ -66,12 +66,12 @@ export default function ForgotPasswordPage() {
 
       {/* Back to login */}
       <div className={cn('mt-8 text-sm', FONT.mono)}>
-        <Link
+        <AppLink
           href="/login"
           className="text-white/60 transition-colors hover:text-white"
         >
           ← Back to login
-        </Link>
+        </AppLink>
       </div>
     </AuthLayout>
   );
