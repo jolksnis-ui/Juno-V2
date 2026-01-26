@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSmoothScroll } from '@/components/ui/smooth-scroll';
@@ -16,7 +17,16 @@ interface PageTransitionProps {
  */
 export const PageTransition = ({ children }: PageTransitionProps) => {
   const pathname = usePathname();
-  const { scrollToTop } = useSmoothScroll();
+  const { scrollToTop, lockScroll } = useSmoothScroll();
+  const prevPathname = useRef(pathname);
+
+  // Lock scroll when pathname changes (navigation starts)
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      lockScroll();
+      prevPathname.current = pathname;
+    }
+  }, [pathname, lockScroll]);
 
   return (
     <AnimatePresence 
@@ -24,6 +34,7 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
       onExitComplete={() => {
         // Reset scroll position only after the exit animation finishes
         // This prevents the user from seeing the page jump to top before it disappears
+        // scrollToTop also unlocks scroll
         scrollToTop();
       }}
     >

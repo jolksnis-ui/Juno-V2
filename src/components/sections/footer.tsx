@@ -19,12 +19,12 @@ const FOOTER_LINKS: Record<string, FooterLink[]> = {
     { label: 'About us', href: '/about' },
     { label: 'Everyday banking', href: '/everyday-banking' },
     { label: 'Corporate account', href: '/corporate-account' },
-    { label: 'Contact us', href: '#' },
+    { label: 'Contact us', href: '/contact-us' },
   ],
   Resources: [
-    { label: 'Cookie Policy', href: '#' },
-    { label: 'Privacy Policy', href: '#' },
-    { label: 'Terms and Conditions', href: '#' },
+    { label: 'Cookie Policy', href: '/cookies' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms and Conditions', href: '/terms-and-conditions' },
   ],
 };
 

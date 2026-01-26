@@ -5,10 +5,14 @@ import Lenis from 'lenis';
 
 interface SmoothScrollContextType {
   scrollToTop: () => void;
+  lockScroll: () => void;
+  unlockScroll: () => void;
 }
 
 const SmoothScrollContext = createContext<SmoothScrollContextType>({
   scrollToTop: () => {},
+  lockScroll: () => {},
+  unlockScroll: () => {},
 });
 
 export const useSmoothScroll = () => useContext(SmoothScrollContext);
@@ -54,7 +58,23 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
   }, []);
 
   /**
-   * Manually resets scroll position to top.
+   * Locks scroll during page transitions to prevent user scrolling.
+   */
+  const lockScroll = () => {
+    if (!lenisRef.current) return;
+    lenisRef.current.stop();
+  };
+
+  /**
+   * Unlocks scroll after page transitions complete.
+   */
+  const unlockScroll = () => {
+    if (!lenisRef.current) return;
+    lenisRef.current.start();
+  };
+
+  /**
+   * Manually resets scroll position to top and unlocks scroll.
    * Called by PageTransition component after exit animation completes.
    */
   const scrollToTop = () => {
@@ -62,10 +82,11 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
     
     lenisRef.current.scrollTo(0, { immediate: true });
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    lenisRef.current.start();
   };
 
   return (
-    <SmoothScrollContext.Provider value={{ scrollToTop }}>
+    <SmoothScrollContext.Provider value={{ scrollToTop, lockScroll, unlockScroll }}>
       {children}
     </SmoothScrollContext.Provider>
   );
