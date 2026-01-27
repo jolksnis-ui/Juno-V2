@@ -76,6 +76,7 @@ src/
 
 - [Product Description](docs/PRODUCT.md)
 - [Tech Stack](docs/STACK.md)
+- [Deployment (Vercel, ветка `staging`)](docs/DEPLOYMENT.md)
 
 ## License
 

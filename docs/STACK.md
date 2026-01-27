@@ -60,8 +60,11 @@ Note: Radix UI provides headless (unstyled) components. All styling comes from T
 ## Deployment
 
 - **Platform**: Vercel
+- **Production branch**: `staging` (настроить в Vercel: Settings → Git → Production Branch)
 - **Domain**: TBD
-- **Environment**: Production + Preview branches
+- **Environment**: Production (из `staging`) + Preview (остальные ветки)
+
+Подробнее: [docs/DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## Development Commands
 
