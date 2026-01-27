@@ -5,7 +5,7 @@ import { forwardRef } from 'react';
 
 interface AppLinkProps
   extends LinkProps,
-    React.AnchorHTMLAttributes<HTMLAnchorElement> {
+    Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   /** Disable Next.js auto scroll on navigation by default */
   scroll?: boolean;
 }
