@@ -8,8 +8,9 @@ import { GetStartedButton } from '@/components/ui/get-started-button';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { useAutoRotate } from '@/hooks/use-auto-rotate';
+import { useInView } from '@/hooks/use-in-view';
 import { MobileFeatureAccordion } from '@/components/ui/mobile-feature-accordion';
-import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, FONT, CONTAINER_MAX_WIDTH, ROW_HEIGHT, BUTTON_TEXT } from '@/lib/constants';
+import { ANIMATION, TRANSITION, IMAGES, BADGE_TEXT, FONT, CONTAINER_MAX_WIDTH, ROW_HEIGHT, BUTTON_TEXT, AUTO_ROTATE_INTERVAL, CORPORATE_SECTION } from '@/lib/constants';
 
 /** Corporate feature data structure */
 interface CorporateFeature {
@@ -24,42 +25,42 @@ const CORPORATE_FEATURES: CorporateFeature[] = [
   {
     id: 1,
     title: 'Instant payments',
-    description: 'Send funds to other Juno Money users instantly.',
-    image: IMAGES.corpInstantPayments,
+    description: 'Move funds between Juno accounts in seconds so your operations stay on schedule.',
+    image: IMAGES.corpTransfer,
   },
   {
     id: 2,
     title: 'Exchange in 30+ currencies',
     description:
-      'Convert between major currencies with competitive rates and full transparency.',
+      'Hedge and convert in major currencies with transparent rates and full visibility.',
     image: IMAGES.corpExchange,
   },
   {
     id: 3,
     title: 'Fast account creation',
     description:
-      'Get started in minutes with streamlined onboarding and verification.',
+      'Onboard your business quickly with streamlined verification and minimal paperwork.',
     image: IMAGES.corpFastAccount,
   },
   {
     id: 4,
     title: 'Dedicated account manager',
     description:
-      'Personal support from experts who understand your business needs.',
+      'A single point of contact who understands your business and helps you scale.',
     image: IMAGES.corpDedicatedManager,
   },
   {
     id: 5,
     title: 'Withdraw',
     description:
-      'Access your funds anytime with flexible withdrawal options worldwide.',
+      'Access your balance when you need it with reliable, flexible withdrawal options.',
     image: IMAGES.corpWithdraw,
   },
   {
     id: 6,
     title: 'Accept payments',
     description:
-      'Receive payments from clients globally with minimal fees and fast settlement.',
+      'Get paid by clients and partners globally with low fees and fast settlement.',
     image: IMAGES.corpAcceptPayments,
   },
 ];
@@ -70,15 +71,18 @@ const CORPORATE_FEATURES: CorporateFeature[] = [
  * Mobile: Vertical accordion with image appearing below active card
  */
 const CorporateSection = () => {
+  const [sectionRef, isSectionInView] = useInView<HTMLElement>({ threshold: 0.05 });
   const { active: activeFeature, isPaused, handleClick: handleFeatureClick } = useAutoRotate({
     itemCount: CORPORATE_FEATURES.length,
+    interval: AUTO_ROTATE_INTERVAL + 1000,
+    externalPaused: !isSectionInView,
   });
 
   const currentFeature =
     CORPORATE_FEATURES.find((f) => f.id === activeFeature) || CORPORATE_FEATURES[0];
 
   return (
-    <section className="relative bg-juno-50 px-4 py-16 md:py-24 md:px-6">
+    <section ref={sectionRef} className="relative bg-juno-50 px-3 py-16 md:px-6 lg:py-24 lg:px-6">
       {/* Subtle background texture */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.02]">
         <Image
@@ -91,15 +95,15 @@ const CorporateSection = () => {
 
       <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
         {/* Desktop Header */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <ScrollReveal mode="slide">
             <SectionHeader
               badge={BADGE_TEXT.corporate}
               title={
                 <>
-                  {`Payment solutions `}
+                  {CORPORATE_SECTION.headlineLine1}
                   <br />
-                  for corporate clients.
+                  {CORPORATE_SECTION.headlineLine2}
                 </>
               }
               action={<GetStartedButton label={BUTTON_TEXT.openAccount} variant="dark" />}
@@ -107,28 +111,28 @@ const CorporateSection = () => {
           </ScrollReveal>
         </div>
 
-        {/* Mobile Header - Centered layout */}
-        <div className="flex flex-col items-center gap-6 text-center md:hidden">
+        {/* Mobile Header: subtitle 24px to title, title 32px to button; tablet: max-w 600px */}
+        <div className="flex w-full flex-col items-center text-center lg:hidden md:mx-auto md:max-w-[600px]">
           <span
             className={cn(
-              'w-fit rounded border border-juno-200 bg-juno-100 px-1.5 py-1 text-sm text-juno-700',
+              'w-fit rounded border border-juno-200 bg-juno-100 px-1.5 py-1 text-[13px] text-juno-700',
               FONT.mono
             )}
           >
             {BADGE_TEXT.corporate}
           </span>
-          <h2 className={cn('text-[32px] leading-[1.13] text-juno-900', FONT.serif)}>
-            Payment solutions for corporate clients.
+          <h2 className={cn('mt-[24px] text-[44px] leading-[48px] lg:leading-[1.13] text-juno-900', FONT.serif)}>
+            {CORPORATE_SECTION.headline}
           </h2>
           <GetStartedButton
             label={BUTTON_TEXT.openAccount}
             variant="dark"
-            className="w-full"
+            className="mt-8 w-full md:w-auto"
           />
         </div>
 
         {/* Desktop: Two-column card */}
-        <div className="mt-16 hidden h-[600px] overflow-hidden rounded-md border border-juno-300 bg-white/56 md:flex">
+        <div className="mt-16 hidden h-[602px] overflow-hidden rounded-md border border-juno-300 bg-white/56 lg:flex">
           {/* Left: Animated feature image */}
           <FeatureImage feature={currentFeature} />
 
@@ -137,18 +141,20 @@ const CorporateSection = () => {
             activeFeature={activeFeature}
             isPaused={isPaused}
             onFeatureClick={handleFeatureClick}
+            isExternallyPaused={!isSectionInView}
           />
         </div>
 
-        {/* Mobile: Accordion Layout */}
-        <div className="mt-8 overflow-hidden rounded-md border border-juno-300 bg-white md:hidden">
+        {/* Mobile/tablet: 40px gap between Open Account button and 6-point accordion */}
+        <div className="mt-10 overflow-hidden rounded-md border border-juno-300 bg-white lg:mt-16 lg:hidden">
           <MobileFeatureAccordion
             features={CORPORATE_FEATURES}
             activeId={activeFeature}
             isPaused={isPaused}
             onFeatureClick={handleFeatureClick}
             theme="light"
-            backgroundImage={IMAGES.corpBg}
+            backgroundImage={IMAGES.corporateBg}
+            isExternallyPaused={!isSectionInView}
           />
         </div>
       </div>
@@ -159,17 +165,17 @@ CorporateSection.displayName = 'CorporateSection';
 
 /** Left side with animated feature image */
 const FeatureImage = ({ feature }: { feature: CorporateFeature }) => (
-  <div className="relative w-1/2 overflow-hidden border-r border-juno-300">
-    {/* Blurred background image */}
+  <div className="relative flex-1 overflow-hidden border-r border-juno-300">
+    {/* Background image - corporate-bg.jpg, no dots */}
     <div className="absolute inset-0 overflow-hidden">
       <Image
-        src={IMAGES.corpBg}
+        src={IMAGES.corporateBg}
         alt=""
         fill
-        className="object-cover opacity-30 blur-sm"
+        className="object-cover"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-white/40 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-white/30 backdrop-blur-[3px]" />
     </div>
 
     {/* Centered animated feature icon */}
@@ -181,7 +187,7 @@ const FeatureImage = ({ feature }: { feature: CorporateFeature }) => (
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ ...TRANSITION, duration: ANIMATION.medium }}
-          className="relative h-full aspect-[1/2]"
+          className="relative h-[600px] w-[360px] shrink-0"
         >
           <Image
             src={feature.image}
@@ -201,13 +207,15 @@ const FeaturesSide = ({
   activeFeature,
   isPaused,
   onFeatureClick,
+  isExternallyPaused,
 }: {
   activeFeature: number;
   isPaused: boolean;
   onFeatureClick: (id: number) => void;
+  isExternallyPaused: boolean;
 }) => (
   <div
-    className="flex w-1/2 flex-col justify-center p-10"
+    className="flex w-[520px] shrink-0 flex-col justify-start pt-8 pb-10 px-10"
     role="tablist"
     aria-label="Corporate features"
   >
@@ -218,6 +226,7 @@ const FeaturesSide = ({
         isActive={activeFeature === feature.id}
         isPaused={isPaused}
         onClick={() => onFeatureClick(feature.id)}
+        isExternallyPaused={isExternallyPaused}
       />
     ))}
   </div>
@@ -229,31 +238,37 @@ const FeatureItem = ({
   isActive,
   isPaused,
   onClick,
+  isExternallyPaused,
 }: {
   feature: CorporateFeature;
   isActive: boolean;
   isPaused: boolean;
   onClick: () => void;
+  isExternallyPaused: boolean;
 }) => (
   <button
     onClick={onClick}
     className="group w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-juno-900/50"
     aria-pressed={isActive}
   >
-    {/* Container with height animation for smooth expand/collapse */}
+    {/* Container - 1 line = shorter row (~128px), 2 lines = taller row (~164px) */}
     <motion.div
-      animate={{ height: isActive ? ROW_HEIGHT.active : ROW_HEIGHT.inactive }}
-      transition={{ ...TRANSITION, duration: ANIMATION.medium }}
-      className="flex flex-col justify-center overflow-hidden py-2"
+      animate={{
+        height: isActive
+          ? (feature.description.length > 50 ? ROW_HEIGHT.activeTwoLines : ROW_HEIGHT.activeOneLine)
+          : ROW_HEIGHT.inactive,
+      }}
+      transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+      className="flex flex-col justify-center overflow-hidden pt-6 pb-6"
     >
-      {/* Title - always visible, animates style between active/inactive */}
+      {/* Title - no layout; style only so it stays centered by flex */}
       <motion.h3
         animate={{
-          fontSize: isActive ? '32px' : '20px',
-          lineHeight: isActive ? '1.25' : '1.4',
+          fontSize: isActive ? '28px' : '20px',
+          lineHeight: isActive ? '32px' : '24px',
           color: isActive ? 'var(--juno-gray-900)' : 'var(--juno-gray-700)',
         }}
-        transition={{ ...TRANSITION, duration: ANIMATION.fast }}
+        transition={{ duration: 0.2 }}
         className={cn(
           'transition-colors duration-200',
           FONT.serif,
@@ -263,26 +278,30 @@ const FeatureItem = ({
         {feature.title}
       </motion.h3>
 
-      {/* Description - slides in from below, slides out upward */}
-      <AnimatePresence>
+      {/* Description - height auto so 1 line = compact, 2 lines = both visible; frame fits content */}
+      <AnimatePresence initial={false}>
         {isActive && (
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ ...TRANSITION, duration: ANIMATION.fast }}
-            className="mt-3 text-base leading-normal text-juno-700"
+          <motion.div
+            key="description"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden"
           >
-            {feature.description}
-          </motion.p>
+            <p className="mt-3 text-base leading-normal text-juno-700" style={{ lineHeight: 1.5 }}>
+              {feature.description}
+            </p>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
 
-    {/* Progress bar with fill animation */}
+    {/* Progress bar – same duration as auto-rotate interval */}
     <ProgressBar
       isActive={isActive}
       isPaused={isPaused}
+      isExternallyPaused={isExternallyPaused}
       featureId={feature.id}
       bgColor="bg-juno-300"
       fillColor="bg-juno-900"

@@ -79,12 +79,12 @@ const LeadershipSection = () => {
   };
 
   return (
-    <section className="relative bg-juno-50 px-6 py-24">
+    <section className="relative bg-juno-50 px-3 py-16 md:px-6 lg:py-24">
       <DotPattern />
 
       <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
-        {/* Part 1: Leadership Team */}
-        <div className="mb-24">
+        {/* Part 1: Leadership Team – 48px above divider on mobile/tablet */}
+        <div className="mb-12 lg:mb-24">
           {/* Header */}
           <ScrollReveal mode="slide">
             <SectionHeader
@@ -99,12 +99,12 @@ const LeadershipSection = () => {
               }
               subtitle="Juno is led by experienced professionals with deep expertise in regulated financial services and operational risk."
               titleMaxWidth="600px"
-              className="mb-16"
+              className="mb-10 lg:mb-16"
             />
           </ScrollReveal>
 
-          {/* Leadership cards */}
-          <div className="flex flex-col items-center justify-center gap-4 lg:flex-row">
+          {/* Leadership cards – mobile: stacked; tablet: grid 3 cols equal height; desktop: flex row, original gap and card heights */}
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:grid-rows-1 md:items-stretch md:gap-4 lg:flex lg:flex-row lg:justify-center lg:gap-6 lg:items-center">
             {LEADERS.map((leader, index) => (
               <LeaderCard
                 key={leader.name}
@@ -115,8 +115,8 @@ const LeadershipSection = () => {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="mb-24 h-px w-full bg-juno-300" />
+        {/* Divider – 48px above FAQ subtitle on mobile/tablet */}
+        <div className="mb-12 h-px w-full bg-juno-300 lg:mb-24" />
 
         {/* Part 2: FAQ */}
         <div>
@@ -128,11 +128,11 @@ const LeadershipSection = () => {
               title="Answers to common questions"
               subtitle="Below you'll find answers to common questions about how Juno operates."
               titleMaxWidth="600px"
-              className="mb-16"
+              className="mb-10 lg:mb-16"
             />
           </ScrollReveal>
 
-          {/* FAQ accordion list */}
+          {/* FAQ accordion list – mobile/tablet: 40px gap from header to first Q&A */}
           <div className="mx-auto flex max-w-[1256px] flex-col gap-3">
             {FAQS.map((faq, index) => (
               <FaqAccordion
@@ -176,32 +176,33 @@ const LeaderCard = ({
     <FadeInView
       delay={delay}
       className={cn(
-        'flex flex-col overflow-hidden rounded-md border border-juno-300',
-        isLarge ? 'w-[440px]' : 'w-[400px]'
+        'flex h-[600px] w-full max-w-none flex-col overflow-hidden rounded-md border border-juno-300 md:min-h-0 md:max-w-[400px] md:h-full lg:h-auto lg:max-w-none',
+        isLarge && 'lg:w-[440px]',
+        !isLarge && 'lg:w-[400px]'
       )}
     >
-      {/* Image */}
+      {/* Image – tablet only: fixed height 320px (width follows screen); desktop: fixed height by size */}
       <div
         className={cn(
-          'relative w-full overflow-hidden border-b border-juno-300 bg-white',
-          isLarge ? 'h-[400px]' : 'h-[342px]'
+          'relative min-h-0 w-full flex-1 overflow-hidden border-b border-juno-300 bg-white md:h-[320px] md:flex-none md:shrink-0 lg:flex-none',
+          isLarge ? 'lg:h-[400px]' : 'lg:h-[342px]'
         )}
       >
         <Image src={image} alt={name} fill className="object-cover" />
       </div>
 
-      {/* Content */}
-      <div className="relative flex flex-col items-center gap-4 bg-white px-8 pb-10 pt-8 text-center">
+      {/* Content – mobile: height fits text + dot; tablet: fills rest of card; desktop: natural height (original) */}
+      <div className="relative flex min-h-0 shrink-0 flex-col items-center justify-start gap-4 bg-white px-6 pt-6 pb-8 text-center md:flex-1 md:shrink md:min-h-0 lg:flex-initial lg:px-8 lg:pt-8 lg:pb-10">
         <DotPattern color="var(--juno-gray-400)" opacity={0.04} />
 
         <div className="relative flex flex-col gap-3">
           <span className={cn('text-sm text-juno-400', FONT.mono)}>
             {role}
           </span>
-          <h3 className={cn('text-2xl leading-8 text-juno-900', FONT.serif)}>
+          <h3 className={cn('text-2xl leading-[28px] text-juno-900 lg:leading-[28px]', FONT.serif)}>
             {name}
           </h3>
-          <p className="text-sm leading-normal text-juno-700">{description}</p>
+          <p className="text-[15px] leading-normal text-juno-700 lg:text-sm">{description}</p>
         </div>
 
         {/* Decorative dot */}

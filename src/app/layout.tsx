@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Prata } from 'next/font/google';
+import { LOGO_SRC } from '@/lib/constants';
 import SmoothScroll from '@/components/ui/smooth-scroll';
 import { PageTransition } from '@/components/ui/page-transition';
 import { HeaderWrapper } from '@/components/layout/header-wrapper';
@@ -23,24 +24,21 @@ const prata = Prata({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://junomoney.com'),
   title: 'Juno Bank | Premium Banking Services',
   description:
     'Highly personalised banking services for corporate entities, institutions and high net worth individuals.',
   icons: {
-    icon: [
-      {
-        url: '/images/Favicon@2x.png',
-        sizes: '32x32',
-        type: 'image/png',
-      },
-    ],
-    apple: [
-      {
-        url: '/images/Favicon@2x.png',
-        sizes: '180x180',
-        type: 'image/png',
-      },
-    ],
+    icon: [{ url: LOGO_SRC, type: 'image/svg+xml' }],
+    apple: [{ url: LOGO_SRC, type: 'image/svg+xml', sizes: '180x180' }],
+  },
+  openGraph: {
+    type: 'website',
+    images: [{ url: '/opengraph-image?v=junomoney', width: 1200, height: 630, alt: 'Juno Money' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/opengraph-image?v=junomoney'],
   },
 };
 
@@ -53,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${prata.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${prata.variable} antialiased overflow-x-hidden`}
       >
         <Preloader />
         <SmoothScroll>

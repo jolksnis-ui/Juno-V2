@@ -33,7 +33,7 @@ export function AuthSubmitButton({
       type="submit"
       disabled={!isValid || isSubmitting}
       className={cn(
-        'h-12 w-full rounded bg-white text-sm text-juno-900 transition-colors',
+        'h-12 w-full md:w-auto rounded bg-white text-sm text-juno-900 transition-colors',
         'hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-50',
         FONT.mono,
         className

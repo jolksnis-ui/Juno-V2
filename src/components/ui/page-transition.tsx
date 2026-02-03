@@ -40,9 +40,12 @@ export const PageTransition = ({ children }: PageTransitionProps) => {
     >
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
+        // IMPORTANT: avoid transforms/filters here.
+        // `position: sticky` (used by the desktop Security stepper) breaks when any ancestor
+        // has `transform`/`filter` applied (common with page transition animations).
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{
           duration: 0.7,
           ease: [0.76, 0, 0.24, 1], // Elegant custom bezier curve

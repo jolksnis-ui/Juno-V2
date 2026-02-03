@@ -41,6 +41,17 @@
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-prata);
 
+  /* Breakpoints
+   * Mobile: 0–799px
+   * Tablet: 800px–1280px
+   * Desktop: 1281px+
+   */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 800px;
+  --breakpoint-lg: 1281px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1536px;
+
   /* Juno gray scale for Tailwind utilities */
   --color-juno-25: var(--juno-gray-25);
   --color-juno-50: var(--juno-gray-50);
@@ -55,11 +66,47 @@
   --color-juno-900: var(--juno-gray-900);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+/* Hide Next.js DevTools / overlay portal element */
+nextjs-portal {
+  display: none !important;
+}
+
+/* Trust, Security & Infrastructure – light blue shade, minimal darkening */
+.infrastructure-tab-image {
+  filter: brightness(1) contrast(1.02) saturate(0.92) hue-rotate(-6deg);
+}
+
+/* Compliance & Infrastructure – sharp via contrast, smooth rendering (no noise) */
+.infrastructure-section .infrastructure-tab-image {
+  filter: brightness(1) contrast(1.12) saturate(0.94) hue-rotate(-6deg);
+  image-rendering: auto;
+}
+
+/* What We Do – balanced left/right, more sharpness, no noise, palette like Compliance & Infrastructure */
+.what-we-do-section .infrastructure-tab-image {
+  filter: brightness(0.96) contrast(1.18) saturate(0.94) hue-rotate(-6deg);
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Compliance tab only – balanced: slightly brighter, less contrast so window/floor feel even */
+.infrastructure-section .compliance-tab-image {
+  filter: brightness(0.94) contrast(1.18) saturate(0.96) hue-rotate(-6deg);
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Legal content prose styles */
@@ -145,7 +192,7 @@ body {
   border-top: 1px solid var(--juno-gray-200);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1281px) {
   .legal-content h2 {
     font-size: 2rem;
   }

@@ -23,11 +23,11 @@ export const LegalPageLayout = ({
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-juno-900 px-4 pb-16 pt-32 md:px-6 md:pb-24 md:pt-40">
-        <div className="mx-auto max-w-4xl">
+      <section className="bg-juno-900 px-3 pb-16 pt-32 md:px-6 lg:px-6 lg:pb-24 lg:pt-40">
+        <div className="mx-auto max-w-4xl md:max-w-[600px] lg:max-w-4xl">
           <h1
             className={cn(
-              'text-4xl leading-tight text-white md:text-5xl lg:text-6xl',
+              'text-4xl leading-tight text-white lg:text-5xl xl:text-6xl',
               FONT.serif
             )}
           >
@@ -42,7 +42,7 @@ export const LegalPageLayout = ({
       </section>
 
       {/* Content Section */}
-      <section className="bg-white px-4 py-12 md:px-6 md:py-20">
+      <section className="bg-white px-3 py-12 md:px-6 lg:px-6 lg:py-20">
         <article className="legal-content mx-auto max-w-4xl text-juno-800">
           {children}
         </article>

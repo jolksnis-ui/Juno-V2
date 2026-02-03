@@ -6,7 +6,7 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 import { AnimatedMenuIcon } from '@/components/ui/icons';
 import { AppLink } from '@/components/ui/app-link';
 import { cn } from '@/lib/utils';
-import { CONTAINER_MAX_WIDTH } from '@/lib/constants';
+import { CONTAINER_MAX_WIDTH, LOGO_SRC, MENU_ICON_COLOR } from '@/lib/constants';
 
 /** Navigation items for expanded menu */
 const NAV_ITEMS = {
@@ -34,6 +34,7 @@ export function Header({ isDark = false }: HeaderProps) {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [iconHovered, setIconHovered] = useState(false);
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -96,9 +97,9 @@ export function Header({ isDark = false }: HeaderProps) {
       )}
     >
       {/* Header Bar */}
-      <div className="px-4 md:px-7">
+      <div className="px-3 md:px-6 lg:px-7">
         <div
-          className="relative mx-auto flex items-center justify-between py-4 md:py-[18px]"
+          className="relative mx-auto flex items-center justify-between py-4 lg:py-[18px]"
           style={{ maxWidth: CONTAINER_MAX_WIDTH }}
         >
           {/* Logo */}
@@ -109,13 +110,13 @@ export function Header({ isDark = false }: HeaderProps) {
             aria-label="Juno home"
           >
             <Image
-              src="/images/Header/logo.svg"
-              alt="Juno logo"
+              src={LOGO_SRC}
+              alt="Juno Money"
               width={112}
               height={28}
               priority
               className={cn(
-                'h-7 w-auto transition-[filter] duration-500 ease-out',
+                'h-[22px] w-auto transition-[filter] duration-500 ease-out lg:h-6',
                 isDark && 'brightness-0 invert'
               )}
             />
@@ -123,18 +124,35 @@ export function Header({ isDark = false }: HeaderProps) {
 
           {/* Centered Menu Button */}
           <motion.button
+            type="button"
             onClick={() => setExpanded(!expanded)}
+            onHoverStart={() => setIconHovered(true)}
+            onHoverEnd={() => setIconHovered(false)}
             aria-label={expanded ? 'Close menu' : 'Open menu'}
             aria-expanded={expanded}
             className={cn(
-              'absolute left-1/2 z-50 flex size-10 -translate-x-1/2 items-center justify-center rounded transition-colors duration-500',
-              isDark ? 'hover:bg-white/10' : 'hover:bg-black/5'
+              'absolute left-1/2 z-50 flex size-10 -translate-x-1/2 cursor-pointer items-center justify-center rounded border border-transparent transition-colors duration-500',
+              isDark
+                ? 'hover:bg-[#18181B] hover:border-[#a0a0ab]'
+                : 'hover:bg-white hover:border-[#70707B]',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+              isDark
+                ? 'focus-visible:ring-white focus-visible:ring-offset-[#18181B]'
+                : 'focus-visible:ring-juno-900 focus-visible:ring-offset-white'
             )}
-            initial="closed"
-            animate={expanded ? "open" : "closed"}
-            whileHover={expanded ? "hoverExpanded" : "hoverClosed"}
           >
-            <AnimatedMenuIcon isOpen={expanded} size={24} color={isDark ? '#ffffff' : '#18181B'} />
+            <AnimatedMenuIcon
+              isOpen={expanded}
+              isHovered={iconHovered}
+              size={24}
+              color={
+                isDark
+                  ? iconHovered
+                    ? '#ffffff'
+                    : '#d1d1d6'
+                  : MENU_ICON_COLOR
+              }
+            />
           </motion.button>
 
           {/* Auth Buttons */}
@@ -142,10 +160,10 @@ export function Header({ isDark = false }: HeaderProps) {
             <AppLink
               href="/login"
               className={cn(
-                'hidden h-9 items-center justify-center rounded border px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out sm:flex md:px-4 md:text-sm',
+                'hidden h-9 items-center justify-center rounded border px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out sm:flex lg:px-4 lg:text-sm',
                 isDark
-                  ? 'border-white/80 text-white hover:bg-white/10'
-                  : 'border-[#d1d1d6] text-[#18181B] hover:bg-black/5'
+                  ? 'border-[#3F3F46] text-white hover:border-[#A0A0AB]'
+                  : 'border-[#d1d1d6] text-[#18181B] hover:border-[#70707b]'
               )}
             >
               Log in
@@ -153,10 +171,10 @@ export function Header({ isDark = false }: HeaderProps) {
             <AppLink
               href="/open-account"
               className={cn(
-                'flex h-9 items-center justify-center rounded px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out md:px-4 md:text-sm',
+                'flex h-9 items-center justify-center rounded px-3 font-[family-name:var(--font-geist-mono)] text-xs transition-all duration-500 ease-out lg:px-4 lg:text-sm',
                 isDark
-                  ? 'bg-white text-[#18181B] hover:bg-white/90'
-                  : 'bg-[#18181B] text-white hover:bg-[#18181B]/90'
+                  ? 'bg-white text-[#18181B] hover:bg-[#D1D1D6]'
+                  : 'bg-[#18181B] text-white hover:bg-[#3F3F46] hover:text-white'
               )}
             >
               Open account
@@ -178,19 +196,32 @@ export function Header({ isDark = false }: HeaderProps) {
               isDark ? 'border-[#3f3f46]' : 'border-[#d1d1d6]'
             )}
           >
-            <div className="px-4 py-8 md:px-7 md:py-12">
+            <div className="px-3 pt-6 pb-9 md:px-6 lg:px-7 lg:py-12">
               {/* Navigation Section */}
               <motion.div variants={itemVariants} className="mx-auto w-full max-w-7xl">
-                {/* Two-column Navigation Grid */}
-                <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2">
-                  {/* Row 1 */}
+                {/* Mobile/tablet: About us, then Everyday banking, then Corporate account, Contact us */}
+                <div className="grid grid-cols-1 gap-x-8 lg:hidden">
+                  <NavLink href={NAV_ITEMS.right[0].href} onClick={() => setExpanded(false)} isDark={isDark}>
+                    {NAV_ITEMS.right[0].label}
+                  </NavLink>
+                  <NavLink href={NAV_ITEMS.left[0].href} onClick={() => setExpanded(false)} isDark={isDark}>
+                    {NAV_ITEMS.left[0].label}
+                  </NavLink>
+                  <NavLink href={NAV_ITEMS.left[1].href} onClick={() => setExpanded(false)} isDark={isDark}>
+                    {NAV_ITEMS.left[1].label}
+                  </NavLink>
+                  <NavLink href={NAV_ITEMS.right[1].href} onClick={() => setExpanded(false)} isDark={isDark}>
+                    {NAV_ITEMS.right[1].label}
+                  </NavLink>
+                </div>
+                {/* Desktop: two-column grid (Everyday banking, About us / Corporate account, Contact us) */}
+                <div className="hidden grid-cols-2 gap-x-8 lg:grid">
                   <NavLink href={NAV_ITEMS.left[0].href} onClick={() => setExpanded(false)} isDark={isDark}>
                     {NAV_ITEMS.left[0].label}
                   </NavLink>
                   <NavLink href={NAV_ITEMS.right[0].href} onClick={() => setExpanded(false)} isDark={isDark}>
                     {NAV_ITEMS.right[0].label}
                   </NavLink>
-                  {/* Row 2 */}
                   <NavLink href={NAV_ITEMS.left[1].href} onClick={() => setExpanded(false)} isDark={isDark}>
                     {NAV_ITEMS.left[1].label}
                   </NavLink>
@@ -224,7 +255,7 @@ const NavLink = ({
     href={href}
     onClick={onClick}
     className={cn(
-      'block whitespace-nowrap text-center border-b py-4 font-[family-name:var(--font-prata)] text-3xl font-light transition-all duration-200 md:py-6 md:text-5xl',
+      'block whitespace-nowrap text-center border-b py-4 font-[family-name:var(--font-prata)] text-3xl font-light transition-all duration-200 lg:py-6 lg:text-5xl',
       isDark
         ? 'border-[#3f3f46] text-[#a1a1aa] hover:text-white hover:border-white'
         : 'border-[#d1d1d6] text-[#71717A] hover:text-[#18181B] hover:border-[#18181B]'

@@ -17,11 +17,16 @@ import { FONT, CONTAINER_MAX_WIDTH, IMAGES } from '@/lib/constants';
 /** Form submission states */
 type SubmitState = 'idle' | 'submitting' | 'success' | 'error' | 'rate-limited';
 
+interface ContactSectionProps {
+  /** When true (Contact Us page), title is 64px on desktop; when false (embedded), 60px */
+  isContactPage?: boolean;
+}
+
 /**
  * Contact section with background image header and contact form
  * Features rate limiting feedback and success/error states
  */
-const ContactSection = () => {
+const ContactSection = ({ isContactPage = false }: ContactSectionProps = {}) => {
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [retryAfter, setRetryAfter] = useState(0);
@@ -99,23 +104,24 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="relative">
-      {/* Background image header */}
-      <div className="relative h-[280px] w-full overflow-hidden">
-        <Image
-          src={IMAGES.corporateBg}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-        />
+    <section className="relative overflow-hidden bg-juno-900">
+      {/* Background frame: full back of contact form, gradient to footer (desktop: 880px; mobile/tablet: reduced height so 8px gap below form) */}
+      <div className="pointer-events-none absolute left-0 top-0 w-full overflow-hidden min-h-[min(85vh,720px)] lg:min-h-0 lg:h-[880px]">
+        <Image src={IMAGES.contactFormBg} alt="" fill className="object-cover object-top" priority />
         <div className="absolute inset-0 bg-black/30" />
+        {/* Fade to juno-900 so footer passes smoothly */}
+        <div className="absolute inset-x-0 bottom-0 h-80 bg-gradient-to-b from-transparent via-black/40 to-juno-900" />
       </div>
 
-      {/* Form container */}
-      <div className="relative -mt-40 px-6 pb-24">
+      {/* Form container – mobile/tablet: 12px (phone) / 24px (tablet) gap outside form; desktop: existing */}
+      <div
+        className={cn(
+          'relative px-3 pb-2 md:px-6 lg:px-6 lg:pt-[200px] lg:pb-8',
+          isContactPage ? 'pt-[116px]' : 'pt-16'
+        )}
+      >
         <FadeInView
-          className="mx-auto rounded-md border border-juno-200 bg-juno-25 px-4 py-20 md:px-8 lg:px-[72px]"
+          className="mx-auto w-full max-w-full rounded-md border border-juno-200 bg-juno-25 bg-[radial-gradient(circle,_rgba(24,24,27,0.04)_0.5px,_transparent_0.5px)] bg-center bg-repeat bg-[length:3px_3px] px-6 py-14 lg:max-w-[1392px] lg:p-0 lg:px-[72px] lg:py-20"
           style={{ maxWidth: CONTAINER_MAX_WIDTH }}
         >
           <AnimatePresence mode="wait">
@@ -128,14 +134,28 @@ const ContactSection = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                {/* Header */}
-                <div className="mb-16 flex flex-col items-center justify-between gap-6 text-center md:flex-row md:items-center md:text-left">
-                  <h2 className={cn('w-full max-w-[600px] text-4xl leading-none text-juno-900 md:text-5xl lg:text-[60px]', FONT.serif)}>
-                    Become a
-                    <br />
-                    Juno Money client.
+                {/* Header – tablet: max-w 696px, centered; desktop: two lines, left-aligned */}
+                <div
+                  className={cn(
+                    'mb-16 flex w-full flex-col items-center justify-between gap-6 text-center md:mx-auto md:max-w-[600px] lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:text-left',
+                    isContactPage && 'lg:h-[136px]'
+                  )}
+                >
+                  <h2
+                    className={cn(
+                      'w-full leading-none text-juno-900 lg:max-w-[600px] lg:m-0 lg:h-[128px] lg:leading-[64px] lg:flex lg:flex-col lg:justify-center',
+                      isContactPage ? 'text-[46px] leading-[50px] lg:text-[64px] lg:leading-[68px] lg:h-[136px]' : 'text-[44px] leading-[48px] lg:text-[60px] lg:leading-[64px]',
+                      FONT.serif
+                    )}
+                  >
+                    <span className="lg:hidden">Become a Juno Money client.</span>
+                    <span className="hidden lg:inline">
+                      Become a
+                      <br />
+                      Juno Money client.
+                    </span>
                   </h2>
-                  <p className="w-full max-w-[320px] text-base leading-normal text-juno-700">
+                  <p className="w-full text-base leading-normal text-juno-700 lg:max-w-[320px]">
                     Unlock a world of financial possibilities with us, open an
                     account today and start experiencing unparalleled banking
                     solutions tailored just for you.
@@ -144,7 +164,7 @@ const ContactSection = () => {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit(handleFormSubmit)} noValidate className="flex flex-col gap-8">
-                  {/* Row 1: Name / Company */}
+                  {/* Row 1: Name / Company – tablet: same row layout as desktop */}
                   <div className="flex flex-col gap-6 md:flex-row md:gap-0">
                     <div className="flex-1">
                       <Input
@@ -170,7 +190,7 @@ const ContactSection = () => {
                     </div>
                   </div>
 
-                  {/* Row 2: Email / Phone */}
+                  {/* Row 2: Email / Phone – tablet: same row layout as desktop */}
                   <div className="flex flex-col gap-6 md:flex-row md:gap-0">
                     <div className="flex-1">
                       <Input
@@ -229,7 +249,7 @@ const ContactSection = () => {
                       label="Get in touch"
                       isLoading={submitState === 'submitting'}
                       disabled={!isValid || submitState === 'rate-limited'}
-                      className="w-full md:w-auto"
+                      className="w-full md:w-auto lg:w-auto"
                     />
                   </div>
                 </form>
@@ -264,7 +284,10 @@ const SuccessMessage = ({ onReset }: { onReset: () => void }) => (
     </p>
     <button
       onClick={onReset}
-      className="mt-8 text-sm font-medium text-juno-900 underline underline-offset-4 transition-opacity hover:opacity-70"
+      className={cn(
+        'mt-8 text-sm font-normal text-juno-900 underline underline-offset-4 transition-opacity hover:opacity-70',
+        FONT.mono
+      )}
       aria-label="Send another message"
     >
       Send another message

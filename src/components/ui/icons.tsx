@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { MENU_ICON_COLOR } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 interface IconProps {
   className?: string;
@@ -8,84 +10,38 @@ interface IconProps {
 
 interface AnimatedMenuIconProps extends IconProps {
   isOpen: boolean;
+  isHovered?: boolean;
 }
 
+const t = { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] as const };
+
 /**
- * Animated menu icon with smooth transition from burger to X
- * Uses Framer Motion for elegant sequential animation
+ * Animated menu icon: 2-line burger morphs smoothly into X (cross) and back.
+ * Same two lines animate with rotate + translate; no swap.
  */
 export const AnimatedMenuIcon = ({
   isOpen,
+  isHovered = false,
   className,
   size = 24,
-  color = "currentColor",
+  color = MENU_ICON_COLOR,
 }: AnimatedMenuIconProps) => {
-  const transition = { duration: 0.4, ease: [0.25, 0.1, 0.25, 1.0] as const };
-
   const topVariants = {
-    closed: {
-      rotate: 0,
-      y: 0,
-      transition: {
-        rotate: { ...transition, duration: 0.2 },
-        y: { ...transition, delay: 0.2 }
-      }
-    },
-    open: {
-      rotate: 45,
-      y: 4,
-      transition: {
-        y: { ...transition, duration: 0.2 },
-        rotate: { ...transition, delay: 0.2 }
-      }
-    },
-    hoverClosed: {
-      y: -3,
-      transition: { ...transition, duration: 0.2 }
-    },
-    hoverExpanded: {
-      rotate: 45,
-      y: 4,
-      scale: 1.1,
-      transition: { ...transition, duration: 0.2 }
-    }
-  };
-
-  const centerVariants = {
-    closed: { opacity: 1 },
-    open: { opacity: 0 },
-    hoverClosed: { opacity: 1 },
-    hoverExpanded: { opacity: 0 }
+    closed: { rotate: 0, y: 0, scale: 1, strokeWidth: 1.4, transition: t },
+    open: { rotate: 45, y: 2, scale: 0.92, strokeWidth: 1.6, transition: t },
+    hoverClosed: { rotate: 0, y: -1, scale: 1, strokeWidth: 1.4, transition: { ...t, duration: 0.2 } },
+    hoverExpanded: { rotate: 45, y: 2, scale: 0.96, strokeWidth: 1.6, transition: { ...t, duration: 0.2 } },
   };
 
   const bottomVariants = {
-    closed: {
-      rotate: 0,
-      y: 0,
-      transition: {
-        rotate: { ...transition, duration: 0.2 },
-        y: { ...transition, delay: 0.2 }
-      }
-    },
-    open: {
-      rotate: -45,
-      y: -4,
-      transition: {
-        y: { ...transition, duration: 0.2 },
-        rotate: { ...transition, delay: 0.2 }
-      }
-    },
-    hoverClosed: {
-      y: 3,
-      transition: { ...transition, duration: 0.2 }
-    },
-    hoverExpanded: {
-      rotate: -45,
-      y: -4,
-      scale: 1.1,
-      transition: { ...transition, duration: 0.2 }
-    }
+    closed: { rotate: 0, y: 0, scale: 1, strokeWidth: 1.4, transition: t },
+    open: { rotate: -45, y: -2, scale: 0.92, strokeWidth: 1.6, transition: t },
+    hoverClosed: { rotate: 0, y: 1, scale: 1, strokeWidth: 1.4, transition: { ...t, duration: 0.2 } },
+    hoverExpanded: { rotate: -45, y: -2, scale: 0.96, strokeWidth: 1.6, transition: { ...t, duration: 0.2 } },
   };
+
+  const state: 'closed' | 'open' | 'hoverClosed' | 'hoverExpanded' =
+    isHovered && isOpen ? 'hoverExpanded' : isHovered && !isOpen ? 'hoverClosed' : isOpen ? 'open' : 'closed';
 
   return (
     <motion.svg
@@ -94,37 +50,30 @@ export const AnimatedMenuIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth="1.4"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={className}
+      className={cn(className, 'origin-center')}
       aria-hidden="true"
     >
-      {/* Top line */}
       <motion.line
-        x1="4"
-        y1="8"
-        x2="20"
-        y2="8"
+        x1="2"
+        y1="10"
+        x2="22"
+        y2="10"
         variants={topVariants}
+        animate={state}
+        initial={false}
         className="origin-center"
       />
-      {/* Middle line */}
       <motion.line
-        x1="4"
-        y1="12"
-        x2="20"
-        y2="12"
-        variants={centerVariants}
-        className="origin-center"
-      />
-      {/* Bottom line */}
-      <motion.line
-        x1="4"
-        y1="16"
-        x2="20"
-        y2="16"
+        x1="2"
+        y1="14"
+        x2="22"
+        y2="14"
         variants={bottomVariants}
+        animate={state}
+        initial={false}
         className="origin-center"
       />
     </motion.svg>

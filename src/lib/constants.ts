@@ -29,6 +29,9 @@ export const AUTO_ROTATE_INTERVAL = 5000;
 /** Update interval for Singapore time display (ms) */
 export const TIME_UPDATE_INTERVAL = 60000;
 
+/** Rotation interval for timezone carousel in hero (ms). Longer = more pause between time settled and next city. */
+export const TIMEZONE_ROTATION_INTERVAL = 60000;
+
 /** Container max width used across sections */
 export const CONTAINER_MAX_WIDTH = '1392px';
 
@@ -50,15 +53,16 @@ export const DIMENSIONS = {
 
 /** Row heights for expandable feature lists */
 export const ROW_HEIGHT = {
-  active: 140,
-  inactive: 84,
+  inactive: 76,
+  activeOneLine: 128,
+  activeTwoLines: 148,
   securityActive: 210,
   securityInactive: 100,
 } as const;
 
 /** Hero video URL - business/corporate theme from Pexels */
 export const HERO_VIDEO_URL =
-  'https://videos.pexels.com/video-files/3252123/3252123-uhd_2560_1440_25fps.mp4';
+  '/videos/hero.mp4';
 
 /** Font family class names for consistent typography */
 export const FONT = {
@@ -69,45 +73,58 @@ export const FONT = {
 /** Video paths */
 export const VIDEOS = {
   animatedCurrencies: '/images/LogIn/Animated Currencies.mp4',
+  corporateHero: '/videos/Juno%20Corporate%20page%20asset.mov',
+  individualHero: '/videos/Juno%20Individual%20page%20asset.mov',
 } as const;
 
 /** Image paths */
 export const IMAGES = {
   mobileMockup: '/images/Mobile Mockup.png',
   laptopMockup: '/images/laptop-mockup.png',
+  /** Account section (home) – desktop: personal tab */
+  accountSectionPersonal: '/images/Individual.png',
+  /** Account section (home) – mobile/tablet only: personal tab */
+  accountSectionPersonalMobile: '/images/Individual(M).png',
+  /** Account section (home) – desktop frame: business tab */
+  accountSectionBusiness: '/images/Bussines.png',
   corporateBg: '/images/corporate-bg.jpg',
+  contactFormBg: '/images/contact-form-bg.jpg',
   avatarJohn: '/images/avatar-john.jpg',
   valuesDotPattern: '/images/values-dot-pattern.png',
   everydayBankingHero: '/images/everyday-banking-hero.jpg',
   // About page images
   aboutOffice: '/images/about/office-interior.jpg',
-  aboutServicePreview: '/images/about/service-preview.jpg',
+  aboutServicePreview: '/images/about/modern-business-building-nanjing-china.jpg',
   visionMockup: '/images/about/vision-mockup.png',
   missionVisionMock: '/images/about/Mission & Vision Mock.png',
   leaderCeo: '/images/about/leader-ceo.jpg',
   leaderCompliance: '/images/about/leader-compliance.jpg',
   leaderCoo: '/images/about/leader-coo.jpg',
-  // Individual features images
-  featureInstantPayments: '/images/Individual-features/Instant payments.svg',
-  featureExchange: '/images/Individual-features/Exchange.svg',
-  featureFastAccount: '/images/Individual-features/Fast Account Creation.svg',
-  featureDedicatedManager: '/images/Individual-features/Dedicated Account Manager.svg',
-  featureWithdraw: '/images/Individual-features/Withdraw.svg',
-  featureAcceptPayments: '/images/Individual-features/Accept Payment.svg',
+  // Individual features images (PNG modals for desktop frame)
+  featureInstantPayments: '/images/Individual-features/Instant payments.png',
+  featureExchange: '/images/Individual-features/Exchange.png',
+  featureFastAccount: '/images/Individual-features/Fast Account Creation.png',
+  featureDedicatedManager: '/images/Individual-features/Dedicated account manager.png',
+  featureWithdraw: '/images/Individual-features/Withdraw.png',
+  featureAcceptPayments: '/images/Individual-features/Accept Payment.png',
   featuresSectionBg: '/images/about/individual features background.png',
-  // Corporate features images
+  individualBg: '/images/individual-bg.jpg',
+  // Corporate features images (PNG modals)
   corpBg: '/images/Corporate-features/Background.png',
-  corpInstantPayments: '/images/Corporate-features/Instant Payments.svg',
-  corpExchange: '/images/Corporate-features/Exchange.svg',
-  corpFastAccount: '/images/Corporate-features/Fast Account Creation.svg',
-  corpDedicatedManager: '/images/Corporate-features/Dedicated Account Manager.svg',
-  corpWithdraw: '/images/Corporate-features/Withdraw.svg',
-  corpAcceptPayments: '/images/Corporate-features/Accept Payments.svg',
+  corpTransfer: '/images/Corporate-features/Transfer.png',
+  corpExchange: '/images/Corporate-features/FX.png',
+  corpFastAccount: '/images/Corporate-features/Account creation.png',
+  corpDedicatedManager: '/images/Corporate-features/Support.png',
+  corpWithdraw: '/images/Corporate-features/Withdrawal Confirmation.png',
+  corpAcceptPayments: '/images/Corporate-features/Accept payments.png',
+  corpTransactionHistory: '/images/Corporate-features/transaction history.png',
   // Stepper images (Security section)
-  stepperAccountProtection: '/images/Stepper/Account Protection.png',
-  stepperComplianceKyc: '/images/Stepper/Compliance & KYC.png',
-  stepperSecurePayments: '/images/Stepper/Secure Payments.png',
-  stepperTrustedInfrastructure: '/images/Stepper/Trusted infrascrutcture.png',
+  // Desktop SVG wrappers (embed the phone PNGs)
+  // Versioned to avoid browser/Next image cache showing older large-canvas asset
+  stepperAccountProtection: '/images/Stepper/Account-Protection-20260128-v3.png',
+  stepperComplianceKyc: '/images/Stepper/Compliance-KYC-20260128-v3.png',
+  stepperSecurePayments: '/images/Stepper/Secure-Payments-20260128-v3.png',
+  stepperTrustedInfrastructure: '/images/Stepper/Trusted-infrascrutcture-20260128-v3.png',
   // Stepper images - Mobile versions
   stepperAccountProtectionMobile: '/images/Stepper/AccountProtection(M).png',
   stepperComplianceMobile: '/images/Stepper/Compliance(M).png',
@@ -128,6 +145,36 @@ export const BADGE_TEXT = {
   individual: 'Tailored for individual clients',
 } as const;
 
+/** Section headlines and body for Individual (features) section */
+export const INDIVIDUAL_SECTION = {
+  headline: 'Payment solutions for individual clients.',
+  body: 'Banking that fits your life—send, exchange, and manage your money with clarity and control.',
+} as const;
+
+/** Section headlines and body for Corporate section */
+export const CORPORATE_SECTION = {
+  headline: 'Payment solutions for corporate clients.',
+  headlineLine1: 'Payment solutions ',
+  headlineLine2: 'for corporate clients.',
+  body: 'Built for businesses—payments, FX, and dedicated support so you can focus on growth.',
+} as const;
+
+/** Account section (Get the best out of Juno Money) – badge, title, subtitle */
+export const ACCOUNT_SECTION = {
+  badge: 'Personal and business accounts',
+  title: 'Get the best out of\nJuno Money.',
+  subtitle:
+    'We provide a highly personalised service to corporate entities, institutions and high net worth individuals, including secure, competitive and discrete execution of cross-border payments and settlement services.',
+} as const;
+
+/** Security section – badge, title, subtitle */
+export const SECURITY_SECTION = {
+  badge: 'Built for regulated environments',
+  title: 'Security & compliance\nyou can trust',
+  subtitle:
+    'Juno combines enterprise-grade security features with world-class compliance tooling to help businesses operate safely, securely, and at scale.',
+} as const;
+
 /** Validation limits for form fields */
 export const VALIDATION_LIMITS = {
   nameMin: 2,
@@ -137,6 +184,12 @@ export const VALIDATION_LIMITS = {
   messageMin: 10,
   messageMax: 5000,
 } as const;
+
+/** Header menu icon: burger (closed) and close/X (open) use the same color */
+export const MENU_ICON_COLOR = '#3F3F46';
+
+/** Logo: ?v= для сброса кэша после смены на junomoney (Vercel/CDN) */
+export const LOGO_SRC = '/images/Header/logo.svg';
 
 /** Email template color palette */
 export const EMAIL_COLORS = {

@@ -52,53 +52,62 @@ const ValuesSection = () => {
   ];
 
   return (
-    <section className="relative bg-juno-900 px-6 py-24">
+    <section className="relative bg-juno-900 px-3 py-16 md:px-6 lg:px-6 lg:py-24">
       {/* Dot pattern background */}
       <DotPattern className="absolute inset-0" />
 
       <div className="relative mx-auto" style={{ maxWidth: CONTAINER_MAX_WIDTH }}>
-        <div className="flex flex-col gap-4">
-          {/* First row: Header + 2 cards */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            {/* Header card (left) */}
-            <FadeInView className="flex h-80 flex-col items-center justify-center gap-6 rounded-md p-6 text-center">
-              <span className={cn('w-fit rounded border border-juno-700 bg-white/[0.08] px-1.5 py-1 text-sm text-juno-300', FONT.mono)}>
-                How we operate
-              </span>
-              <h2 className={cn('text-5xl leading-[1.14] text-white lg:text-[64px]', FONT.serif)}>
-                Our values
-              </h2>
-              <p className="text-base leading-normal text-juno-200">
-                Our values guide how we build and operate secure, compliant
-                financial services.
-              </p>
-            </FadeInView>
+        {/* Mobile: 1 col stack. Tablet (md): 2 cols – row1 header, row2 cards 1–2, row3 cards 3–4, row4 card 5 centered. Desktop (lg): 3 cols as before */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-4">
+          {/* Header card – subtitle, title, body max-w 600px (mobile/tablet); full width on tablet row (col-span-2); 32px back-up below text; title↔body 24px (gap-6) */}
+          <FadeInView className="mx-auto mb-8 flex min-h-0 w-full max-w-[600px] flex-col items-center justify-center gap-6 rounded-md p-0 text-center md:col-span-2 lg:col-span-1 lg:mb-0 lg:max-w-none lg:h-80 lg:p-6">
+            <span className={cn('w-fit rounded border border-juno-700 bg-white/[0.08] px-1.5 py-1 text-sm text-juno-300', FONT.mono)}>
+              How we operate
+            </span>
+            <h2 className={cn('w-full text-[44px] leading-[48px] text-white lg:text-[60px] lg:!leading-[64px]', FONT.serif)}>
+              Our values
+            </h2>
+            <p className="text-base leading-normal text-juno-200">
+              Our values guide how we build and operate secure, compliant
+              financial services.
+            </p>
+          </FadeInView>
 
-            {/* First 2 value cards */}
-            {values.slice(0, 2).map((value, index) => (
-              <ValueCard
-                key={value.number}
-                number={value.number}
-                icon={value.icon}
-                title={value.title}
-                description={value.description}
-                delay={0.1 * (index + 1)}
-              />
-            ))}
-          </div>
+          {/* Cards 01, 02 – row 2 on tablet */}
+          {values.slice(0, 2).map((value, index) => (
+            <ValueCard
+              key={value.number}
+              number={value.number}
+              icon={value.icon}
+              title={value.title}
+              description={value.description}
+              delay={0.1 * (index + 1)}
+            />
+          ))}
 
-          {/* Second row: 3 cards */}
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            {values.slice(2).map((value, index) => (
-              <ValueCard
-                key={value.number}
-                number={value.number}
-                icon={value.icon}
-                title={value.title}
-                description={value.description}
-                delay={0.1 * (index + 3)}
-              />
-            ))}
+          {/* Cards 03, 04 – row 3 on tablet */}
+          {values.slice(2, 4).map((value, index) => (
+            <ValueCard
+              key={value.number}
+              number={value.number}
+              icon={value.icon}
+              title={value.title}
+              description={value.description}
+              delay={0.1 * (index + 3)}
+            />
+          ))}
+
+          {/* Card 05 – row 4 on tablet (centered); desktop: row 2 col 3, same as 03 and 04 */}
+          <div className="md:col-span-2 md:flex md:justify-center lg:col-span-1 lg:block">
+            <ValueCard
+              key={values[4].number}
+              number={values[4].number}
+              icon={values[4].icon}
+              title={values[4].title}
+              description={values[4].description}
+              delay={0.5}
+              className="md:w-[calc((100%-1rem)/2)] lg:w-full"
+            />
           </div>
         </div>
       </div>

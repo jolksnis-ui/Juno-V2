@@ -8,7 +8,7 @@ import { Header } from './header';
 const AUTH_ROUTES = ['/login', '/open-account', '/forgot-password'];
 
 /** Routes where header should use dark theme */
-const DARK_HEADER_ROUTES = ['/corporate-account'];
+const DARK_HEADER_ROUTES = ['/corporate-account', '/about'];
 
 /**
  * Conditionally renders Header based on current route

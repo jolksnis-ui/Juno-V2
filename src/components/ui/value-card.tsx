@@ -36,7 +36,7 @@ export const ValueCard = ({
     <FadeInView
       delay={delay}
       className={cn(
-        'relative flex h-80 flex-col justify-between overflow-hidden rounded-md border border-juno-700 bg-white/[0.02] p-8',
+        'relative flex h-[260px] flex-col justify-between overflow-hidden rounded-md border border-juno-700 bg-white/[0.02] px-4 pt-4 pb-6 lg:h-80 lg:p-8',
         className
       )}
     >
@@ -48,6 +48,11 @@ export const ValueCard = ({
           backgroundSize: `${DIMENSIONS.dotPatternSize} ${DIMENSIONS.dotPatternSize}`,
           backgroundPosition: 'top left',
         }}
+        aria-hidden="true"
+      />
+      {/* Same 3px dot canvas as Mission center card / Business–Corporate account frame */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-40 bg-[length:3px_3px] bg-center bg-repeat bg-[radial-gradient(circle,_rgba(255,255,255,0.08)_0.5px,_transparent_0.5px)]"
         aria-hidden="true"
       />
 
@@ -63,10 +68,10 @@ export const ValueCard = ({
 
       {/* Content: Title + Description */}
       <div className="relative flex flex-col gap-3">
-        <h3 className={cn('text-2xl leading-8 text-white', FONT.serif)}>
+        <h3 className={cn('text-2xl leading-[28px] text-white lg:leading-[28px]', FONT.serif)}>
           {title}
         </h3>
-        <p className="text-sm leading-normal text-juno-400">{description}</p>
+        <p className="text-[15px] leading-normal text-juno-400 lg:text-sm">{description}</p>
 
         {/* Bottom border gradient */}
         <div className="mt-8 h-px w-full bg-gradient-to-r from-juno-700 via-juno-600 to-juno-700" />

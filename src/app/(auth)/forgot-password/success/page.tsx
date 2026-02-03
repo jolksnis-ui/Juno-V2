@@ -12,7 +12,7 @@ export default function ForgotPasswordSuccessPage() {
     <AuthLayout>
       <div className="text-center">
         <div className="mb-6 text-5xl">✓</div>
-        <h1 className={cn('mb-4 text-2xl text-white md:text-3xl', FONT.serif)}>
+        <h1 className={cn('mb-4 text-2xl leading-[28px] text-white lg:text-3xl', FONT.serif)}>
           Password Changed
         </h1>
         <p className={cn('mb-8 text-white/60', FONT.mono)}>

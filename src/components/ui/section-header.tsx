@@ -41,7 +41,7 @@ export const SectionHeader = ({
     return (
       <div
         className={cn(
-          'mx-auto flex flex-col items-center gap-6 text-center',
+          'mx-auto flex flex-col items-center gap-6 text-center md:!max-w-[600px]',
           className
         )}
         style={{ maxWidth: titleMaxWidth }}
@@ -49,7 +49,7 @@ export const SectionHeader = ({
         {badge && (
           <span
             className={cn(
-              'w-fit rounded border px-1.5 py-1 text-sm',
+              'w-fit rounded border px-1.5 py-1 text-[13px] lg:text-sm',
               FONT.mono,
               isDark
                 ? 'border-juno-700 bg-white/[0.08] text-juno-300'
@@ -61,7 +61,7 @@ export const SectionHeader = ({
         )}
         <h2
           className={cn(
-            'text-[36px] leading-none md:text-[60px] md:leading-[1.13]',
+            'w-full text-[44px] leading-[48px] lg:text-[60px] lg:leading-[64px]',
             FONT.serif,
             isDark ? 'text-white' : 'text-juno-900'
           )}
@@ -71,7 +71,7 @@ export const SectionHeader = ({
         {subtitle && (
           <p
             className={cn(
-              'text-lg leading-normal',
+              'text-base leading-normal',
               isDark ? 'text-juno-200' : 'text-juno-700'
             )}
           >
@@ -82,13 +82,18 @@ export const SectionHeader = ({
     );
   }
 
-  // Left-aligned layout with optional action
+  // Left-aligned layout with optional action (tablet: centered, max-w 696px)
   return (
-    <div className={cn('flex flex-col gap-6', className)}>
+    <div
+      className={cn(
+        'flex flex-col gap-6 md:mx-auto md:max-w-[600px] md:items-center md:text-center lg:mx-0 lg:max-w-none lg:items-stretch lg:text-left',
+        className
+      )}
+    >
       {badge && (
         <span
           className={cn(
-            'w-fit rounded border px-1.5 py-1 text-sm',
+            'w-fit rounded border px-1.5 py-1 text-[13px] lg:text-sm',
             FONT.mono,
             isDark
               ? 'border-juno-700 bg-white/[0.08] text-juno-300'
@@ -98,10 +103,10 @@ export const SectionHeader = ({
           {badge}
         </span>
       )}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between md:flex-col md:items-center md:gap-4 lg:flex-row lg:justify-between lg:items-center">
         <h2
           className={cn(
-            'text-[60px] leading-[1.13]',
+            'w-full text-[60px] leading-[64px]',
             FONT.serif,
             isDark ? 'text-white' : 'text-juno-900'
           )}
@@ -114,7 +119,7 @@ export const SectionHeader = ({
       {subtitle && (
         <p
           className={cn(
-            'text-lg leading-normal',
+            'text-lg leading-[22px]',
             isDark ? 'text-juno-200' : 'text-juno-700'
           )}
           style={{ maxWidth: titleMaxWidth }}

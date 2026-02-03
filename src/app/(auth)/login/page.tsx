@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <AuthLayout>
-      <h1 className={cn('mb-10 text-3xl text-white md:text-4xl', FONT.serif)}>
+      <h1 className={cn('mb-10 text-3xl text-white lg:text-4xl', FONT.serif)}>
         Welcome to Juno
       </h1>
 

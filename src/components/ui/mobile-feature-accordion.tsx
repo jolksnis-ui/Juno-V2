@@ -40,7 +40,7 @@ const THEMES: Record<'light' | 'dark', ThemeConfig> = {
     descriptionColor: 'text-juno-700',
     progressBgColor: 'bg-juno-300',
     progressFillColor: 'bg-juno-900',
-    overlayColor: 'bg-white/40',
+    overlayColor: 'bg-white/30',
   },
   dark: {
     borderColor: 'border-juno-700',
@@ -66,6 +66,10 @@ interface MobileFeatureAccordionProps {
   theme?: 'light' | 'dark';
   /** Background image for expanded items */
   backgroundImage: string;
+  /** Progress bar delay in seconds (e.g. wait for expand animation so bar matches desktop logic) */
+  progressDelaySeconds?: number;
+  /** Pause the progress bar when section is out of view */
+  isExternallyPaused?: boolean;
 }
 
 /**
@@ -79,6 +83,8 @@ export const MobileFeatureAccordion = ({
   onFeatureClick,
   theme = 'dark',
   backgroundImage,
+  progressDelaySeconds = 0,
+  isExternallyPaused = false,
 }: MobileFeatureAccordionProps) => (
   <div className="flex flex-col">
     {features.map((feature, index) => (
@@ -91,6 +97,8 @@ export const MobileFeatureAccordion = ({
         onClick={() => onFeatureClick(feature.id)}
         theme={theme}
         backgroundImage={backgroundImage}
+        progressDelaySeconds={progressDelaySeconds}
+        isExternallyPaused={isExternallyPaused}
       />
     ))}
   </div>
@@ -105,6 +113,8 @@ interface MobileFeatureItemProps {
   onClick: () => void;
   theme: 'light' | 'dark';
   backgroundImage: string;
+  progressDelaySeconds?: number;
+  isExternallyPaused?: boolean;
 }
 
 /** Mobile feature item with smooth animated transitions */
@@ -116,31 +126,31 @@ const MobileFeatureItem = ({
   onClick,
   theme,
   backgroundImage,
+  progressDelaySeconds = 0,
+  isExternallyPaused = false,
 }: MobileFeatureItemProps) => {
   const config = THEMES[theme];
 
   return (
     <div className={cn(!isLast && !isActive && `border-b ${config.borderColor}`)}>
-      {/* Title - always visible, clickable when inactive */}
-      <button
-        onClick={!isActive ? onClick : undefined}
-        className={cn('w-full px-4 py-4 text-center', !isActive && 'cursor-pointer')}
-        aria-label={!isActive ? `View ${feature.title}` : undefined}
-        disabled={isActive}
-      >
-        <motion.h3
-          animate={{
-            fontSize: isActive ? '22px' : '18px',
-            color: isActive ? config.activeTitleColor : config.inactiveTitleColor,
-          }}
-          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          className={cn('leading-tight', FONT.serif)}
+      {/* Inactive: clickable title row. Active: title + body live in one frame below. */}
+      {!isActive && (
+        <button
+          onClick={onClick}
+          className="flex w-full cursor-pointer items-center justify-center px-4 py-4 text-center"
+          aria-label={`View ${feature.title}`}
         >
-          {feature.title}
-        </motion.h3>
-      </button>
+          <motion.h3
+            animate={{ fontSize: '18px', color: config.inactiveTitleColor }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+            className={cn('leading-[22px]', FONT.serif)}
+          >
+            {feature.title}
+          </motion.h3>
+        </button>
+      )}
 
-      {/* Expandable content */}
+      {/* Expandable content: one frame (headline + body, 12px gap, 16px padding) then progress + image */}
       <AnimatePresence>
         {isActive && (
           <motion.div
@@ -150,51 +160,64 @@ const MobileFeatureItem = ({
             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
-              className={cn('px-4 pb-4 text-center text-base leading-relaxed', config.descriptionColor)}
-            >
-              {feature.description}
-            </motion.p>
+            {/* Single frame: headline + body, 12px between them, 16px left/right, 24px top/bottom */}
+            <div className="px-4 py-6">
+              <motion.h3
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className={cn('text-center text-[24px] leading-[28px]', FONT.serif)}
+                style={{ color: config.activeTitleColor }}
+              >
+                {feature.title}
+              </motion.h3>
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+                className={cn('mt-3 text-center text-[15px] leading-[22.5px] lg:text-base lg:leading-relaxed', config.descriptionColor)}
+              >
+                {feature.description}
+              </motion.p>
+            </div>
 
-            {/* Progress bar */}
+            {/* Progress bar – same logic/duration as desktop; delay so it starts after expand */}
             <ProgressBar
               isActive={isActive}
               isPaused={isPaused}
+              isExternallyPaused={isExternallyPaused}
               featureId={feature.id}
               bgColor={config.progressBgColor}
               fillColor={config.progressFillColor}
+              delaySeconds={progressDelaySeconds}
             />
 
-            {/* Image container */}
+            {/* Image container – same background as desktop for each point (section bg + overlay + blur) */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="relative h-[280px] overflow-hidden"
+              className="relative h-[320px] overflow-hidden"
             >
-              {/* Blurred background */}
+              {/* Background – identical to desktop: section bg image, object-cover, overlay + 3px blur (per point) */}
               <div className="absolute inset-0 overflow-hidden">
                 <Image
                   src={backgroundImage}
                   alt=""
                   fill
-                  className="object-cover opacity-30 blur-sm"
+                  className="object-cover"
                   aria-hidden="true"
                 />
-                <div className={cn('absolute inset-0 backdrop-blur-md', config.overlayColor)} />
+                <div className={cn('absolute inset-0 backdrop-blur-[3px]', config.overlayColor)} />
               </div>
 
-              {/* Feature image */}
+              {/* Feature image – same graphics as desktop, slightly larger on mobile/tablet for visibility */}
               <div className="absolute inset-0 flex items-center justify-center p-4">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                  className="relative h-[240px] w-[180px]"
+                  className="relative h-[300px] w-[225px]"
                 >
                   <Image
                     src={feature.image}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useRef, ReactNode } from 'react';
+import { useContext, useState, ReactNode } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface FrozenRouterProps {
@@ -14,7 +14,7 @@ interface FrozenRouterProps {
  */
 export const FrozenRouter = ({ children }: FrozenRouterProps) => {
   const context = useContext(LayoutRouterContext);
-  const frozen = useRef(context).current;
+  const [frozen] = useState(context);
 
   return (
     <LayoutRouterContext.Provider value={frozen}>

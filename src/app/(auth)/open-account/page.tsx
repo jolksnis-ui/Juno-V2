@@ -52,7 +52,7 @@ export default function OpenAccountPage() {
       {isSuccess ? (
         <div className="text-center">
           <div className="mb-6 text-5xl">✓</div>
-          <h1 className={cn('mb-4 text-2xl text-white md:text-3xl', FONT.serif)}>
+          <h1 className={cn('mb-4 text-2xl leading-[28px] text-white lg:text-3xl', FONT.serif)}>
             Enquiry Submitted
           </h1>
           <p className={cn('mb-8 text-white/60', FONT.mono)}>
@@ -71,7 +71,7 @@ export default function OpenAccountPage() {
         </div>
       ) : (
         <>
-          <h1 className={cn('mb-2 text-3xl text-white md:text-4xl', FONT.serif)}>
+          <h1 className={cn('mb-2 text-3xl text-white lg:text-4xl', FONT.serif)}>
             Open an Account
           </h1>
           <p className={cn('mb-8 text-white/60', FONT.mono)}>

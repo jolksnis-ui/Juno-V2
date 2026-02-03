@@ -1,9 +1,9 @@
 'use client';
 
 import { forwardRef } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { BUTTON_TEXT, DIMENSIONS } from '@/lib/constants';
+import { BUTTON_TEXT, DIMENSIONS, FONT } from '@/lib/constants';
 
 interface GetStartedButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -43,9 +43,10 @@ const GetStartedButton = forwardRef<HTMLButtonElement, GetStartedButtonProps>(
         disabled={disabled || isLoading}
         style={{ height: DIMENSIONS.buttonHeight }}
         className={cn(
-          'group relative inline-flex items-center justify-center overflow-hidden rounded-md px-8 text-sm font-medium transition-colors',
+          'group relative inline-flex items-center justify-center overflow-hidden rounded-[4px] px-8 text-base font-normal transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-50',
+          FONT.mono,
           isLight
             ? 'bg-white text-juno-900 focus-visible:ring-juno-900'
             : 'bg-juno-900 text-white focus-visible:ring-white',
@@ -59,14 +60,14 @@ const GetStartedButton = forwardRef<HTMLButtonElement, GetStartedButtonProps>(
         {!isLoading && (
           <i
             className={cn(
-              'absolute bottom-1 right-1 top-1 z-10 grid w-1/4 place-items-center rounded-sm transition-all duration-500 group-hover:w-[calc(100%-0.5rem)] group-active:scale-95',
+              'absolute bottom-1 right-1 top-1 z-10 grid w-[calc(25%-16px)] place-items-center rounded-[2px] transition-all duration-500 group-hover:w-[calc(100%-0.5rem)] group-active:scale-95',
               isLight ? 'bg-juno-900/10' : 'bg-white/15'
             )}
             aria-hidden="true"
           >
-            <ChevronRight
-              size={16}
-              strokeWidth={2}
+            <ArrowUpRight
+              size={22}
+              strokeWidth={1.6}
               className={isLight ? 'text-juno-900' : 'text-white'}
             />
           </i>

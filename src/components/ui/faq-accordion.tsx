@@ -38,19 +38,19 @@ export const FaqAccordion = ({
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between p-6"
+        className="flex w-full cursor-pointer items-center justify-between gap-4 px-4 py-6 lg:p-6"
         aria-expanded={isOpen}
       >
         <div className="flex items-center gap-3">
           <span className={cn('w-10 text-base text-juno-400', FONT.mono)}>
             {number}
           </span>
-          <span className={cn('text-left text-2xl leading-8 text-juno-900', FONT.serif)}>
+          <span className={cn('text-left text-2xl leading-[28px] text-juno-900', FONT.serif)}>
             {question}
           </span>
         </div>
         <div
-          className="flex size-9 shrink-0 items-center justify-center rounded border border-juno-300"
+          className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-[4px] border border-juno-300 transition-colors duration-200 hover:border-[#3f3f46]"
           aria-hidden="true"
         >
           <PlusMinusIcon isOpen={isOpen} />
@@ -65,8 +65,10 @@ export const FaqAccordion = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: ANIMATION_MICRO.medium, ease: TRANSITION.ease }}
           >
-            <div className="border-t border-juno-300 px-6 pb-6 pt-6">
-              <p style={{ maxWidth: MAX_WIDTHS.faqAnswer }} className="text-base leading-normal text-juno-700">
+            {/* Same divider style on all breakpoints: 16px inset, dashed */}
+            <div className="px-4 lg:px-6">
+              <div className="border-t border-dashed border-juno-300" aria-hidden />
+              <p style={{ maxWidth: MAX_WIDTHS.faqAnswer }} className="pt-6 pb-6 text-[15px] leading-normal text-juno-700 lg:text-base">
                 {answer}
               </p>
             </div>
@@ -85,10 +87,9 @@ const PlusMinusIcon = ({ isOpen }: { isOpen: boolean }) => (
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="var(--juno-gray-900)"
     strokeWidth="1.5"
     strokeLinecap="round"
-    className="transition-transform duration-200"
+    className="stroke-[#18181b]"
   >
     {/* Horizontal line (always visible) */}
     <line x1="5" y1="12" x2="19" y2="12" />

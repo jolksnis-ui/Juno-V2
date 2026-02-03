@@ -10,6 +10,8 @@ interface UseAutoRotateOptions {
   interval?: number;
   /** Starting item (1-indexed, default: 1) */
   initialItem?: number;
+  /** When true, auto-rotation is paused (e.g. section not in view – avoids layout jump below) */
+  externalPaused?: boolean;
 }
 
 interface UseAutoRotateReturn {
@@ -37,9 +39,11 @@ export function useAutoRotate({
   itemCount,
   interval = AUTO_ROTATE_INTERVAL,
   initialItem = 1,
+  externalPaused = false,
 }: UseAutoRotateOptions): UseAutoRotateReturn {
   const [active, setActive] = useState(initialItem);
   const [isPaused, setIsPaused] = useState(false);
+  const shouldRun = !isPaused && !externalPaused;
 
   /** Advances to the next item (wraps around) */
   const next = useCallback(() => {
@@ -75,12 +79,12 @@ export function useAutoRotate({
     [prev, next, interval]
   );
 
-  // Auto-rotation effect
+  // Auto-rotation effect (paused when section not in view to avoid layout jump below)
   useEffect(() => {
-    if (isPaused) return;
+    if (!shouldRun) return;
     const timer = setInterval(next, interval);
     return () => clearInterval(timer);
-  }, [isPaused, next, interval]);
+  }, [shouldRun, next, interval]);
 
   return {
     active,

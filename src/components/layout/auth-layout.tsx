@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { VIDEOS } from '@/lib/constants';
+import { LOGO_SRC, VIDEOS } from '@/lib/constants';
 import { AppLink } from '@/components/ui/app-link';
 
 interface AuthLayoutProps {
@@ -17,12 +17,12 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="flex min-h-screen">
       {/* Left Panel - Form */}
-      <div className="flex w-full flex-col bg-black px-6 py-8 md:w-1/2 md:px-12 lg:px-20">
+      <div className="flex w-full flex-col bg-black px-3 py-8 md:px-6 lg:w-1/2 lg:px-12 xl:px-20">
         {/* Logo - links back to home */}
         <AppLink href="/" className="mb-auto" aria-label="Back to home">
           <Image
-            src="/images/Header/logo.svg"
-            alt="Juno"
+            src={LOGO_SRC}
+            alt="Juno Money"
             width={100}
             height={25}
             className="h-6 w-auto brightness-0 invert"
@@ -38,7 +38,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       </div>
 
       {/* Right Panel - Full-bleed Video */}
-      <div className="relative hidden w-1/2 overflow-hidden bg-black md:block">
+      <div className="relative hidden w-1/2 overflow-hidden bg-black lg:block">
         <video
           autoPlay
           loop
