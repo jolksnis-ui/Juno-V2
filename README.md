@@ -34,13 +34,16 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000](http://localhost:3000) in your browser, or run `npm run dev:open` in a second terminal to open it automatically (macOS).
+
+**Using Cursor:** To see the project in the sidebar, use **File → Open Folder** and select this project folder. See [docs/DEVELOPING.md](docs/DEVELOPING.md) for details.
 
 ## Scripts
 
-| Command                | Description               |
-| ---------------------- | ------------------------- |
-| `npm run dev`          | Start development server  |
+| Command                | Description                        |
+| ---------------------- | ---------------------------------- |
+| `npm run dev`          | Start development server           |
+| `npm run dev:open`     | Open http://localhost:3000 in browser (macOS) |
 | `npm run build`        | Build for production      |
 | `npm start`            | Start production server   |
 | `npm run lint`         | Run ESLint                |
@@ -74,6 +77,7 @@ src/
 
 ## Documentation
 
+- [Developing in Cursor](docs/DEVELOPING.md) — open project, run dev, open browser, click between pages
 - [Product Description](docs/PRODUCT.md)
 - [Tech Stack](docs/STACK.md)
 - [Deployment (Vercel, ветка `staging`)](docs/DEPLOYMENT.md)

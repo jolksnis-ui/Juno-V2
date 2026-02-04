@@ -9,10 +9,10 @@ export const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Total animation duration control (extended for drama)
+    // Total animation duration (short enough to start working quickly)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3500); // 3.5s total duration
+    }, 2000); // 2s
 
     return () => clearTimeout(timer);
   }, []);
@@ -22,7 +22,7 @@ export const Preloader = () => {
       {isLoading && (
         <motion.div
           key="preloader"
-          className="fixed inset-0 z-[100] flex min-h-dvh items-center justify-center bg-[#18181B]"
+          className="pointer-events-none fixed inset-0 z-[100] flex min-h-dvh items-center justify-center bg-[#18181B]"
           initial={{ y: 0 }}
           exit={{
             y: '-100%',
