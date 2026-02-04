@@ -89,6 +89,8 @@ export const IMAGES = {
   accountSectionBusiness: '/images/Bussines.png',
   corporateBg: '/images/corporate-bg.jpg',
   contactFormBg: '/images/contact-form-bg.jpg',
+  /** Login page – right panel (architectural building) */
+  loginPanel: '/images/about/modern-business-building-nanjing-china.jpg',
   avatarJohn: '/images/avatar-john.jpg',
   valuesDotPattern: '/images/values-dot-pattern.png',
   everydayBankingHero: '/images/everyday-banking-hero.jpg',
